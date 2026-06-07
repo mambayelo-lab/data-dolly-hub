@@ -1,4 +1,5 @@
 import { AppShell, KpiCard, DataTable, Badge } from "@/components/AppShell";
+import { VendorLogo } from "@/components/VendorLogo";
 import { orders, products, customers, fmtEUR, skuName } from "@/data/maisonLumen";
 
 export function SapApp() {
@@ -10,7 +11,7 @@ export function SapApp() {
       vendorName="SAP"
       appName="S/4HANA · Finance & Procurement"
       appSubtitle="Productive · Client 100 · MLUMEN"
-      logo={<span className="font-bold tracking-tight text-base">SAP</span>}
+      logo={<VendorLogo brand="sap" />}
       user={{ name: "Camille Roux", role: "Finance Lead" }}
       rightTopbar={<span className="opacity-80">EUR · FY 2026 · Période 06</span>}
       nav={[

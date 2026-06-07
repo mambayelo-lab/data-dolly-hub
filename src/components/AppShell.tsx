@@ -24,7 +24,7 @@ export function AppShell({ vendorClass, vendorName, appName, appSubtitle, logo, 
           <ArrowLeft className="h-3.5 w-3.5" /> Hub
         </Link>
         <div className="h-5 w-px bg-white/30" />
-        <div className="font-semibold tracking-tight">{logo ?? vendorName}</div>
+        <div className="bg-white rounded px-2 py-1 flex items-center shadow-sm">{logo ?? <span className="font-semibold text-ink">{vendorName}</span>}</div>
         <span className="opacity-75">|</span>
         <span className="opacity-90">{appName}</span>
         <div className="ml-auto flex items-center gap-4 text-xs">

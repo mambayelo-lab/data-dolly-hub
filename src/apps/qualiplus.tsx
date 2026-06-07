@@ -1,4 +1,5 @@
 import { AppShell, KpiCard, DataTable, Badge } from "@/components/AppShell";
+import { VendorLogo } from "@/components/VendorLogo";
 import { nonConformities, prodOrders, company } from "@/data/fromagerieDuVal";
 
 export function QualiPlusApp() {
@@ -10,7 +11,7 @@ export function QualiPlusApp() {
       vendorName="QualiPlus"
       appName="QualiPlus QHSE · Gestion qualité & IFS"
       appSubtitle="Système qualité Fromagerie du Val · Audit IFS planifié 2026-09"
-      logo={<span className="font-bold tracking-tight text-base">QualiPlus</span>}
+      logo={<VendorLogo brand="qualiplus" />}
       user={{ name: "Sophie Hervé", role: "Resp. Qualité Groupe" }}
       rightTopbar={<span className="opacity-80">IFS v8 · BRC v9</span>}
       nav={[

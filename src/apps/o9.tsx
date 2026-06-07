@@ -1,4 +1,5 @@
 import { AppShell, KpiCard, DataTable, Badge } from "@/components/AppShell";
+import { VendorLogo } from "@/components/VendorLogo";
 import { forecast, products, skuName } from "@/data/maisonLumen";
 
 export function O9App() {
@@ -15,12 +16,7 @@ export function O9App() {
       vendorName="o9 Solutions"
       appName="Demand Planning · Maison Lumen S&OP"
       appSubtitle="Tenant MLUMEN · Planning horizon 8 wk"
-      logo={
-        <span className="flex items-center gap-2">
-          <span className="h-6 w-6 rounded-full grid place-items-center text-xs font-bold" style={{ background: "white", color: "#7c3aed" }}>o9</span>
-          <span className="font-semibold tracking-tight">Solutions</span>
-        </span>
-      }
+      logo={<VendorLogo brand="o9" />}
       user={{ name: "Aïcha Bensalem", role: "Demand Planner" }}
       rightTopbar={<span style={{ color: "rgba(255,255,255,0.8)" }}>Cycle DP · S+24</span>}
       nav={[

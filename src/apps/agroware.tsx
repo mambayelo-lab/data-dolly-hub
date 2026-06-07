@@ -1,4 +1,5 @@
 import { AppShell, KpiCard, DataTable, Badge } from "@/components/AppShell";
+import { VendorLogo } from "@/components/VendorLogo";
 import { collections, producers, producerName, siteName } from "@/data/fromagerieDuVal";
 
 export function AgroWareApp() {
@@ -10,7 +11,7 @@ export function AgroWareApp() {
       vendorName="AgroWare"
       appName="AgroWare 365 · Gestion amont laitier"
       appSubtitle="Coopérative Fromagerie du Val · 412 producteurs"
-      logo={<span className="font-bold tracking-tight text-base">🌿 AgroWare</span>}
+      logo={<VendorLogo brand="agroware" />}
       user={{ name: "Hélène Marais", role: "Resp. Collecte" }}
       rightTopbar={<span className="opacity-80">Tournée J · 06.06.2026</span>}
       nav={[

@@ -1,4 +1,5 @@
 import { AppShell, KpiCard, DataTable, Badge } from "@/components/AppShell";
+import { VendorLogo } from "@/components/VendorLogo";
 import { stock, stores, products, orders, totalOnHand, fmtEUR } from "@/data/maisonLumen";
 
 export function ManhattanApp() {
@@ -8,7 +9,7 @@ export function ManhattanApp() {
       vendorName="Manhattan"
       appName="Active® Omni · OMS / WMS"
       appSubtitle="Tenant MLUMEN-PRD · Region EU-WEST"
-      logo={<span className="font-bold tracking-tight">MANHATTAN<span style={{ color: "#ef7d00" }}>.</span></span>}
+      logo={<VendorLogo brand="manhattan" />}
       user={{ name: "Yannick Mboup", role: "Supply Chain Lead" }}
       rightTopbar={<span>SLA fulfillment 99.1 %</span>}
       nav={[
