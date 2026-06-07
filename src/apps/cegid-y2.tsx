@@ -1,4 +1,5 @@
 import { AppShell, KpiCard, DataTable, Badge } from "@/components/AppShell";
+import { VendorLogo } from "@/components/VendorLogo";
 import { orders, stores, products, fmtEUR } from "@/data/maisonLumen";
 
 export function CegidApp() {
@@ -9,7 +10,7 @@ export function CegidApp() {
       vendorName="Cegid"
       appName="Retail Y2 · Back Office Enseigne"
       appSubtitle="Enseigne MLUMEN · Caisse centralisée"
-      logo={<span className="font-bold tracking-tight" style={{ fontFamily: "var(--font-display)" }}>cegid</span>}
+      logo={<VendorLogo brand="cegid" />}
       user={{ name: "Sophie Carlier", role: "Retail Ops" }}
       rightTopbar={<span>180 magasins synchronisés · MAJ 06/06 09:12</span>}
       nav={[

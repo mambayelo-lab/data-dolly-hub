@@ -1,4 +1,5 @@
 import { AppShell, KpiCard, DataTable, Badge } from "@/components/AppShell";
+import { VendorLogo } from "@/components/VendorLogo";
 import { customers, orders, fmtEUR } from "@/data/maisonLumen";
 
 export function SalesforceApp() {
@@ -9,12 +10,7 @@ export function SalesforceApp() {
       vendorName="Salesforce"
       appName="Sales Cloud · Clienteling Maison Lumen"
       appSubtitle="Org 00D5g000004XyZx · API v59"
-      logo={
-        <span className="flex items-center gap-2">
-          <span className="h-5 w-7 rounded grid place-items-center text-[10px] font-bold" style={{ background: "#00a1e0", color: "white" }}>SF</span>
-          <span className="font-semibold">salesforce</span>
-        </span>
-      }
+      logo={<VendorLogo brand="salesforce" />}
       user={{ name: "Marc Dupré", role: "Sales Director" }}
       rightTopbar={<span style={{ color: "rgba(255,255,255,0.7)" }}>Sandbox · UAT-2026</span>}
       nav={[

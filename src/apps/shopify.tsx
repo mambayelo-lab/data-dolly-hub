@@ -1,4 +1,5 @@
 import { AppShell, KpiCard, DataTable, Badge } from "@/components/AppShell";
+import { VendorLogo } from "@/components/VendorLogo";
 import { orders, products, customers, fmtEUR } from "@/data/maisonLumen";
 
 export function ShopifyApp() {
@@ -9,12 +10,7 @@ export function ShopifyApp() {
       vendorName="Shopify"
       appName="Admin · maison-lumen.fr"
       appSubtitle="Plan Shopify Plus"
-      logo={
-        <span className="flex items-center gap-2">
-          <span className="h-5 w-5 rounded grid place-items-center text-[11px] font-bold" style={{ background: "#008060", color: "white" }}>S</span>
-          <span className="font-semibold">Shopify</span>
-        </span>
-      }
+      logo={<VendorLogo brand="shopify" />}
       user={{ name: "Léa Vidal", role: "E-com Manager" }}
       rightTopbar={<span style={{ color: "#bbb" }}>EUR · maison-lumen.fr</span>}
       nav={[
