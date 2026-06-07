@@ -144,7 +144,7 @@ function SectorPage() {
             <p className="mt-6 text-lg text-ink-soft max-w-2xl leading-relaxed">{config.description}</p>
           </div>
           <div className="lg:col-span-5 lg:border-l lg:border-border lg:pl-10 grid grid-cols-2 gap-6">
-            {config.stats.map((s) => (
+            {config.stats.map((s: { label: string; value: string }) => (
               <div key={s.label}>
                 <div className="font-display text-3xl text-ink tabular-nums">{s.value}</div>
                 <div className="text-[10px] uppercase tracking-wider text-ink-soft mt-1">{s.label}</div>
@@ -163,7 +163,7 @@ function SectorPage() {
           <div className="text-sm text-ink-soft">Chaque tuile ouvre l'app mockée fidèle à son éditeur.</div>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {config.apps.map((a) => (
+          {config.apps.map((a: { id: string; code: string; name: string; vendor: string; module: string; color: string }) => (
             <Link key={a.id} to="/apps/$appId" params={{ appId: a.id }} className="group border border-border bg-paper-elev rounded-lg p-5 hover:border-ink/40 hover:shadow-sm transition-all">
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded grid place-items-center text-white text-xs font-bold" style={{ background: a.color }}>{a.code}</div>
@@ -188,7 +188,7 @@ function SectorPage() {
           <h2 className="font-display text-3xl mt-2">{config.crossStory.lead}</h2>
           <p className="text-sm text-ink-soft mt-3 max-w-3xl">{config.crossStory.body}</p>
           <div className="grid lg:grid-cols-4 gap-4 mt-6">
-            {config.crossStory.cards.map((c) => (
+            {config.crossStory.cards.map((c: { label: string; value: string; desc: string }) => (
               <div key={c.label} className="bg-paper border border-border rounded-lg p-5">
                 <div className="text-[10px] uppercase tracking-wider text-ink-soft">{c.label}</div>
                 <div className="font-display text-3xl mt-1 tabular-nums">{c.value}</div>
