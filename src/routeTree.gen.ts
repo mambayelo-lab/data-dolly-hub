@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SectorSlugRouteImport } from './routes/sector.$slug'
+import { Route as AppsAppIdRouteImport } from './routes/apps.$appId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +23,39 @@ const SectorSlugRoute = SectorSlugRouteImport.update({
   path: '/sector/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppsAppIdRoute = AppsAppIdRouteImport.update({
+  id: '/apps/$appId',
+  path: '/apps/$appId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/apps/$appId': typeof AppsAppIdRoute
   '/sector/$slug': typeof SectorSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/apps/$appId': typeof AppsAppIdRoute
   '/sector/$slug': typeof SectorSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/apps/$appId': typeof AppsAppIdRoute
   '/sector/$slug': typeof SectorSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sector/$slug'
+  fullPaths: '/' | '/apps/$appId' | '/sector/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sector/$slug'
-  id: '__root__' | '/' | '/sector/$slug'
+  to: '/' | '/apps/$appId' | '/sector/$slug'
+  id: '__root__' | '/' | '/apps/$appId' | '/sector/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppsAppIdRoute: typeof AppsAppIdRoute
   SectorSlugRoute: typeof SectorSlugRoute
 }
 
@@ -65,11 +75,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SectorSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apps/$appId': {
+      id: '/apps/$appId'
+      path: '/apps/$appId'
+      fullPath: '/apps/$appId'
+      preLoaderRoute: typeof AppsAppIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppsAppIdRoute: AppsAppIdRoute,
   SectorSlugRoute: SectorSlugRoute,
 }
 export const routeTree = rootRouteImport
