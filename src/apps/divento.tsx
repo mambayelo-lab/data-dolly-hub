@@ -1,4 +1,5 @@
 import { AppShell, KpiCard, DataTable, Badge } from "@/components/AppShell";
+import { VendorLogo } from "@/components/VendorLogo";
 import { distOrders, distCustomers, customerName, productName, fmtEUR } from "@/data/fromagerieDuVal";
 
 export function DiventoApp() {
@@ -10,7 +11,7 @@ export function DiventoApp() {
       vendorName="Divento"
       appName="Divento Distribution · Tournées & B2B"
       appSubtitle="Société FDV · 6 régions commerciales"
-      logo={<span className="font-bold tracking-tight text-base">Divento</span>}
+      logo={<VendorLogo brand="divento" />}
       user={{ name: "Julien Postel", role: "Resp. ADV Nord" }}
       rightTopbar={<span className="opacity-80">Vue semaine S23/2026</span>}
       nav={[

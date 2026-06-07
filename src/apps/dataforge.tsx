@@ -1,4 +1,5 @@
 import { AppShell, KpiCard, DataTable, Badge } from "@/components/AppShell";
+import { VendorLogo } from "@/components/VendorLogo";
 import { prodOrders, collections, distOrders, fmtEUR } from "@/data/fromagerieDuVal";
 
 export function DataForgeApp() {
@@ -11,7 +12,7 @@ export function DataForgeApp() {
       vendorName="DataForge"
       appName="DataForge Lakehouse · Workspace Analytics"
       appSubtitle="Workspace fdv-prod · Catalog unity-fdv"
-      logo={<span className="font-bold tracking-tight text-base">DataForge</span>}
+      logo={<VendorLogo brand="dataforge" />}
       user={{ name: "Naïma Benyahia", role: "Data Engineer Lead" }}
       rightTopbar={<span className="opacity-80">Cluster fdv-prod-medium · 12 DBU/h</span>}
       nav={[
