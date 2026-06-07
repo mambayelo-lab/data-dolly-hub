@@ -98,9 +98,52 @@ function agroConfig(): SectorConfig {
   };
 }
 
+function industryConfig(): SectorConfig {
+  const backlog = indusWO.filter((w) => w.status !== "Terminé").reduce((s, w) => {
+    const p = indusParts.find((x) => x.pn === w.pn);
+    return s + (p?.sellPriceEUR ?? p?.stdCostEUR ?? 0) * w.qty;
+  }, 0);
+  return {
+    slug: "industry",
+    eyebrow: "Secteur Industrie · Aéro & Médical",
+    brand: indusCo.brand,
+    legal: indusCo.legalName,
+    siret: indusCo.siret,
+    vat: indusCo.vat,
+    description:
+      "ETI française fondée en 1992 (siège Annecy). Fabricant de pièces mécaniques de précision pour l'aéronautique (Airbus, Safran, Dassault) et le médical (implants orthopédiques, instruments chirurgicaux). 3 sites : Annecy (5 axes), Cluses (décolletage), Saint-Étienne (assemblage & contrôle). Certifications EN 9100, ISO 13485, NADCAP.",
+    stats: [
+      { label: "Sites prod.", value: String(indusCo.sites) },
+      { label: "Machines", value: String(indusCo.machines) },
+      { label: "Collaborateurs", value: indusCo.employees.toLocaleString("fr-FR") },
+      { label: "CA annuel", value: fmtIndus(indusCo.revenueEUR) },
+    ],
+    apps: indusApps,
+    appDescriptions: {
+      "ifx-cloud": "ERP industriel — ventes, OF, MRP, stocks multi-sites, coûts standards, comptabilité. Source de vérité.",
+      "dasselys-3dx": "PLM & CAO 3D — articles, BOM, plans, ECN, maturité (RELEASED), gestion des configurations.",
+      opcentral: "MES — exécution atelier, OEE temps réel, déclarations temps & quantités, SPC, andon, traçabilité.",
+      wonderwave: "SCADA / Historian — supervision OPC-UA des machines, alarmes ISA-18.2, historique 90 j, audit trail.",
+      coopa: "Source-to-Pay — requisitions, PO, factures, performance fournisseurs, contrats, sourcing événementiel.",
+      maximoves: "GMAO — ordres de travail correctifs & préventifs, plans PM, pièces détachées, prédictif via SCADA.",
+    },
+    crossStory: {
+      lead: "De la spécification client à la pièce expédiée, un fil d'information continu",
+      body: "L'OF WO-2026-014821 (carter HX-AER-7831-A pour Airbus Atlantic) référence le même PN dans Dasselys (Rev. C), le même besoin matière (RAW-TI64-D80, 4.2 kg) dans IFX & Coopa, est exécuté sur MCH-A01 (OpCentral & Wonderwave), et déclenche l'OT prédictif WO-M-3044 dans MaxiMoves si vibrations détectées.",
+      cards: [
+        { label: "Articles & matières", value: String(indusParts.length), desc: "PN partagés entre PLM Dasselys, ERP IFX, MES OpCentral et Coopa." },
+        { label: "Machines pilotées", value: String(indusMachines.length), desc: "Mêmes assets dans MES, SCADA Wonderwave et GMAO MaxiMoves." },
+        { label: "OF en cours", value: String(indusWO.length), desc: "Ordres synchronisés ERP ↔ MES avec mêmes statuts et qty produites." },
+        { label: "PO Achats", value: String(indusPO.length), desc: "Engagements Coopa rapatriés dans IFX Cloud pour les coûts projets." },
+      ],
+    },
+  };
+}
+
 const sectorConfigs: Record<SectorSlug, () => SectorConfig> = {
   retail: retailConfig,
   "agro-food": agroConfig,
+  industry: industryConfig,
 };
 
 export const Route = createFileRoute("/sector/$slug")({
