@@ -1,4 +1,5 @@
 import { AppShell, KpiCard, DataTable, Badge } from "@/components/AppShell";
+import { VendorLogo } from "@/components/VendorLogo";
 import { recipes, products, productName } from "@/data/fromagerieDuVal";
 
 export function TraceLinkApp() {
@@ -10,7 +11,7 @@ export function TraceLinkApp() {
       vendorName="TraceLink"
       appName="TraceLink PLM · Specs produits & fournisseurs"
       appSubtitle="Workspace Fromagerie du Val · Référentiel cahiers des charges"
-      logo={<span className="font-bold tracking-tight text-base">TraceLink<span className="opacity-60"> PLM</span></span>}
+      logo={<VendorLogo brand="tracelink" />}
       user={{ name: "Maxime Lecuyer", role: "Resp. R&D Fromages" }}
       rightTopbar={<span className="opacity-80">Workspace FDV · {recipes.length} recettes</span>}
       nav={[

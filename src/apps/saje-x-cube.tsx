@@ -1,4 +1,5 @@
 import { AppShell, KpiCard, DataTable, Badge } from "@/components/AppShell";
+import { VendorLogo } from "@/components/VendorLogo";
 import { prodOrders, products, sites, fmtEUR, productName, siteName } from "@/data/fromagerieDuVal";
 
 export function SajeXCubeApp() {
@@ -11,7 +12,7 @@ export function SajeXCubeApp() {
       vendorName="Saje"
       appName="X-Cube · ERP Industriel Agro"
       appSubtitle="Dossier FDV · Société 001 · Folder PROD"
-      logo={<span className="font-bold tracking-tight text-base">SAJE</span>}
+      logo={<VendorLogo brand="saje" />}
       user={{ name: "Patrick Hauchard", role: "Directeur Industriel" }}
       rightTopbar={<span className="opacity-80">EUR · Exercice 2026 · P06</span>}
       nav={[
