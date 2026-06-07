@@ -80,6 +80,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Aura SI Hub" },
       { name: "description", content: "Portail des SI témoins — 18 applications mockées avec données cohérentes cross-systèmes." },
       { property: "og:type", content: "website" },
+      { property: "og:title", content: "Aura SI Hub" },
+      { name: "twitter:title", content: "Aura SI Hub" },
+      { property: "og:description", content: "Portail des SI témoins — 18 applications mockées avec données cohérentes cross-systèmes." },
+      { name: "twitter:description", content: "Portail des SI témoins — 18 applications mockées avec données cohérentes cross-systèmes." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0f776acf-2bd9-4fdd-850e-d17e8484f4f0/id-preview-88d220c5--29117db9-0818-40a4-8e09-3c365363c219.lovable.app-1780793597360.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0f776acf-2bd9-4fdd-850e-d17e8484f4f0/id-preview-88d220c5--29117db9-0818-40a4-8e09-3c365363c219.lovable.app-1780793597360.png" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
