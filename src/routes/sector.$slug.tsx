@@ -2,8 +2,9 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { apps as retailApps, company as retailCo, products as retailProducts, stores, orders as retailOrders, fmtEUR as fmtRetail } from "@/data/maisonLumen";
 import { apps as agroApps, company as agroCo, products as agroProducts, sites, prodOrders, distOrders, fmtEUR as fmtAgro } from "@/data/fromagerieDuVal";
+import { apps as indusApps, company as indusCo, parts as indusParts, machines as indusMachines, workOrders as indusWO, purchaseOrders as indusPO, fmtEUR as fmtIndus } from "@/data/helvexPrecision";
 
-type SectorSlug = "retail" | "agro-food";
+type SectorSlug = "retail" | "agro-food" | "industry";
 
 type SectorConfig = {
   slug: SectorSlug;
