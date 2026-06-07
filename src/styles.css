@@ -135,6 +135,14 @@
 /* o9 — violet */
 .vendor-o9 { --vendor-color: #7c3aed; --vendor-bg: #faf9ff; --vendor-ink: #1e1b4b; --vendor-muted: #6b7280; --vendor-border: #e4e0f3; }
 
+/* --- Agro-alimentaire (Fromagerie du Val) --- */
+.vendor-saje { --vendor-color: #00ad4d; --vendor-bg: #f4f7f4; --vendor-ink: #1b2a1f; --vendor-muted: #5f6d62; --vendor-border: #dde6df; }
+.vendor-agroware { --vendor-color: #2e7d32; --vendor-bg: #f6f8f3; --vendor-ink: #1f2d1f; --vendor-muted: #5b6b5b; --vendor-border: #dde5d7; }
+.vendor-qualiplus { --vendor-color: #0066b3; --vendor-bg: #f4f7fb; --vendor-ink: #0f1e30; --vendor-muted: #5e6f82; --vendor-border: #d8e1ec; }
+.vendor-tracelink { --vendor-color: #003a70; --vendor-bg: #f3f5f9; --vendor-ink: #0a1a2c; --vendor-muted: #5c6a7a; --vendor-border: #d6dde6; }
+.vendor-divento { --vendor-color: #0072ce; --vendor-bg: #f4f7fa; --vendor-ink: #11243a; --vendor-muted: #5d6c7e; --vendor-border: #d7dfe8; }
+.vendor-dataforge { --vendor-color: #ff3621; --vendor-bg: #fdf6f5; --vendor-ink: #1f1212; --vendor-muted: #6f5f5f; --vendor-border: #ecdcd9; }
+
 .kpi-card {
   background: white;
   border: 1px solid var(--vendor-border);
