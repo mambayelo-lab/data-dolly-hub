@@ -7,18 +7,9 @@
 import type { CSSProperties } from "react";
 
 export type BrandKey =
-  | "sap"
-  | "cegid"
-  | "shopify"
-  | "manhattan"
-  | "salesforce"
-  | "o9"
-  | "saje"
-  | "agroware"
-  | "qualiplus"
-  | "tracelink"
-  | "divento"
-  | "dataforge";
+  | "sap" | "cegid" | "shopify" | "manhattan" | "salesforce" | "o9"
+  | "saje" | "agroware" | "qualiplus" | "tracelink" | "divento" | "dataforge"
+  | "ifx" | "dasselys" | "opcentral" | "wonderwave" | "coopa" | "maximoves";
 
 type Props = { brand: BrandKey; size?: "sm" | "md" | "lg"; onDark?: boolean };
 
@@ -110,10 +101,53 @@ export function VendorLogo({ brand, size = "md", onDark = false }: Props) {
           {text("#1f1212", { fontWeight: 800 }, "DataForge")}
         </span>
       );
+    case "ifx":
+      return (
+        <span className={`inline-flex items-center gap-1 ${s.h}`}>
+          <span className="grid place-items-center" style={{ background: "#0066cc", color: "#fff", width: 22, height: 22, fontWeight: 900, fontSize: 11, borderRadius: 4 }}>IFX</span>
+          {text("#0066cc", { fontWeight: 700 }, "Cloud")}
+        </span>
+      );
+    case "dasselys":
+      return (
+        <span className={`inline-flex items-center gap-1 ${s.h}`}>
+          <span className="rounded-sm" style={{ background: "#005386", width: 10, height: 10, transform: "rotate(45deg)" }} />
+          {text("#005386", { fontWeight: 800 }, "Dasselys")}
+        </span>
+      );
+    case "opcentral":
+      return (
+        <span className={`inline-flex items-baseline ${s.h}`}>
+          {text("#009999", { fontWeight: 800 }, "Op")}
+          {text("#005f6b", { fontWeight: 800 }, "Central")}
+        </span>
+      );
+    case "wonderwave":
+      return (
+        <span className={`inline-flex items-center gap-1 ${s.h}`}>
+          <svg viewBox="0 0 16 8" className="h-3 w-5"><path d="M0 4 Q2 0 4 4 T8 4 T12 4 T16 4" stroke="#ff8200" strokeWidth="1.6" fill="none" /></svg>
+          {text("#3b2f2f", { fontWeight: 800 }, "Wonderwave")}
+        </span>
+      );
+    case "coopa":
+      return (
+        <span className={`inline-flex items-center gap-1 ${s.h}`}>
+          <span className="rounded-full" style={{ background: "#ff5b34", width: 12, height: 12 }} />
+          {text("#ff5b34", { fontWeight: 900, letterSpacing: "0.01em" }, "coopa")}
+        </span>
+      );
+    case "maximoves":
+      return (
+        <span className={`inline-flex items-baseline ${s.h}`}>
+          {text("#7a3ff2", { fontWeight: 900 }, "Maxi")}
+          {text("#3b1f7a", { fontWeight: 900 }, "Moves")}
+        </span>
+      );
   }
 }
 
 export const ALL_BRANDS: BrandKey[] = [
   "sap", "cegid", "shopify", "manhattan", "salesforce", "o9",
   "saje", "agroware", "qualiplus", "tracelink", "divento", "dataforge",
+  "ifx", "dasselys", "opcentral", "wonderwave", "coopa", "maximoves",
 ];
