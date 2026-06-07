@@ -1,6 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { apps as retailApps } from "@/data/maisonLumen";
 import { apps as agroApps } from "@/data/fromagerieDuVal";
+import { apps as indusApps } from "@/data/helvexPrecision";
 import { SapApp } from "@/apps/sap";
 import { CegidApp } from "@/apps/cegid-y2";
 import { ShopifyApp } from "@/apps/shopify";
@@ -13,6 +14,12 @@ import { QualiPlusApp } from "@/apps/qualiplus";
 import { TraceLinkApp } from "@/apps/tracelink";
 import { DiventoApp } from "@/apps/divento";
 import { DataForgeApp } from "@/apps/dataforge";
+import { IfxCloudApp } from "@/apps/ifx-cloud";
+import { Dasselys3DXApp } from "@/apps/dasselys-3dx";
+import { OpCentralApp } from "@/apps/opcentral";
+import { WonderwaveApp } from "@/apps/wonderwave";
+import { CoopaApp } from "@/apps/coopa";
+import { MaxiMovesApp } from "@/apps/maximoves";
 
 const map: Record<string, () => React.JSX.Element> = {
   sap: SapApp,
@@ -27,9 +34,15 @@ const map: Record<string, () => React.JSX.Element> = {
   tracelink: TraceLinkApp,
   divento: DiventoApp,
   dataforge: DataForgeApp,
+  "ifx-cloud": IfxCloudApp,
+  "dasselys-3dx": Dasselys3DXApp,
+  opcentral: OpCentralApp,
+  wonderwave: WonderwaveApp,
+  coopa: CoopaApp,
+  maximoves: MaxiMovesApp,
 };
 
-const catalog = [...retailApps, ...agroApps];
+const catalog = [...retailApps, ...agroApps, ...indusApps];
 
 export const Route = createFileRoute("/apps/$appId")({
   loader: ({ params }) => {
