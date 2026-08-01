@@ -1,0 +1,17 @@
+{
+  "buildCommand": "cd aura && npm install && npm run build",
+  "outputDirectory": "aura/.next",
+  "installCommand": "cd aura && npm install",
+  "framework": "nextjs",
+  "functions": {
+    "aura/app/api/**/*.ts": {
+      "maxDuration": 60
+    }
+  },
+  "env": {
+    "ANTHROPIC_API_KEY": "@anthropic_api_key",
+    "LEAINX_API_TOKEN": "@leainx_api_token",
+    "JIRA_API_TOKEN": "@jira_api_token",
+    "CONFLUENCE_API_TOKEN": "@confluence_api_token"
+  }
+}
