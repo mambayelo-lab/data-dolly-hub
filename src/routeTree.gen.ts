@@ -9,27 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as LoginRouteImport } from './routes/login'
 import { Route as WhatsappRouteImport } from './routes/whatsapp'
 import { Route as ProductsRouteImport } from './routes/products'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as CampaignsRouteImport } from './routes/campaigns'
-import { Route as CampaignsIdRouteImport } from './routes/campaigns.$id'
-import { Route as RegisterSupplierRouteImport } from './routes/register.supplier'
-import { Route as RegisterClientRouteImport } from './routes/register.client'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as SupplierDashboardRouteImport } from './routes/supplier.dashboard'
+import { Route as RegisterSupplierRouteImport } from './routes/register.supplier'
+import { Route as RegisterClientRouteImport } from './routes/register/client'
 import { Route as ClientDashboardRouteImport } from './routes/client.dashboard'
+import { Route as CampaignsIdRouteImport } from './routes/campaigns.$id'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const WhatsappRoute = WhatsappRouteImport.update({
   id: '/whatsapp',
   path: '/whatsapp',
@@ -40,14 +30,24 @@ const ProductsRoute = ProductsRouteImport.update({
   path: '/products',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CampaignsRoute = CampaignsRouteImport.update({
   id: '/campaigns',
   path: '/campaigns',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CampaignsIdRoute = CampaignsIdRouteImport.update({
-  id: '/campaigns/$id',
-  path: '/campaigns/$id',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupplierDashboardRoute = SupplierDashboardRouteImport.update({
+  id: '/supplier/dashboard',
+  path: '/supplier/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterSupplierRoute = RegisterSupplierRouteImport.update({
@@ -60,122 +60,107 @@ const RegisterClientRoute = RegisterClientRouteImport.update({
   path: '/register/client',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SupplierDashboardRoute = SupplierDashboardRouteImport.update({
-  id: '/supplier/dashboard',
-  path: '/supplier/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ClientDashboardRoute = ClientDashboardRouteImport.update({
   id: '/client/dashboard',
   path: '/client/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CampaignsIdRoute = CampaignsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => CampaignsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/campaigns': typeof CampaignsRouteWithChildren
   '/login': typeof LoginRoute
-  '/whatsapp': typeof WhatsappRoute
   '/products': typeof ProductsRoute
-  '/campaigns': typeof CampaignsRoute
+  '/whatsapp': typeof WhatsappRoute
   '/campaigns/$id': typeof CampaignsIdRoute
-  '/register/supplier': typeof RegisterSupplierRoute
-  '/register/client': typeof RegisterClientRoute
-  '/supplier/dashboard': typeof SupplierDashboardRoute
   '/client/dashboard': typeof ClientDashboardRoute
+  '/register/client': typeof RegisterClientRoute
+  '/register/supplier': typeof RegisterSupplierRoute
+  '/supplier/dashboard': typeof SupplierDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/campaigns': typeof CampaignsRouteWithChildren
   '/login': typeof LoginRoute
-  '/whatsapp': typeof WhatsappRoute
   '/products': typeof ProductsRoute
-  '/campaigns': typeof CampaignsRoute
+  '/whatsapp': typeof WhatsappRoute
   '/campaigns/$id': typeof CampaignsIdRoute
-  '/register/supplier': typeof RegisterSupplierRoute
-  '/register/client': typeof RegisterClientRoute
-  '/supplier/dashboard': typeof SupplierDashboardRoute
   '/client/dashboard': typeof ClientDashboardRoute
+  '/register/client': typeof RegisterClientRoute
+  '/register/supplier': typeof RegisterSupplierRoute
+  '/supplier/dashboard': typeof SupplierDashboardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/campaigns': typeof CampaignsRouteWithChildren
   '/login': typeof LoginRoute
-  '/whatsapp': typeof WhatsappRoute
   '/products': typeof ProductsRoute
-  '/campaigns': typeof CampaignsRoute
+  '/whatsapp': typeof WhatsappRoute
   '/campaigns/$id': typeof CampaignsIdRoute
-  '/register/supplier': typeof RegisterSupplierRoute
-  '/register/client': typeof RegisterClientRoute
-  '/supplier/dashboard': typeof SupplierDashboardRoute
   '/client/dashboard': typeof ClientDashboardRoute
+  '/register/client': typeof RegisterClientRoute
+  '/register/supplier': typeof RegisterSupplierRoute
+  '/supplier/dashboard': typeof SupplierDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/login'
-    | '/whatsapp'
-    | '/products'
     | '/campaigns'
+    | '/login'
+    | '/products'
+    | '/whatsapp'
     | '/campaigns/$id'
-    | '/register/supplier'
-    | '/register/client'
-    | '/supplier/dashboard'
     | '/client/dashboard'
+    | '/register/client'
+    | '/register/supplier'
+    | '/supplier/dashboard'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/login'
-    | '/whatsapp'
-    | '/products'
     | '/campaigns'
+    | '/login'
+    | '/products'
+    | '/whatsapp'
     | '/campaigns/$id'
-    | '/register/supplier'
-    | '/register/client'
-    | '/supplier/dashboard'
     | '/client/dashboard'
+    | '/register/client'
+    | '/register/supplier'
+    | '/supplier/dashboard'
   id:
     | '__root__'
     | '/'
-    | '/login'
-    | '/whatsapp'
-    | '/products'
     | '/campaigns'
+    | '/login'
+    | '/products'
+    | '/whatsapp'
     | '/campaigns/$id'
-    | '/register/supplier'
-    | '/register/client'
-    | '/supplier/dashboard'
     | '/client/dashboard'
+    | '/register/client'
+    | '/register/supplier'
+    | '/supplier/dashboard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CampaignsRoute: typeof CampaignsRouteWithChildren
   LoginRoute: typeof LoginRoute
-  WhatsappRoute: typeof WhatsappRoute
   ProductsRoute: typeof ProductsRoute
-  CampaignsRoute: typeof CampaignsRoute
-  CampaignsIdRoute: typeof CampaignsIdRoute
-  RegisterSupplierRoute: typeof RegisterSupplierRoute
-  RegisterClientRoute: typeof RegisterClientRoute
-  SupplierDashboardRoute: typeof SupplierDashboardRoute
+  WhatsappRoute: typeof WhatsappRoute
   ClientDashboardRoute: typeof ClientDashboardRoute
+  RegisterClientRoute: typeof RegisterClientRoute
+  RegisterSupplierRoute: typeof RegisterSupplierRoute
+  SupplierDashboardRoute: typeof SupplierDashboardRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/whatsapp': {
       id: '/whatsapp'
       path: '/whatsapp'
@@ -190,6 +175,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/campaigns': {
       id: '/campaigns'
       path: '/campaigns'
@@ -197,11 +189,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CampaignsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/campaigns/$id': {
-      id: '/campaigns/$id'
-      path: '/campaigns/$id'
-      fullPath: '/campaigns/$id'
-      preLoaderRoute: typeof CampaignsIdRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/supplier/dashboard': {
+      id: '/supplier/dashboard'
+      path: '/supplier/dashboard'
+      fullPath: '/supplier/dashboard'
+      preLoaderRoute: typeof SupplierDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register/supplier': {
@@ -218,13 +217,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterClientRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/supplier/dashboard': {
-      id: '/supplier/dashboard'
-      path: '/supplier/dashboard'
-      fullPath: '/supplier/dashboard'
-      preLoaderRoute: typeof SupplierDashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/client/dashboard': {
       id: '/client/dashboard'
       path: '/client/dashboard'
@@ -232,20 +224,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/campaigns/$id': {
+      id: '/campaigns/$id'
+      path: '/$id'
+      fullPath: '/campaigns/$id'
+      preLoaderRoute: typeof CampaignsIdRouteImport
+      parentRoute: typeof CampaignsRoute
+    }
   }
 }
 
+interface CampaignsRouteChildren {
+  CampaignsIdRoute: typeof CampaignsIdRoute
+}
+
+const CampaignsRouteChildren: CampaignsRouteChildren = {
+  CampaignsIdRoute: CampaignsIdRoute,
+}
+
+const CampaignsRouteWithChildren = CampaignsRoute._addFileChildren(
+  CampaignsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CampaignsRoute: CampaignsRouteWithChildren,
   LoginRoute: LoginRoute,
-  WhatsappRoute: WhatsappRoute,
   ProductsRoute: ProductsRoute,
-  CampaignsRoute: CampaignsRoute,
-  CampaignsIdRoute: CampaignsIdRoute,
-  RegisterSupplierRoute: RegisterSupplierRoute,
-  RegisterClientRoute: RegisterClientRoute,
-  SupplierDashboardRoute: SupplierDashboardRoute,
+  WhatsappRoute: WhatsappRoute,
   ClientDashboardRoute: ClientDashboardRoute,
+  RegisterClientRoute: RegisterClientRoute,
+  RegisterSupplierRoute: RegisterSupplierRoute,
+  SupplierDashboardRoute: SupplierDashboardRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
