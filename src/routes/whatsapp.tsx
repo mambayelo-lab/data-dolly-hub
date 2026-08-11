@@ -32,7 +32,7 @@ function WhatsAppPage() {
     { num: "04", title: "Gérez tout depuis le tableau de bord", desc: "Suivez en temps réel les inscriptions, paliers atteints et expédiez en un clic", icon: "📊" },
   ];
 
-  const countries = ["🇸🇳 Sénégal", "🇨🇮 Côte d'Ivoire", "🇬🇭 Ghana", "🇨🇲 Cameroun", "🇲🇦 Maroc", "🇳🇬 Nigeria", "🇰🇪 Kenya", "🇪🇬 Égypte", "🇹🇳 Tunisie", "🇩🇿 Algérie", "🇪🇹 Éthiopie", "🇹🇿 Tanzanie"];
+  const countries = ["🇫🇷 France", "🇩🇪 Allemagne", "🇪🇸 Espagne", "🇬🇧 Royaume-Uni", "🇮🇹 Italie", "🇵🇱 Pologne", "🇧🇷 Brésil", "🇦🇪 Émirats", "🇸🇦 Arabie Saoudite", "🇮🇳 Inde", "🇨🇳 Chine", "🇹🇷 Turquie"];
 
   return (
     <PageLayout>
@@ -51,7 +51,7 @@ function WhatsAppPage() {
             <span style={{ color: "#25D366" }}>directement sur WhatsApp</span>
           </h1>
           <p className="text-white/70 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-            En Afrique, WhatsApp est le canal d'affaires numéro 1. Dolly Trade B2B est la première plateforme qui intègre nativement WhatsApp pour les achats groupés B2B.
+            WhatsApp est le canal d'affaires numéro 1 dans le monde. Dolly Trade B2B intègre nativement WhatsApp pour gérer vos campagnes d'achats groupés B2B sans friction.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link to="/register/supplier" className="btn-whatsapp text-base px-6 py-3">
@@ -73,7 +73,7 @@ function WhatsAppPage() {
             {[
               { val: "2,8 Mds", label: "Utilisateurs WhatsApp dans le monde", icon: "🌍" },
               { val: "98%", label: "Taux d'ouverture des messages WhatsApp", icon: "📬" },
-              { val: "45 pays", label: "Acheteurs africains actifs sur notre réseau", icon: "🌍" },
+              { val: "180+ pays", label: "Pays où nos fournisseurs livrent", icon: "🌍" },
               { val: "< 2 min", label: "Temps de réponse moyen de nos fournisseurs", icon: "⚡" },
             ].map((s) => (
               <div key={s.label} className="bg-white rounded-2xl p-6 text-center shadow-sm">
@@ -104,7 +104,7 @@ function WhatsAppPage() {
                   { icon: <Bell className="h-4 w-4" />, text: "Alertes instantanées quand un palier est atteint" },
                   { icon: <ShoppingCart className="h-4 w-4" />, text: "Commande confirmée en 30 secondes" },
                   { icon: <Zap className="h-4 w-4" />, text: "Taux d'ouverture 98% vs 22% pour l'email" },
-                  { icon: <Globe className="h-4 w-4" />, text: "Fonctionne dans 45 pays africains" },
+                  { icon: <Globe className="h-4 w-4" />, text: "Disponible dans 180+ pays à travers le monde" },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(37,211,102,0.1)", color: "#25D366" }}>
@@ -210,8 +210,8 @@ function WhatsAppPage() {
       <section className="py-16" style={{ background: "linear-gradient(135deg, #1A1630 0%, #2D2050 60%, #1B5E3E 100%)" }}>
         <div className="container mx-auto px-4 max-w-5xl text-center">
           <div className="kente-bg absolute inset-0 opacity-5 pointer-events-none" />
-          <h2 className="font-display text-3xl font-bold text-white mb-3">Présent dans toute l'Afrique</h2>
-          <p className="text-white/60 mb-10">Vos clients peuvent recevoir des alertes WhatsApp depuis n'importe lequel de ces pays</p>
+          <h2 className="font-display text-3xl font-bold text-white mb-3">Présent dans le monde entier</h2>
+          <p className="text-white/60 mb-10">Vos clients peuvent recevoir des alertes WhatsApp depuis n'importe quel pays</p>
           <div className="flex flex-wrap gap-3 justify-center">
             {countries.map((c) => (
               <span key={c} className="px-4 py-2 rounded-full text-sm font-medium text-white"
@@ -220,7 +220,7 @@ function WhatsAppPage() {
               </span>
             ))}
             <span className="px-4 py-2 rounded-full text-sm font-medium" style={{ background: "rgba(37,211,102,0.2)", color: "#25D366", border: "1px solid rgba(37,211,102,0.3)" }}>
-              + 33 pays supplémentaires
+              + 168 pays supplémentaires
             </span>
           </div>
         </div>

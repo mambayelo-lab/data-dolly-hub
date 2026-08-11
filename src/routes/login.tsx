@@ -103,14 +103,14 @@ function LoginPage() {
             <span style={{ color: "#E8A820" }}>sans frontières</span>
           </h2>
           <p className="text-white/70 text-lg mb-8 leading-relaxed max-w-md">
-            Connectez-vous à des milliers de fournisseurs mondiaux ou d'acheteurs africains. Campagnes d'achats groupés avec paliers de prix dégressifs jusqu'à -42%.
+            Rejoignez des milliers de fournisseurs et d'acheteurs professionnels. Campagnes d'achats groupés avec paliers de prix dégressifs jusqu'à -42%.
           </p>
           <div className="flex flex-col gap-4">
             {[
               { icon: "📦", val: "12 000+", label: "Références produits" },
               { icon: "🏭", val: "1 240+", label: "Fournisseurs vérifiés" },
               { icon: "📱", val: "WhatsApp", label: "Intégré nativement" },
-              { icon: "🌍", val: "45 pays", label: "Acheteurs actifs" },
+              { icon: "🌍", val: "180+", label: "Pays desservis" },
             ].map((s) => (
               <div key={s.label} className="flex items-center gap-4 stat-pill">
                 <div className="text-xl">{s.icon}</div>

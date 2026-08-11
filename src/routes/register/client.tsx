@@ -25,11 +25,11 @@ const BUSINESS_TYPES = [
 ];
 
 const AFRICA_COUNTRIES = [
-  "Sénégal", "Côte d'Ivoire", "Mali", "Burkina Faso", "Guinée", "Cameroun",
-  "Nigeria", "Ghana", "Togo", "Bénin", "Niger", "Tchad", "RD Congo", "Congo",
-  "Gabon", "Maroc", "Tunisie", "Algérie", "Égypte", "Kenya", "Tanzanie",
-  "Éthiopie", "Ouganda", "Mozambique", "Zambie", "Afrique du Sud", "Angola",
-  "Autre pays africain", "France", "Belgique", "Canada", "Autre",
+  "France", "Belgique", "Allemagne", "Espagne", "Italie", "Royaume-Uni",
+  "Pologne", "Pays-Bas", "Portugal", "Suisse", "Turquie", "Émirats arabes unis",
+  "Arabie Saoudite", "Qatar", "Inde", "Chine", "Brésil", "Canada", "États-Unis",
+  "Maroc", "Tunisie", "Algérie", "Sénégal", "Côte d'Ivoire", "Nigeria", "Ghana",
+  "Kenya", "Égypte", "Afrique du Sud", "Autre",
 ];
 
 type ClientForm = {

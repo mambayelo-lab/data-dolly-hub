@@ -131,8 +131,7 @@ export function B2BNavbar() {
 export function B2BFooter() {
   return (
     <footer style={{ background: "#1A1630", color: "rgba(255,255,255,0.65)" }}>
-      {/* Kente border top */}
-      <div className="kente-border" />
+      <div className="h-1" style={{ background: "linear-gradient(90deg, #C14B1D 0%, #E8A820 33%, #1B5E3E 66%, #C14B1D 100%)" }} />
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-16 pb-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
@@ -142,11 +141,11 @@ export function B2BFooter() {
                 style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>D</div>
               <div>
                 <div className="text-white font-bold text-lg font-display">DOLLY TRADE B2B</div>
-                <div className="text-xs text-white/40 tracking-wider">LA MARKETPLACE DE L'AFRIQUE ET DU MONDE</div>
+                <div className="text-xs text-white/40 tracking-wider">MARKETPLACE B2B INTERNATIONALE</div>
               </div>
             </div>
             <p className="text-sm leading-relaxed mb-6 max-w-sm">
-              Plateforme B2B internationale spécialisée dans les achats groupés entre fournisseurs mondiaux et acheteurs professionnels africains. 30 ans d'expertise import-export.
+              Plateforme B2B spécialisée dans les achats groupés à paliers dégressifs. Rejoignez une campagne, payez via escrow sécurisé et bénéficiez de prix de gros.
             </p>
             <a href="/whatsapp" className="btn-whatsapp inline-flex text-sm" style={{ padding: "10px 20px" }}>
               <WhatsAppIcon size={18} /> Commander via WhatsApp
