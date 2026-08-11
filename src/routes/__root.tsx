@@ -78,23 +78,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Aura SI Hub" },
-      { name: "description", content: "Portail des SI témoins — 18 applications mockées avec données cohérentes cross-systèmes." },
+      { title: "Dolly Trade B2B — Marketplace internationale d'achats groupés" },
+      { name: "description", content: "Plateforme B2B spécialisée en achats groupés avec intégration WhatsApp native. Fournisseurs mondiaux, acheteurs africains, paliers de prix dégressifs jusqu'à -42%." },
       { property: "og:type", content: "website" },
-      { property: "og:title", content: "Aura SI Hub" },
-      { name: "twitter:title", content: "Aura SI Hub" },
-      { property: "og:description", content: "Portail des SI témoins — 18 applications mockées avec données cohérentes cross-systèmes." },
-      { name: "twitter:description", content: "Portail des SI témoins — 18 applications mockées avec données cohérentes cross-systèmes." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0f776acf-2bd9-4fdd-850e-d17e8484f4f0/id-preview-88d220c5--29117db9-0818-40a4-8e09-3c365363c219.lovable.app-1780793597360.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0f776acf-2bd9-4fdd-850e-d17e8484f4f0/id-preview-88d220c5--29117db9-0818-40a4-8e09-3c365363c219.lovable.app-1780793597360.png" },
+      { property: "og:title", content: "Dolly Trade B2B — Marketplace internationale d'achats groupés" },
+      { name: "twitter:title", content: "Dolly Trade B2B — Marketplace internationale d'achats groupés" },
+      { property: "og:description", content: "Plateforme B2B spécialisée en achats groupés avec intégration WhatsApp native. Fournisseurs mondiaux, acheteurs africains, paliers de prix dégressifs jusqu'à -42%." },
+      { name: "twitter:description", content: "Plateforme B2B spécialisée en achats groupés avec intégration WhatsApp native. Fournisseurs mondiaux, acheteurs africains, paliers de prix dégressifs jusqu'à -42%." },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "theme-color", content: "#1A1630" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
       },
       { rel: "stylesheet", href: appCss },
     ],
@@ -107,7 +106,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <head>
         <HeadContent />
       </head>
