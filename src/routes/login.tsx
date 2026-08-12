@@ -4,7 +4,7 @@ import { Eye, EyeOff, Shield } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "Connexion — Dolly Trade B2B" }] }),
+  head: () => ({ meta: [{ title: "Connexion — WAOUMAS" }] }),
   component: LoginPage,
 });
 
@@ -23,14 +23,14 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex" style={{ background: "#F8F2E8" }}>
+    <div className="min-h-screen flex" style={{ background: "#FAF6EF" }}>
       {/* Left: form */}
       <div className="w-full max-w-md mx-auto flex flex-col justify-center px-8 py-12 lg:mx-0 lg:w-1/2">
         <Link to="/" className="flex items-center gap-3 mb-10">
           <div className="h-9 w-9 rounded-xl flex items-center justify-center text-white font-bold"
-            style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>D</div>
+            style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}>W</div>
           <div>
-            <div className="font-display font-bold text-[#2B1507] text-base">DOLLY TRADE B2B</div>
+            <div className="font-display font-bold text-[#2B1507] text-base">WAOUMAS</div>
             <div className="text-[10px] text-gray-400 tracking-wider">MARKETPLACE INTERNATIONALE</div>
           </div>
         </Link>
@@ -69,7 +69,7 @@ function LoginPage() {
               <input type="checkbox" className="rounded" />
               Se souvenir de moi
             </label>
-            <a href="#" className="text-sm font-medium" style={{ color: "#C14B1D" }}>Mot de passe oublié?</a>
+            <a href="#" className="text-sm font-medium" style={{ color: "#D4581C" }}>Mot de passe oublié?</a>
           </div>
 
           <button type="submit" className="btn-primary w-full justify-center mt-2">
@@ -80,12 +80,12 @@ function LoginPage() {
         <div className="mt-6 text-center">
           <span className="text-sm text-gray-500">Pas encore de compte? </span>
           <Link to={role === "supplier" ? "/register/supplier" : "/register/client"}
-            className="text-sm font-semibold" style={{ color: "#C14B1D" }}>
+            className="text-sm font-semibold" style={{ color: "#D4581C" }}>
             S'inscrire
           </Link>
         </div>
 
-        <div className="mt-8 p-4 rounded-xl flex items-start gap-3" style={{ background: "rgba(27,94,62,0.06)", border: "1px solid rgba(27,94,62,0.15)" }}>
+        <div className="mt-8 p-4 rounded-xl flex items-start gap-3" style={{ background: "rgba(21,128,61,0.06)", border: "1px solid rgba(21,128,61,0.15)" }}>
           <Shield className="h-4 w-4 text-green-600 shrink-0 mt-0.5" />
           <div className="text-xs text-green-700">Plateforme sécurisée SSL 256 bits · Données chiffrées · Conforme RGPD</div>
         </div>
@@ -93,14 +93,14 @@ function LoginPage() {
 
       {/* Right: brand panel */}
       <div className="hidden lg:flex flex-1 flex-col justify-center p-12 text-white relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #2B1507 0%, #3D1E0C 60%, #1B5E3E 100%)" }}>
+        style={{ background: "linear-gradient(135deg, #2B1507 0%, #3D1E0C 60%, #15803D 100%)" }}>
         <div className="kente-bg absolute inset-0 opacity-10" />
         <div className="relative z-10">
           <div className="text-4xl mb-6">🌍</div>
           <h2 className="font-display text-3xl font-bold mb-4">
             Le commerce B2B
             <br />
-            <span style={{ color: "#E8A820" }}>sans frontières</span>
+            <span style={{ color: "#F5BE25" }}>sans frontières</span>
           </h2>
           <p className="text-white/70 text-lg mb-8 leading-relaxed max-w-md">
             Rejoignez des milliers de fournisseurs et d'acheteurs professionnels. Campagnes d'achats groupés avec paliers de prix dégressifs jusqu'à -42%.

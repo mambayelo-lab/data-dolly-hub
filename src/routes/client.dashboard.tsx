@@ -6,7 +6,7 @@ import { campaigns, sectors, getSupplier, getCurrentTier, getCampaignProgress, f
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/client/dashboard")({
-  head: () => ({ meta: [{ title: "Espace Acheteur — Dolly Trade B2B" }] }),
+  head: () => ({ meta: [{ title: "Espace Acheteur — WAOUMAS" }] }),
   component: ClientDashboardPage,
 });
 
@@ -31,9 +31,9 @@ function WhatsAppIcon({ size = 16 }: { size?: number }) {
 
 const MY_CAMPAIGNS = campaigns.slice(0, 2);
 const MY_ORDERS = [
-  { id: "CMD-2847", campaign: "Gants chirurgicaux latex", supplier: "🇩🇪 MedEquip Global", qty: "500 000 paires", amount: "€ 31 000", status: "Confirmée", statusColor: "#1B5E3E", date: "11 Août 2026" },
+  { id: "CMD-2847", campaign: "Gants chirurgicaux latex", supplier: "🇩🇪 MedEquip Global", qty: "500 000 paires", amount: "€ 31 000", status: "Confirmée", statusColor: "#15803D", date: "11 Août 2026" },
   { id: "CMD-2791", campaign: "Sucre roux de canne ICUMSA 45", supplier: "🇧🇷 AgriKing Export", qty: "50 tonnes", amount: "$ 12 400", status: "En transit", statusColor: "#1E4D8C", date: "28 Juil 2026" },
-  { id: "CMD-2756", campaign: "Filtres huile diesel Toyota", supplier: "🇨🇳 AutoParts Asia Hub", qty: "2 000 pièces", amount: "$ 18 400", status: "Livrée ✓", statusColor: "#1B5E3E", date: "15 Juil 2026" },
+  { id: "CMD-2756", campaign: "Filtres huile diesel Toyota", supplier: "🇨🇳 AutoParts Asia Hub", qty: "2 000 pièces", amount: "$ 18 400", status: "Livrée ✓", statusColor: "#15803D", date: "15 Juil 2026" },
 ];
 
 const NOTIFS = [
@@ -47,9 +47,9 @@ function ClientDashboardPage() {
   const [activeSection, setActiveSection] = useState("overview");
 
   const kpis = [
-    { label: "Commandes actives", value: "2", color: "#C14B1D", icon: "🔥" },
-    { label: "Total économisé", value: "€ 8 200", color: "#1B5E3E", icon: "💰" },
-    { label: "Campagnes rejointes", value: "5", color: "#E8A820", icon: "🤝" },
+    { label: "Commandes actives", value: "2", color: "#D4581C", icon: "🔥" },
+    { label: "Total économisé", value: "€ 8 200", color: "#15803D", icon: "💰" },
+    { label: "Campagnes rejointes", value: "5", color: "#F5BE25", icon: "🤝" },
     { label: "Commandes livrées", value: "3", color: "#1E4D8C", icon: "✅" },
   ];
 
@@ -62,9 +62,9 @@ function ClientDashboardPage() {
       activeItem={activeSection}
       onNavClick={setActiveSection}
       stats={[
-        { label: "Campagnes rejointes", value: "2", color: "#1B5E3E" },
-        { label: "Commandes en cours", value: "1", color: "#E8A820" },
-        { label: "Économie totale", value: "€8.2K", color: "#C14B1D" },
+        { label: "Campagnes rejointes", value: "2", color: "#15803D" },
+        { label: "Commandes en cours", value: "1", color: "#F5BE25" },
+        { label: "Économie totale", value: "€8.2K", color: "#D4581C" },
       ]}
     >
       {/* ── OVERVIEW ─────────────────────────────────── */}
@@ -82,8 +82,8 @@ function ClientDashboardPage() {
 
           {/* Notifications urgentes */}
           {NOTIFS.filter((n) => n.urgent).map((n, i) => (
-            <div key={i} className="flex items-start gap-3 p-4 rounded-xl border-l-4" style={{ background: "rgba(193,75,29,0.06)", borderLeftColor: "#C14B1D" }}>
-              <Bell className="h-4 w-4 shrink-0 mt-0.5" style={{ color: "#C14B1D" }} />
+            <div key={i} className="flex items-start gap-3 p-4 rounded-xl border-l-4" style={{ background: "rgba(212,88,28,0.06)", borderLeftColor: "#D4581C" }}>
+              <Bell className="h-4 w-4 shrink-0 mt-0.5" style={{ color: "#D4581C" }} />
               <div className="flex-1">
                 <div className="text-sm font-semibold text-[#2B1507]">{n.text}</div>
                 <div className="text-xs text-gray-400 mt-0.5">{n.time}</div>
@@ -110,7 +110,7 @@ function ClientDashboardPage() {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-display font-bold text-[#2B1507] text-lg">Mes campagnes actives</h3>
-              <button onClick={() => setActiveSection("my-campaigns")} className="text-sm font-semibold flex items-center gap-1" style={{ color: "#1B5E3E" }}>
+              <button onClick={() => setActiveSection("my-campaigns")} className="text-sm font-semibold flex items-center gap-1" style={{ color: "#15803D" }}>
                 Toutes <ChevronRight className="h-3.5 w-3.5" />
               </button>
             </div>
@@ -159,7 +159,7 @@ function ClientDashboardPage() {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-display font-bold text-[#2B1507] text-lg">Mes commandes</h3>
-              <button onClick={() => setActiveSection("orders")} className="text-sm font-semibold flex items-center gap-1" style={{ color: "#1B5E3E" }}>
+              <button onClick={() => setActiveSection("orders")} className="text-sm font-semibold flex items-center gap-1" style={{ color: "#15803D" }}>
                 Toutes <ChevronRight className="h-3.5 w-3.5" />
               </button>
             </div>
@@ -282,7 +282,7 @@ function ClientDashboardPage() {
               ))}
             </div>
           </div>
-          <a href="https://wa.me/33612345678?text=Bonjour+Dolly+Trade+B2B%2C+je+voudrais+voir+les+campagnes+actives"
+          <a href="https://wa.me/33612345678?text=Bonjour+WAOUMAS%2C+je+voudrais+voir+les+campagnes+actives"
             target="_blank" rel="noopener noreferrer" className="btn-whatsapp w-full justify-center">
             <WhatsAppIcon size={20} /> Ouvrir WhatsApp Business
           </a>

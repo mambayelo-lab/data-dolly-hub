@@ -5,7 +5,7 @@ import { PageLayout } from "@/components/B2BLayout";
 import { products, sectors, suppliers, getSupplier, getSector, formatPrice, type Product } from "@/data/marketplace";
 
 export const Route = createFileRoute("/products")({
-  head: () => ({ meta: [{ title: "Catalogue Produits B2B — Dolly Trade" }] }),
+  head: () => ({ meta: [{ title: "Catalogue Produits B2B — WAOUMAS" }] }),
   component: ProductsPage,
 });
 
@@ -78,7 +78,7 @@ function SupplierCard({ s }: { s: typeof suppliers[0] }) {
         <p className="text-xs text-gray-500 line-clamp-2 mb-2">{s.description}</p>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1 text-xs">
-            <Star className="h-3 w-3 fill-current" style={{ color: "#E8A820" }} />
+            <Star className="h-3 w-3 fill-current" style={{ color: "#F5BE25" }} />
             <span className="font-semibold text-[#2B1507]">{s.rating}</span>
             <span className="text-gray-400">({s.reviewCount} avis)</span>
           </div>
@@ -118,7 +118,7 @@ function ProductsPage() {
   return (
     <PageLayout>
       {/* Header */}
-      <div className="py-14 px-6 lg:px-8" style={{ background: "linear-gradient(135deg, #1B5E3E, #0D3B22)" }}>
+      <div className="py-14 px-6 lg:px-8" style={{ background: "linear-gradient(135deg, #15803D, #0D3B22)" }}>
         <div className="kente-bg absolute inset-0 opacity-5" />
         <div className="max-w-7xl mx-auto relative">
           <div className="text-xs font-bold uppercase tracking-widest mb-3 text-green-400">Catalogue B2B</div>
