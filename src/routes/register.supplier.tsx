@@ -91,13 +91,13 @@ export default function RegisterSupplierPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "#F8F2E8" }}>
+    <div className="min-h-screen" style={{ background: "#FAF6EF" }}>
       {/* Top bar */}
       <div className="py-4 px-6 border-b border-white/20" style={{ background: "#2B1507" }}>
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5">
             <div className="h-8 w-8 rounded-lg flex items-center justify-center text-white font-bold"
-              style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>D</div>
+              style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}>D</div>
             <span className="text-white font-bold text-sm font-display">DOLLY TRADE B2B</span>
           </Link>
           <span className="text-white/50 text-xs">Inscription Fournisseur</span>
@@ -110,11 +110,11 @@ export default function RegisterSupplierPage() {
           {STEPS.map((s, i) => (
             <div key={s.id} className="flex items-center gap-1 shrink-0">
               <div className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium transition-all ${step === s.id ? "text-white" : step > s.id ? "text-green-700" : "text-gray-400"}`}
-                style={step === s.id ? { background: "#C14B1D" } : step > s.id ? { background: "rgba(27,94,62,0.12)" } : { background: "white" }}>
+                style={step === s.id ? { background: "#D4581C" } : step > s.id ? { background: "rgba(21,128,61,0.12)" } : { background: "white" }}>
                 <span>{step > s.id ? "✓" : s.icon}</span>
                 <span className="hidden sm:inline">{s.label}</span>
               </div>
-              {i < STEPS.length - 1 && <div className="h-px w-4 shrink-0" style={{ background: step > s.id ? "#1B5E3E" : "#E5E7EB" }} />}
+              {i < STEPS.length - 1 && <div className="h-px w-4 shrink-0" style={{ background: step > s.id ? "#15803D" : "#E5E7EB" }} />}
             </div>
           ))}
         </div>
@@ -220,7 +220,7 @@ export default function RegisterSupplierPage() {
                   <input type="text" placeholder="Ex: ISO 9001, CE, FDA, Halal, Kosher, FSSC 22000..." value={form.certifications} onChange={(e) => set("certifications", e.target.value)} />
                 </div>
               </div>
-              <div className="mt-4 p-4 rounded-xl flex gap-3 items-start" style={{ background: "rgba(27,94,62,0.06)", border: "1px solid rgba(27,94,62,0.15)" }}>
+              <div className="mt-4 p-4 rounded-xl flex gap-3 items-start" style={{ background: "rgba(21,128,61,0.06)", border: "1px solid rgba(21,128,61,0.15)" }}>
                 <Shield className="h-4 w-4 text-green-600 shrink-0 mt-0.5" />
                 <div className="text-xs text-green-700">Vos données légales sont chiffrées et ne sont jamais partagées avec les acheteurs sans votre accord. Elles servent uniquement à la vérification de votre compte.</div>
               </div>
@@ -336,7 +336,7 @@ export default function RegisterSupplierPage() {
               <div className="flex items-start gap-3 p-4 rounded-xl mb-6 text-left" style={{ background: "#F9F7F4" }}>
                 <input type="checkbox" id="terms" checked={form.acceptTerms} onChange={(e) => set("acceptTerms", e.target.checked)} className="mt-0.5" />
                 <label htmlFor="terms" className="text-sm text-gray-600 cursor-pointer">
-                  J'accepte les <a href="#" className="underline" style={{ color: "#C14B1D" }}>Conditions générales d'utilisation</a> et la <a href="#" className="underline" style={{ color: "#C14B1D" }}>Politique de confidentialité</a> de Dolly Trade B2B. Je certifie que les informations fournies sont exactes.
+                  J'accepte les <a href="#" className="underline" style={{ color: "#D4581C" }}>Conditions générales d'utilisation</a> et la <a href="#" className="underline" style={{ color: "#D4581C" }}>Politique de confidentialité</a> de Dolly Trade B2B. Je certifie que les informations fournies sont exactes.
                 </label>
               </div>
               <button onClick={submit} className="btn-primary w-full justify-center text-base py-3.5">

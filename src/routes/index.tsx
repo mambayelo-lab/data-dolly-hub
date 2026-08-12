@@ -14,9 +14,9 @@ export const Route = createFileRoute("/")({
 });
 
 function getBadge(participantCount: number) {
-  if (participantCount >= 40) return { text: "Populaire", color: "#C14B1D", bg: "rgba(193,75,29,0.1)" };
-  if (participantCount >= 20) return { text: "Très demandé", color: "#B45309", bg: "rgba(232,168,32,0.12)" };
-  return { text: "Nouveau", color: "#1B5E3E", bg: "rgba(27,94,62,0.1)" };
+  if (participantCount >= 40) return { text: "Populaire", color: "#D4581C", bg: "rgba(212,88,28,0.1)" };
+  if (participantCount >= 20) return { text: "Très demandé", color: "#B45309", bg: "rgba(245,190,37,0.12)" };
+  return { text: "Nouveau", color: "#15803D", bg: "rgba(21,128,61,0.1)" };
 }
 
 function countdown(endDate: string): string {
@@ -48,7 +48,7 @@ function CampaignCard({ c }: { c: (typeof campaigns)[0] }) {
       to="/campaigns/$id"
       params={{ id: c.id }}
       className="flex flex-col bg-white rounded-2xl overflow-hidden transition-all hover:-translate-y-0.5"
-      style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06)", border: "1px solid #F0ECE6" }}
+      style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06)", border: "1px solid #E9E1D3" }}
     >
       {/* Badge row */}
       <div className="flex items-center justify-between px-4 pt-4 pb-2">
@@ -82,48 +82,64 @@ function CampaignCard({ c }: { c: (typeof campaigns)[0] }) {
       </div>
 
       {/* Dual price */}
-      <div className="mx-4 mb-3 flex rounded-xl overflow-hidden border" style={{ borderColor: "#F0ECE6" }}>
-        <div className="flex-1 px-3 py-2.5 bg-gray-50">
-          <div className="text-[9px] uppercase tracking-wide text-gray-400 font-semibold mb-0.5">Palier actuel</div>
-          <div className="text-[15px] font-bold text-[#2B1507]">
-            {formatPrice(tier.pricePerUnit, tier.currency)}
-          </div>
-          <div className="text-[10px] text-gray-400">/{c.unit}</div>
+      <div className="mx-4 mb-3 flex rounded-xl overflow-hidden" style={{ border: "1.5px solid #E9E1D3" }}>
+        <div className="flex-1 px-3 py-3" style={{ background: "#FAFAFA" }}>
+          <div className="text-[9px] uppercase tracking-wide text-gray-400 font-semibold mb-0.5">Prix actuel</div>
+          <div className="text-[17px] font-bold text-[#2B1507] leading-none">{formatPrice(tier.pricePerUnit, tier.currency)}</div>
+          <div className="text-[10px] text-gray-400 mt-0.5">/{c.unit}</div>
         </div>
-        {next && (
-          <div className="flex-1 px-3 py-2.5" style={{ background: "rgba(193,75,29,0.05)" }}>
-            <div className="text-[9px] uppercase tracking-wide font-semibold mb-0.5" style={{ color: "#C14B1D" }}>Prochain palier</div>
-            <div className="text-[15px] font-bold" style={{ color: "#C14B1D" }}>
-              {formatPrice(next.pricePerUnit, next.currency)}
+        <div className="w-px" style={{ background: "#E9E1D3" }} />
+        {next ? (
+          <div className="flex-1 px-3 py-3" style={{ background: "rgba(212,88,28,0.04)" }}>
+            <div className="text-[9px] uppercase tracking-wide font-bold mb-0.5" style={{ color: "#D4581C" }}>Si vous rejoignez</div>
+            <div className="text-[17px] font-bold leading-none" style={{ color: "#D4581C" }}>{formatPrice(next.pricePerUnit, next.currency)}</div>
+            <div
+              className="inline-block text-[9px] font-bold px-1.5 py-0.5 rounded-full mt-1 text-white"
+              style={{ background: "#D4581C" }}
+            >
+              −{next.discount}%
             </div>
-            <div className="text-[10px]" style={{ color: "#C14B1D" }}>-{next.discount}%</div>
+          </div>
+        ) : (
+          <div className="flex-1 px-3 py-3" style={{ background: "rgba(21,128,61,0.05)" }}>
+            <div className="text-[9px] uppercase tracking-wide font-bold mb-0.5" style={{ color: "#15803D" }}>Meilleur prix</div>
+            <div className="text-[17px] font-bold leading-none" style={{ color: "#15803D" }}>{formatPrice(tier.pricePerUnit, tier.currency)}</div>
+            <div className="text-[10px] font-semibold mt-1" style={{ color: "#15803D" }}>−{tier.discount}% ✓</div>
           </div>
         )}
       </div>
 
       {/* Progress */}
       <div className="px-4 pb-3">
-        <div className="h-1.5 rounded-full overflow-hidden bg-gray-100 mb-1.5">
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[10px] text-gray-400">
+            {next ? (
+              <>encore <span className="font-semibold text-gray-600">{fmtQty(toNext)} {c.unit}</span> pour {next.label}</>
+            ) : (
+              <span className="font-semibold text-green-600">Palier max atteint ✓</span>
+            )}
+          </span>
+          <span className="text-[10px] font-bold" style={{ color: "#D4581C" }}>{Math.round(progress)}%</span>
+        </div>
+        <div className="h-2 rounded-full overflow-hidden" style={{ background: "#EDE5D8" }}>
           <div
             className="h-full rounded-full"
-            style={{ width: `${progress}%`, background: "linear-gradient(90deg, #C14B1D, #E8A820)" }}
+            style={{ width: `${progress}%`, background: "linear-gradient(90deg, #D4581C, #F5BE25)" }}
           />
         </div>
-        {next && (
-          <div className="text-[10px] text-gray-400">
-            encore <span className="font-semibold text-gray-600">{fmtQty(toNext)} {c.unit}</span> pour {next.label}
-          </div>
-        )}
       </div>
 
       {/* CTA */}
       <div className="mt-auto px-4 pb-4">
         <div
-          className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[12px] font-bold text-white"
-          style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}
+          className="w-full flex items-center justify-center gap-1.5 py-3 rounded-xl text-[13px] font-bold text-white"
+          style={{
+            background: "linear-gradient(135deg, #D4581C 0%, #E8722E 50%, #F5BE25 100%)",
+            boxShadow: "0 3px 12px rgba(212,88,28,0.35)",
+          }}
         >
-          {next ? `Rejoindre · Palier suivant: ${formatPrice(next.pricePerUnit, next.currency)}` : "Rejoindre la campagne"}
-          <ArrowRight size={13} />
+          {next ? `Acheter à ${formatPrice(next.pricePerUnit, next.currency)}` : "Rejoindre la campagne"}
+          <ArrowRight size={14} />
         </div>
       </div>
     </Link>
@@ -144,28 +160,41 @@ function HomePage() {
   return (
     <AppLayoutHome rightPanel={<HomepageRightPanel />}>
       {/* ── HERO ── */}
-      <section className="px-6 pt-8 pb-6" style={{ background: "linear-gradient(160deg, #2B1507 0%, #3D1E0C 60%, #1B3E2A 100%)" }}>
+      <section
+        className="px-6 pt-8 pb-6"
+        style={{
+          background: "linear-gradient(145deg, #2B1507 0%, #3A1A08 40%, #1D3B28 100%)",
+          borderBottom: "1px solid rgba(212,88,28,0.2)",
+        }}
+      >
         <div className="max-w-2xl">
           <div
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-semibold mb-5"
-            style={{ background: "rgba(232,168,32,0.15)", color: "#E8A820", border: "1px solid rgba(232,168,32,0.25)" }}
+            style={{ background: "rgba(245,190,37,0.18)", color: "#F5BE25", border: "1px solid rgba(245,190,37,0.30)" }}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
             {activeCampaigns.length} campagnes actives en ce moment
           </div>
           <h1 className="font-display text-3xl lg:text-4xl font-bold text-white leading-tight mb-4">
-            Achats groupés.
-            <br />
-            <span style={{ color: "#E8A820" }}>Meilleurs prix.</span>
+            Plus nombreux,{" "}
+            <span style={{ color: "#F5BE25" }}>meilleur prix.</span>
           </h1>
-          <p className="text-white/60 text-[14px] leading-relaxed mb-6 max-w-lg">
-            Rejoignez une commande collective, faites baisser le prix à chaque palier, payez en sécurité par escrow. Jusqu'à <strong className="text-white">-43%</strong> sur le prix marché.
+          <p className="text-white/65 text-[14px] leading-relaxed mb-6 max-w-lg">
+            Rejoignez des commandes collectives B2B. Le prix baisse automatiquement à chaque palier. Paiement sécurisé par escrow — jusqu'à <strong className="text-white font-bold">−43%</strong> sur le prix marché.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Link to="/campaigns" className="btn-primary text-sm">
+            <Link
+              to="/campaigns"
+              className="btn-primary text-sm"
+              style={{ boxShadow: "0 4px 20px rgba(212,88,28,0.5)" }}
+            >
               Voir les campagnes <ArrowRight size={15} />
             </Link>
-            <Link to="/register/supplier" className="btn-secondary text-sm" style={{ background: "rgba(255,255,255,0.08)", color: "white", border: "1px solid rgba(255,255,255,0.15)" }}>
+            <Link
+              to="/register/supplier"
+              className="btn-secondary text-sm"
+              style={{ background: "rgba(255,255,255,0.08)", color: "white", border: "1px solid rgba(255,255,255,0.18)" }}
+            >
               Espace fournisseur
             </Link>
           </div>
@@ -174,25 +203,26 @@ function HomePage() {
         {/* Stats bar */}
         <div className="flex flex-wrap gap-2 mt-8">
           {[
-            { val: activeCampaigns.length.toString(), label: "campagnes actives" },
-            { val: totalParticipants.toString(), label: "participants" },
-            { val: "-43%", label: "économie max" },
-            { val: "180+", label: "pays desservis" },
+            { val: activeCampaigns.length.toString(), label: "campagnes actives", emoji: "🔥" },
+            { val: totalParticipants.toString(), label: "participants", emoji: "👥" },
+            { val: "−43%", label: "économie max", emoji: "💰" },
+            { val: "180+", label: "pays desservis", emoji: "🌍" },
           ].map((s) => (
             <div
               key={s.label}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl"
               style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)" }}
             >
-              <span className="font-bold text-white">{s.val}</span>
-              <span className="text-white/45 text-[12px]">{s.label}</span>
+              <span className="text-[13px]">{s.emoji}</span>
+              <span className="font-bold text-white text-[13px]">{s.val}</span>
+              <span className="text-white/45 text-[11px]">{s.label}</span>
             </div>
           ))}
         </div>
       </section>
 
       {/* ── SECTORS ── */}
-      <section className="py-5 px-6 border-b" style={{ borderColor: "#F0ECE6", background: "white" }}>
+      <section className="py-5 px-6 border-b" style={{ borderColor: "#E9E1D3", background: "white" }}>
         <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
           <button
             className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-semibold text-white"
@@ -205,7 +235,7 @@ function HomePage() {
               key={s.id}
               to="/campaigns"
               className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium text-gray-600 hover:bg-gray-100 transition-colors"
-              style={{ background: "#F8F2E8", whiteSpace: "nowrap" }}
+              style={{ background: "#FAF6EF", whiteSpace: "nowrap" }}
             >
               {s.icon} {s.name}
             </Link>
@@ -214,13 +244,13 @@ function HomePage() {
       </section>
 
       {/* ── ACTIVE CAMPAIGNS ── */}
-      <section className="px-6 pt-6 pb-8" style={{ background: "#F8F2E8" }}>
+      <section className="px-6 pt-6 pb-8" style={{ background: "#FAF6EF" }}>
         <div className="flex items-center justify-between mb-5">
           <div>
             <h2 className="font-display text-[18px] font-bold text-[#2B1507]">Campagnes en cours</h2>
             <p className="text-[12px] text-gray-500 mt-0.5">Plus vous êtes nombreux, plus le prix baisse pour tous</p>
           </div>
-          <Link to="/campaigns" className="flex items-center gap-1 text-[12px] font-semibold" style={{ color: "#C14B1D" }}>
+          <Link to="/campaigns" className="flex items-center gap-1 text-[12px] font-semibold" style={{ color: "#D4581C" }}>
             Toutes <ArrowRight size={13} />
           </Link>
         </div>
@@ -246,17 +276,17 @@ function HomePage() {
                 {i < STEPS.length - 1 && (
                   <div
                     className="hidden lg:block absolute top-6 left-full w-full h-0.5 z-0"
-                    style={{ background: "linear-gradient(90deg, #C14B1D40, #E8A82040)", width: "calc(100% - 3rem)" }}
+                    style={{ background: "linear-gradient(90deg, #D4581C40, #F5BE2540)", width: "calc(100% - 3rem)" }}
                   />
                 )}
                 <div className="relative z-10 flex flex-col items-start">
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-3"
-                    style={{ background: "linear-gradient(135deg, rgba(193,75,29,0.1), rgba(232,168,32,0.1))", border: "1px solid rgba(193,75,29,0.15)" }}
+                    style={{ background: "linear-gradient(135deg, rgba(212,88,28,0.1), rgba(245,190,37,0.1))", border: "1px solid rgba(212,88,28,0.15)" }}
                   >
                     {s.icon}
                   </div>
-                  <div className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: "#C14B1D" }}>{s.n}</div>
+                  <div className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: "#D4581C" }}>{s.n}</div>
                   <div className="font-semibold text-[13px] text-[#2B1507] mb-1">{s.title}</div>
                   <div className="text-[11px] text-gray-500 leading-relaxed">{s.desc}</div>
                 </div>
@@ -266,7 +296,7 @@ function HomePage() {
 
           <div
             className="mt-6 p-4 rounded-xl flex items-center gap-3"
-            style={{ background: "rgba(27,94,62,0.06)", border: "1px solid rgba(27,94,62,0.15)" }}
+            style={{ background: "rgba(21,128,61,0.06)", border: "1px solid rgba(21,128,61,0.15)" }}
           >
             <CheckCircle size={16} className="text-green-600 shrink-0" />
             <p className="text-[12px] text-green-700">
@@ -277,7 +307,7 @@ function HomePage() {
       </section>
 
       {/* ── DUAL CTA ── */}
-      <section className="px-6 py-8" style={{ background: "#F8F2E8" }}>
+      <section className="px-6 py-8" style={{ background: "#FAF6EF" }}>
         <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
           <div className="rounded-2xl p-6 text-white" style={{ background: "linear-gradient(135deg, #2B1507, #3D1E0C)" }}>
             <div className="text-3xl mb-3">🏭</div>
@@ -289,7 +319,7 @@ function HomePage() {
               Créer un compte fournisseur <ArrowRight size={14} />
             </Link>
           </div>
-          <div className="rounded-2xl p-6" style={{ background: "white", border: "1px solid #F0ECE6" }}>
+          <div className="rounded-2xl p-6" style={{ background: "white", border: "1px solid #E9E1D3" }}>
             <div className="text-3xl mb-3">🛒</div>
             <h3 className="font-display text-[17px] font-bold text-[#2B1507] mb-2">Vous êtes acheteur ?</h3>
             <p className="text-gray-500 text-[13px] leading-relaxed mb-4">

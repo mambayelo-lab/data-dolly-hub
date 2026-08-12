@@ -69,7 +69,7 @@ function NewCampaignForm() {
   return (
     <form onSubmit={handleSubmit} className="max-w-3xl">
       <div className="flex items-center gap-3 mb-6">
-        <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white" style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>
+        <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white" style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}>
           <Plus className="h-5 w-5" />
         </div>
         <div>
@@ -182,7 +182,7 @@ function NewCampaignForm() {
                 <button key={z} type="button" onClick={() => toggleZone(z)}
                   className="px-3 py-1.5 rounded-full text-xs font-medium border-2 transition-all"
                   style={form.deliveryZones.includes(z)
-                    ? { background: "#C14B1D", color: "white", borderColor: "#C14B1D" }
+                    ? { background: "#D4581C", color: "white", borderColor: "#D4581C" }
                     : { background: "white", color: "#6B7280", borderColor: "#E5E7EB" }}>
                   {z}
                 </button>
@@ -215,9 +215,9 @@ function SupplierDashboardPage() {
   const [activeSection, setActiveSection] = useState("overview");
 
   const kpis = [
-    { label: "Revenu total", value: "€ 847 230", sub: "+18% ce mois", color: "#C14B1D", icon: "💰" },
-    { label: "Campagnes actives", value: "3", sub: "2 clôturent dans 30j", color: "#1B5E3E", icon: "🔥" },
-    { label: "Commandes reçues", value: "127", sub: "12 en attente", color: "#E8A820", icon: "📦" },
+    { label: "Revenu total", value: "€ 847 230", sub: "+18% ce mois", color: "#D4581C", icon: "💰" },
+    { label: "Campagnes actives", value: "3", sub: "2 clôturent dans 30j", color: "#15803D", icon: "🔥" },
+    { label: "Commandes reçues", value: "127", sub: "12 en attente", color: "#F5BE25", icon: "📦" },
     { label: "Pays acheteurs", value: "18", sub: "Sénégal, Nigeria...", color: "#1E4D8C", icon: "🌍" },
     { label: "Participants totaux", value: "492", sub: "+42 ce mois", color: "#8B1A4A", icon: "👥" },
     { label: "Note moyenne", value: "4.8 ⭐", sub: "312 avis", color: "#7C5C38", icon: "⭐" },
@@ -239,9 +239,9 @@ function SupplierDashboardPage() {
       activeItem={activeSection}
       onNavClick={setActiveSection}
       stats={[
-        { label: "Campagnes actives", value: "3", color: "#C14B1D" },
-        { label: "Commandes en attente", value: "12", color: "#E8A820" },
-        { label: "Revenu ce mois", value: "€ 127K", color: "#1B5E3E" },
+        { label: "Campagnes actives", value: "3", color: "#D4581C" },
+        { label: "Commandes en attente", value: "12", color: "#F5BE25" },
+        { label: "Revenu ce mois", value: "€ 127K", color: "#15803D" },
         { label: "Pays clients", value: "18", color: "#1E4D8C" },
       ]}
     >
@@ -276,7 +276,7 @@ function SupplierDashboardPage() {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-display font-bold text-[#2B1507] text-lg">Campagnes actives</h3>
-              <button onClick={() => setActiveSection("campaigns")} className="text-sm font-semibold flex items-center gap-1" style={{ color: "#C14B1D" }}>
+              <button onClick={() => setActiveSection("campaigns")} className="text-sm font-semibold flex items-center gap-1" style={{ color: "#D4581C" }}>
                 Toutes <ChevronRight className="h-3.5 w-3.5" />
               </button>
             </div>
@@ -314,7 +314,7 @@ function SupplierDashboardPage() {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-display font-bold text-[#2B1507] text-lg">Commandes récentes</h3>
-              <button onClick={() => setActiveSection("orders")} className="text-sm font-semibold flex items-center gap-1" style={{ color: "#C14B1D" }}>
+              <button onClick={() => setActiveSection("orders")} className="text-sm font-semibold flex items-center gap-1" style={{ color: "#D4581C" }}>
                 Toutes <ChevronRight className="h-3.5 w-3.5" />
               </button>
             </div>

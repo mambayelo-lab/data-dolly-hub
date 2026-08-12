@@ -67,7 +67,7 @@ function WhatsAppPage() {
       </section>
 
       {/* Stats WhatsApp Africa */}
-      <section className="py-12" style={{ background: "#F8F2E8" }}>
+      <section className="py-12" style={{ background: "#FAF6EF" }}>
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
@@ -166,7 +166,7 @@ function WhatsAppPage() {
       </section>
 
       {/* Automations */}
-      <section className="py-16" style={{ background: "#F8F2E8" }}>
+      <section className="py-16" style={{ background: "#FAF6EF" }}>
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="font-display text-3xl font-bold text-[#2B1507] mb-3">Automatisations incluses</h2>
@@ -207,7 +207,7 @@ function WhatsAppPage() {
       </section>
 
       {/* Countries */}
-      <section className="py-16" style={{ background: "linear-gradient(135deg, #2B1507 0%, #3D1E0C 60%, #1B5E3E 100%)" }}>
+      <section className="py-16" style={{ background: "linear-gradient(135deg, #2B1507 0%, #3D1E0C 60%, #15803D 100%)" }}>
         <div className="container mx-auto px-4 max-w-5xl text-center">
           <div className="kente-bg absolute inset-0 opacity-5 pointer-events-none" />
           <h2 className="font-display text-3xl font-bold text-white mb-3">Présent dans le monde entier</h2>
@@ -257,7 +257,7 @@ function WhatsAppPage() {
               },
             ].map((plan) => (
               <div key={plan.name} className={`rounded-2xl p-6 ${plan.highlighted ? "text-white shadow-xl" : "border border-gray-100"}`}
-                style={plan.highlighted ? { background: "linear-gradient(135deg, #1B5E3E, #25D366)" } : {}}>
+                style={plan.highlighted ? { background: "linear-gradient(135deg, #15803D, #25D366)" } : {}}>
                 <div className={`text-sm font-semibold mb-1 ${plan.highlighted ? "text-green-200" : "text-gray-500"}`}>{plan.name}</div>
                 <div className={`font-display text-2xl font-bold mb-4 ${plan.highlighted ? "text-white" : "text-[#2B1507]"}`}>{plan.price}</div>
                 <div className="flex flex-col gap-2 mb-6">
@@ -282,7 +282,7 @@ function WhatsAppPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16" style={{ background: "#F8F2E8" }}>
+      <section className="py-16" style={{ background: "#FAF6EF" }}>
         <div className="container mx-auto px-4 text-center max-w-2xl">
           <div className="text-5xl mb-4">📱</div>
           <h2 className="font-display text-3xl font-bold text-[#2B1507] mb-4">Prêt à commercer sur WhatsApp?</h2>
