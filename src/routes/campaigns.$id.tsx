@@ -397,7 +397,7 @@ function CampaignDetailPage() {
 
   return (
     <AppLayout>
-      <div className="flex" style={{ height: "calc(100vh - 54px)" }}>
+      <div className="flex flex-col lg:flex-row lg:h-[calc(100vh-54px)]">
 
         {/* ── Scrollable main content ── */}
         <div className="flex-1 overflow-y-auto" style={{ background: "#FAF6EF" }}>
@@ -777,8 +777,13 @@ function CampaignDetailPage() {
           </div>
         </div>
 
-        {/* ── Sticky right panel (order widget) ── */}
-        <div style={{ width: 320, position: "sticky", top: 0, height: "calc(100vh - 54px)", overflowY: "auto", flexShrink: 0 }}>
+        {/* ── Sticky right panel (order widget) — desktop only ── */}
+        <div className="hidden lg:block" style={{ width: 320, position: "sticky", top: 0, height: "calc(100vh - 54px)", overflowY: "auto", flexShrink: 0 }}>
+          <OrderWidget campaign={campaign} />
+        </div>
+
+        {/* ── Order widget inline — mobile only (below main content) ── */}
+        <div className="lg:hidden" style={{ borderTop: "1px solid #E9E1D3" }}>
           <OrderWidget campaign={campaign} />
         </div>
 

@@ -28,7 +28,7 @@ function LoginPage() {
       <div className="w-full max-w-md mx-auto flex flex-col justify-center px-8 py-12 lg:mx-0 lg:w-1/2">
         <Link to="/" className="flex items-center gap-3 mb-10">
           <div className="h-9 w-9 rounded-xl flex items-center justify-center text-white font-bold"
-            style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}>D</div>
+            style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}>W</div>
           <div>
             <div className="font-display font-bold text-[#2B1507] text-base">WAOUMAS</div>
             <div className="text-[10px] text-gray-400 tracking-wider">MARKETPLACE INTERNATIONALE</div>

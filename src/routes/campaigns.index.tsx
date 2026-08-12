@@ -245,9 +245,9 @@ function CampaignsPage() {
         )}
       </div>
 
-      {/* ── Bottom sticky bar ── */}
+      {/* ── Bottom sticky bar (desktop only — mobile bottom nav handles navigation) ── */}
       <div
-        className="fixed bottom-0 left-[220px] right-0 z-50 px-6 py-3 flex items-center gap-4 justify-between"
+        className="hidden lg:flex fixed bottom-0 left-[220px] right-0 z-50 px-6 py-3 items-center gap-4 justify-between"
         style={{ background: "white", boxShadow: "0 -1px 0 #E9E1D3, 0 -8px 24px rgba(0,0,0,0.06)" }}
       >
         <div className="flex items-center gap-4 overflow-x-auto">
