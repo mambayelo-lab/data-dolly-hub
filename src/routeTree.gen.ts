@@ -14,6 +14,7 @@ import { Route as ProductsRouteImport } from './routes/products'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as CampaignsRouteImport } from './routes/campaigns'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CampaignsIndexRouteImport } from './routes/campaigns.index'
 import { Route as SupplierDashboardRouteImport } from './routes/supplier.dashboard'
 import { Route as RegisterSupplierRouteImport } from './routes/register.supplier'
 import { Route as RegisterClientRouteImport } from './routes/register/client'
@@ -44,6 +45,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const CampaignsIndexRoute = CampaignsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CampaignsRoute,
 } as any)
 const SupplierDashboardRoute = SupplierDashboardRouteImport.update({
   id: '/supplier/dashboard',
@@ -82,10 +88,10 @@ export interface FileRoutesByFullPath {
   '/register/client': typeof RegisterClientRoute
   '/register/supplier': typeof RegisterSupplierRoute
   '/supplier/dashboard': typeof SupplierDashboardRoute
+  '/campaigns/': typeof CampaignsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/campaigns': typeof CampaignsRouteWithChildren
   '/login': typeof LoginRoute
   '/products': typeof ProductsRoute
   '/whatsapp': typeof WhatsappRoute
@@ -94,6 +100,7 @@ export interface FileRoutesByTo {
   '/register/client': typeof RegisterClientRoute
   '/register/supplier': typeof RegisterSupplierRoute
   '/supplier/dashboard': typeof SupplierDashboardRoute
+  '/campaigns': typeof CampaignsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,6 +114,7 @@ export interface FileRoutesById {
   '/register/client': typeof RegisterClientRoute
   '/register/supplier': typeof RegisterSupplierRoute
   '/supplier/dashboard': typeof SupplierDashboardRoute
+  '/campaigns/': typeof CampaignsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,10 +129,10 @@ export interface FileRouteTypes {
     | '/register/client'
     | '/register/supplier'
     | '/supplier/dashboard'
+    | '/campaigns/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/campaigns'
     | '/login'
     | '/products'
     | '/whatsapp'
@@ -133,6 +141,7 @@ export interface FileRouteTypes {
     | '/register/client'
     | '/register/supplier'
     | '/supplier/dashboard'
+    | '/campaigns'
   id:
     | '__root__'
     | '/'
@@ -145,6 +154,7 @@ export interface FileRouteTypes {
     | '/register/client'
     | '/register/supplier'
     | '/supplier/dashboard'
+    | '/campaigns/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -196,6 +206,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/campaigns/': {
+      id: '/campaigns/'
+      path: '/'
+      fullPath: '/campaigns/'
+      preLoaderRoute: typeof CampaignsIndexRouteImport
+      parentRoute: typeof CampaignsRoute
+    }
     '/supplier/dashboard': {
       id: '/supplier/dashboard'
       path: '/supplier/dashboard'
@@ -236,10 +253,12 @@ declare module '@tanstack/react-router' {
 
 interface CampaignsRouteChildren {
   CampaignsIdRoute: typeof CampaignsIdRoute
+  CampaignsIndexRoute: typeof CampaignsIndexRoute
 }
 
 const CampaignsRouteChildren: CampaignsRouteChildren = {
   CampaignsIdRoute: CampaignsIdRoute,
+  CampaignsIndexRoute: CampaignsIndexRoute,
 }
 
 const CampaignsRouteWithChildren = CampaignsRoute._addFileChildren(

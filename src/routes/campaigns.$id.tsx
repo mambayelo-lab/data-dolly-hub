@@ -1,8 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { ArrowLeft, Shield, Clock, Package, CheckCircle, Users, ChevronRight, Lock, TrendingDown, AlertCircle } from "lucide-react";
-import { PageLayout } from "@/components/B2BLayout";
-import { getCampaign, getSupplier, getSector, getCurrentTier, getNextTier, getCampaignProgress, formatQty, formatPrice, buildWhatsAppLink, campaigns } from "@/data/marketplace";
+import { useState, useEffect } from "react";
+import { ArrowLeft, ChevronRight, Shield, Lock, CheckCircle, Clock, Users, TrendingDown } from "lucide-react";
+import { AppLayout } from "@/components/B2BLayout";
+import {
+  getCampaign, getSupplier, getSector, getCurrentTier, getNextTier,
+  formatQty, formatPrice, buildWhatsAppLink, campaigns,
+} from "@/data/marketplace";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/campaigns/$id")({
@@ -13,6 +16,7 @@ export const Route = createFileRoute("/campaigns/$id")({
   component: CampaignDetailPage,
 });
 
+/* ── Helpers ──────────────────────────────────────── */
 function WhatsAppIcon({ size = 16 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -21,141 +25,362 @@ function WhatsAppIcon({ size = 16 }: { size?: number }) {
   );
 }
 
-const TIER_META = [
-  { color: "#6B7280", bg: "#F9FAFB", ring: "#D1D5DB", label: "Starter" },
-  { color: "#92400E", bg: "#FFFBEB", ring: "#FCD34D", label: "Bronze" },
-  { color: "#475569", bg: "#F8FAFC", ring: "#94A3B8", label: "Silver" },
-  { color: "#C14B1D", bg: "#FFF7ED", ring: "#FB923C", label: "Or" },
-];
+function useCountdown(endDate: string) {
+  const calc = () => {
+    const diff = new Date(endDate).getTime() - Date.now();
+    return {
+      d: Math.max(0, Math.floor(diff / 86400000)),
+      h: Math.max(0, Math.floor((diff % 86400000) / 3600000)),
+      m: Math.max(0, Math.floor((diff % 3600000) / 60000)),
+      s: Math.max(0, Math.floor((diff % 60000) / 1000)),
+      ended: diff <= 0,
+    };
+  };
+  const [time, setTime] = useState(calc);
+  useEffect(() => {
+    const id = setInterval(() => setTime(calc()), 1000);
+    return () => clearInterval(id);
+  }, [endDate]);
+  return time;
+}
 
-function TierBar({ tiers, currentQty, unit }: { tiers: ReturnType<typeof getCampaign>["priceTiers"]; currentQty: number; unit: string }) {
-  const maxQty = tiers[tiers.length - 1].minQty;
-  const currentTierIdx = [...tiers].reverse().findIndex((t) => currentQty >= t.minQty);
-  const activeTierIdx = currentTierIdx === -1 ? 0 : tiers.length - 1 - currentTierIdx;
-  const nextTierIdx = activeTierIdx < tiers.length - 1 ? activeTierIdx + 1 : null;
-  const progressPct = Math.min(100, (currentQty / maxQty) * 100);
+/* ── Circular progress ───────────────────────────── */
+function CircleProgress({ pct }: { pct: number }) {
+  const r = 60;
+  const circ = 2 * Math.PI * r;
+  const offset = circ * (1 - Math.min(pct, 100) / 100);
+  return (
+    <svg width={152} height={152} viewBox="0 0 152 152">
+      <defs>
+        <linearGradient id="cpGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#C14B1D" />
+          <stop offset="100%" stopColor="#E8A820" />
+        </linearGradient>
+      </defs>
+      <circle cx="76" cy="76" r={r} fill="none" stroke="#F0ECE6" strokeWidth="12" />
+      <circle
+        cx="76" cy="76" r={r} fill="none"
+        stroke="url(#cpGrad)" strokeWidth="12"
+        strokeLinecap="round"
+        strokeDasharray={circ}
+        strokeDashoffset={offset}
+        transform="rotate(-90 76 76)"
+      />
+      <text x="76" y="70" textAnchor="middle" fill="#2B1507" style={{ fontSize: 30, fontWeight: 700 }}>
+        {Math.round(pct)}
+      </text>
+      <text x="76" y="86" textAnchor="middle" fill="#2B1507" style={{ fontSize: 14, fontWeight: 600 }}>
+        %
+      </text>
+      <text x="76" y="102" textAnchor="middle" fill="#9CA3AF" style={{ fontSize: 10 }}>
+        de l'objectif
+      </text>
+    </svg>
+  );
+}
+
+/* ── Tier progress bar ───────────────────────────── */
+function TierProgressBar({ campaign }: { campaign: NonNullable<ReturnType<typeof getCampaign>> }) {
+  const currentTier = getCurrentTier(campaign);
+  const currentIdx = campaign.priceTiers.indexOf(currentTier);
+  const maxQty = campaign.priceTiers[campaign.priceTiers.length - 1].minQty;
+  const progress = Math.min(100, (campaign.currentQty / maxQty) * 100);
+  const n = campaign.priceTiers.length;
 
   return (
     <div>
-      {/* Tier pills */}
-      <div className="grid grid-cols-4 gap-2 mb-4">
-        {tiers.map((tier, i) => {
-          const meta = TIER_META[i];
-          const isActive = i === activeTierIdx;
-          const isAchieved = i < activeTierIdx;
-          const isNext = i === nextTierIdx;
+      {/* Track + nodes */}
+      <div className="relative h-3 rounded-full mb-8 mt-4" style={{ background: "#F0ECE6" }}>
+        <div
+          className="absolute left-0 top-0 h-full rounded-full transition-all duration-700"
+          style={{ width: `${progress}%`, background: "linear-gradient(90deg, #C14B1D, #E8A820)" }}
+        />
+        {campaign.priceTiers.map((tier, i) => {
+          const isAchieved = i < currentIdx;
+          const isCurrent = i === currentIdx;
+          const leftPct = i === 0 ? 0 : i === n - 1 ? 100 : (tier.minQty / maxQty) * 100;
           return (
-            <div key={tier.label} className={`rounded-xl p-3 text-center border-2 transition-all relative`}
-              style={{
-                borderColor: isActive ? meta.ring : isAchieved ? "#10B981" : "#E5E7EB",
-                background: isActive ? meta.bg : isAchieved ? "#F0FDF4" : "white",
-                boxShadow: isActive ? `0 0 0 3px ${meta.ring}40` : "none",
-              }}>
-              {isAchieved && (
-                <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center">
-                  <CheckCircle className="h-3 w-3 text-white" />
-                </div>
-              )}
-              {isNext && (
-                <div className="absolute -top-2 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded text-[9px] font-bold text-white whitespace-nowrap"
-                  style={{ background: "#C14B1D" }}>PROCHAIN</div>
-              )}
-              <div className="text-[10px] font-bold uppercase tracking-wide mb-1" style={{ color: isAchieved ? "#10B981" : meta.color }}>
-                {isAchieved ? "✓ " : ""}{tier.label}
+            <div
+              key={tier.label}
+              className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `${leftPct}%` }}
+            >
+              <div
+                className="w-6 h-6 rounded-full border-2 flex items-center justify-center"
+                style={{
+                  background: isAchieved ? "#E8A820" : isCurrent ? "#C14B1D" : "white",
+                  borderColor: isAchieved ? "#E8A820" : isCurrent ? "#C14B1D" : "#E5E7EB",
+                  boxShadow: isCurrent ? "0 0 0 3px rgba(193,75,29,0.2)" : "none",
+                }}
+              >
+                {(isAchieved || isCurrent) && <CheckCircle className="w-3.5 h-3.5 text-white" />}
               </div>
-              <div className="font-display text-base font-bold" style={{ color: isActive ? meta.color : "#374151" }}>
-                {formatPrice(tier.pricePerUnit, tier.currency)}
-              </div>
-              <div className="text-[10px] text-gray-400">/{unit}</div>
-              {tier.discount > 0 && (
-                <div className="text-[10px] font-bold mt-1 px-1 py-0.5 rounded" style={{ background: isAchieved ? "#D1FAE5" : isActive ? `${meta.ring}30` : "#F3F4F6", color: isAchieved ? "#059669" : meta.color }}>
-                  -{tier.discount}%
-                </div>
-              )}
             </div>
           );
         })}
       </div>
 
-      {/* Progress bar */}
-      <div className="relative">
-        <div className="progress-track" style={{ height: 14 }}>
-          <div className="progress-fill transition-all duration-700" style={{ width: `${progressPct}%` }} />
-          {tiers.slice(1).map((t) => (
-            <div key={t.label} className="absolute top-0 bottom-0 w-0.5 bg-white/60"
-              style={{ left: `${(t.minQty / maxQty) * 100}%` }} />
-          ))}
-        </div>
-
-        {/* Milestone markers */}
-        <div className="flex justify-between mt-1">
-          {tiers.map((t) => (
-            <div key={t.label} className="text-[10px] text-gray-400">{formatQty(t.minQty)}</div>
-          ))}
-        </div>
-      </div>
-
-      {/* Status line */}
-      <div className="mt-2 flex items-center justify-between text-sm">
-        <div className="flex items-center gap-1.5">
-          <Users className="h-4 w-4 text-gray-400" />
-          <span className="font-semibold text-[#2B1507]">{formatQty(currentQty)}</span>
-          <span className="text-gray-400">{unit} inscrits</span>
-        </div>
-        {nextTierIdx !== null && (
-          <div className="text-xs font-semibold px-2 py-1 rounded-lg" style={{ background: "rgba(193,75,29,0.08)", color: "#C14B1D" }}>
-            +{formatQty(tiers[nextTierIdx].minQty - currentQty)} → {tiers[nextTierIdx].label} (-{tiers[nextTierIdx].discount}%)
-          </div>
-        )}
+      {/* Labels */}
+      <div className="grid" style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
+        {campaign.priceTiers.map((tier, i) => {
+          const isAchieved = i < currentIdx;
+          const isCurrent = i === currentIdx;
+          return (
+            <div key={tier.label} className="text-center px-1">
+              <div className="font-bold text-[12px]" style={{ color: isCurrent ? "#C14B1D" : isAchieved ? "#92400E" : "#9CA3AF" }}>
+                {tier.label}
+              </div>
+              <div className="text-[10px] text-gray-400 mt-0.5">{formatQty(tier.minQty)} {campaign.unit}</div>
+              <div className="font-semibold text-[12px] mt-0.5" style={{ color: isCurrent ? "#C14B1D" : "#374151" }}>
+                {formatPrice(tier.pricePerUnit, tier.currency)}
+              </div>
+              <div className="mt-2">
+                {isAchieved ? (
+                  <span className="inline-flex items-center gap-0.5 text-[10px] font-bold text-green-600">
+                    <CheckCircle className="w-3 h-3" /> Atteint
+                  </span>
+                ) : isCurrent ? (
+                  <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full text-white" style={{ background: "#C14B1D" }}>
+                    En cours
+                  </span>
+                ) : (
+                  <span className="text-[10px] text-gray-400">À venir</span>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
 
-function EscrowFlow({ joined }: { joined: boolean }) {
-  const steps = [
-    { icon: "🛒", label: "Inscription", desc: "Vous rejoignez", done: true },
-    { icon: "🔒", label: "Paiement escrow", desc: "Fonds bloqués", done: joined },
-    { icon: "🎯", label: "Palier atteint", desc: "Prix optimisé", done: false },
-    { icon: "✅", label: "Livraison", desc: "Fournisseur payé", done: false },
-  ];
+/* ── Order widget (right panel) ──────────────────── */
+function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof getCampaign>> }) {
+  const [qty, setQty] = useState(campaign.moq);
+  const [joined, setJoined] = useState(false);
+  const countdown = useCountdown(campaign.endDate);
+  const currentTier = getCurrentTier(campaign);
+  const nextTier = getNextTier(campaign);
+  const total = qty * currentTier.pricePerUnit;
+  const supplier = getSupplier(campaign.supplierId);
+
+  const handleJoin = () => {
+    if (qty < campaign.moq) {
+      toast.error(`Minimum : ${formatQty(campaign.moq)} ${campaign.unit}`);
+      return;
+    }
+    setJoined(true);
+    toast.success("Inscription confirmée !", {
+      description: `${formatQty(qty)} ${campaign.unit} · ${formatPrice(total, currentTier.currency)} — fonds bloqués en escrow.`,
+    });
+  };
 
   return (
-    <div className="flex items-center gap-1 mt-4">
-      {steps.map((s, i) => (
-        <div key={s.label} className="flex items-center flex-1">
-          <div className="flex flex-col items-center flex-1 text-center">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm mb-1 transition-all ${s.done ? "text-white" : ""}`}
-              style={{ background: s.done ? "#1B5E3E" : "#F3F4F6" }}>
-              {s.icon}
-            </div>
-            <div className="text-[9px] font-bold" style={{ color: s.done ? "#1B5E3E" : "#9CA3AF" }}>{s.label}</div>
-            <div className="text-[8px] text-gray-400">{s.desc}</div>
-          </div>
-          {i < steps.length - 1 && (
-            <div className="flex-shrink-0 w-4 h-px mt-[-20px]" style={{ background: s.done ? "#1B5E3E" : "#E5E7EB" }} />
-          )}
+    <div className="flex flex-col gap-4 p-4 h-full overflow-y-auto" style={{ background: "white", borderLeft: "1px solid #F0ECE6" }}>
+
+      {/* Countdown */}
+      <div className="rounded-2xl p-4 border" style={{ borderColor: "#F0ECE6" }}>
+        <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wide text-gray-400 font-semibold mb-3">
+          <Clock size={10} /> Fin de la campagne dans
         </div>
-      ))}
+        <div className="grid grid-cols-4 gap-1.5">
+          {[
+            { n: countdown.d, label: "Jours" },
+            { n: countdown.h, label: "Heures" },
+            { n: countdown.m, label: "Min" },
+            { n: countdown.s, label: "Sec" },
+          ].map(({ n, label }) => (
+            <div key={label} className="text-center rounded-xl py-2.5" style={{ background: "#2B1507" }}>
+              <div className="font-display font-bold text-[22px] text-white leading-none">
+                {String(n).padStart(2, "0")}
+              </div>
+              <div className="text-[8px] text-white/45 mt-1">{label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Header */}
+      <div className="font-display font-bold text-[15px] text-[#2B1507]">Participer à cette campagne</div>
+
+      {!joined ? (
+        <>
+          {/* Current price */}
+          <div className="rounded-xl p-3 border" style={{ background: "rgba(193,75,29,0.04)", borderColor: "rgba(193,75,29,0.12)" }}>
+            <div className="text-[10px] text-gray-500 mb-0.5">Prix actuel — {currentTier.label}</div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-display text-[24px] font-bold" style={{ color: "#C14B1D" }}>
+                {formatPrice(currentTier.pricePerUnit, currentTier.currency)}
+              </span>
+              <span className="text-[12px] text-gray-400">/ {campaign.unit}</span>
+            </div>
+            {nextTier && (
+              <div className="flex items-center gap-1 text-[10px] text-green-600 mt-1 font-semibold">
+                <TrendingDown size={11} />
+                Palier suivant : {formatPrice(nextTier.pricePerUnit, nextTier.currency)} (-{nextTier.discount}%)
+              </div>
+            )}
+          </div>
+
+          {/* Qty input */}
+          <div>
+            <div className="text-[11px] font-semibold text-gray-700 mb-2 flex items-center justify-between">
+              <span>Votre réservation</span>
+              <span className="text-gray-400 font-normal">min. {formatQty(campaign.moq)} {campaign.unit}</span>
+            </div>
+            <div
+              className="flex items-center rounded-xl border-2 overflow-hidden"
+              style={{ borderColor: qty >= campaign.moq ? "#C14B1D" : "#E5E7EB" }}
+            >
+              <button
+                onClick={() => setQty(Math.max(campaign.moq, qty - campaign.moq))}
+                className="px-3 py-2.5 text-[20px] text-gray-500 hover:bg-gray-50 transition-colors leading-none"
+              >
+                −
+              </button>
+              <input
+                type="number"
+                value={qty}
+                onChange={(e) => setQty(Math.max(campaign.moq, Number(e.target.value) || campaign.moq))}
+                className="flex-1 text-center py-2.5 font-semibold text-[14px] focus:outline-none min-w-0"
+              />
+              <span className="text-[11px] text-gray-400 pr-1">{campaign.unit}</span>
+              <button
+                onClick={() => setQty(qty + campaign.moq)}
+                className="px-3 py-2.5 text-[20px] text-gray-500 hover:bg-gray-50 transition-colors leading-none"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          {/* Total */}
+          <div className="rounded-xl p-3" style={{ background: "#F8F2E8" }}>
+            <div className="flex items-baseline justify-between">
+              <span className="text-[12px] text-gray-500">Total estimé</span>
+              <span className="font-display text-[18px] font-bold text-[#2B1507]">
+                {formatPrice(total, currentTier.currency)}
+              </span>
+            </div>
+            <div className="text-[10px] text-gray-400 mt-0.5">
+              {formatQty(qty)} × {formatPrice(currentTier.pricePerUnit, currentTier.currency)}/{campaign.unit}
+            </div>
+          </div>
+
+          {/* CTA */}
+          <button
+            onClick={handleJoin}
+            className="w-full py-3.5 rounded-xl text-[14px] font-bold text-white transition-opacity hover:opacity-90"
+            style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}
+          >
+            Réserver maintenant
+          </button>
+
+          <div className="flex items-center justify-center gap-1.5 text-[10px] text-gray-400">
+            <Lock size={10} />
+            Paiement 100% sécurisé · Vos fonds sont bloqués (Escrow)
+          </div>
+
+          {campaign.whatsappEnabled && (
+            <a
+              href={buildWhatsAppLink(campaign)}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-whatsapp w-full justify-center text-[12px]"
+            >
+              <WhatsAppIcon size={14} /> Commander via WhatsApp
+            </a>
+          )}
+        </>
+      ) : (
+        <div className="flex flex-col items-center gap-3 text-center py-3">
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl" style={{ background: "rgba(27,94,62,0.08)" }}>
+            🎉
+          </div>
+          <div className="font-bold text-[15px] text-[#2B1507]">Vous avez rejoint !</div>
+          <div className="text-[12px] text-gray-500">
+            {formatQty(qty)} {campaign.unit} · {formatPrice(total, currentTier.currency)}
+          </div>
+          <div className="text-[11px] text-gray-400 p-3 rounded-xl" style={{ background: "#F8F2E8" }}>
+            Vous allez recevoir un lien de paiement sécurisé. Vos fonds seront bloqués en escrow jusqu'à la livraison confirmée.
+          </div>
+        </div>
+      )}
+
+      {/* Supplier mini */}
+      {supplier && (
+        <div className="rounded-xl p-3 border" style={{ borderColor: "#F0ECE6" }}>
+          <div className="text-[10px] uppercase tracking-wide text-gray-400 font-semibold mb-2.5">À propos du fournisseur</div>
+          <div className="flex items-center gap-2.5">
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-[13px] shrink-0"
+              style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}
+            >
+              {supplier.name[0]}
+            </div>
+            <div className="min-w-0">
+              <div className="text-[12px] font-semibold text-[#2B1507] flex items-center gap-1">
+                <span className="truncate">{supplier.name}</span>
+                {supplier.verified && <CheckCircle className="w-3.5 h-3.5 text-green-500 shrink-0" />}
+              </div>
+              <div className="text-[10px] text-gray-400">{supplier.flag} {supplier.city}, {supplier.country}</div>
+            </div>
+          </div>
+          <div className="flex gap-4 mt-2.5 pt-2.5 border-t" style={{ borderColor: "#F0ECE6" }}>
+            <div>
+              <div className="text-[12px] font-bold text-[#2B1507]">⭐ {supplier.rating}</div>
+              <div className="text-[9px] text-gray-400">{supplier.reviewCount} avis</div>
+            </div>
+            <div>
+              <div className="text-[12px] font-bold text-[#2B1507]">{supplier.established}</div>
+              <div className="text-[9px] text-gray-400">Depuis</div>
+            </div>
+            <div>
+              <div className="text-[12px] font-bold text-green-600">Vérifié ✓</div>
+              <div className="text-[9px] text-gray-400">Fournisseur</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Guarantees */}
+      <div className="rounded-xl p-3 border" style={{ borderColor: "#E5E7EB", background: "#FAFAFA" }}>
+        <div className="text-[10px] uppercase tracking-wide text-gray-400 font-semibold mb-2.5 flex items-center gap-1">
+          <Shield size={10} className="text-green-600" /> Nos garanties
+        </div>
+        {[
+          "Meilleurs prix grâce aux achats groupés",
+          "Paiement sécurisé par Escrow",
+          "Livraison garantie dans les délais",
+        ].map((g) => (
+          <div key={g} className="flex items-center gap-2 mb-1.5">
+            <CheckCircle className="w-3.5 h-3.5 text-green-500 shrink-0" />
+            <span className="text-[10px] text-gray-600">{g}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
+
+/* ── Main page ───────────────────────────────────── */
+const TABS = ["Détails", "Paliers de prix", "Fournisseur", "Livraison & Paiement"];
 
 function CampaignDetailPage() {
   const { id } = Route.useParams();
   const campaign = getCampaign(id);
-  const [qty, setQty] = useState(campaign?.moq ?? 0);
-  const [joined, setJoined] = useState(false);
+  const [activeTab, setActiveTab] = useState("Détails");
 
   if (!campaign) {
     return (
-      <PageLayout>
-        <div className="max-w-7xl mx-auto px-6 py-20 text-center">
+      <AppLayout>
+        <div className="flex flex-col items-center justify-center h-[60vh] text-center px-6">
           <div className="text-5xl mb-4">❌</div>
           <h1 className="font-display text-2xl text-[#2B1507] mb-2">Campagne introuvable</h1>
-          <Link to="/campaigns" className="btn-primary mt-4">Retour aux campagnes</Link>
+          <Link to="/campaigns" className="btn-primary mt-4">← Retour aux campagnes</Link>
         </div>
-      </PageLayout>
+      </AppLayout>
     );
   }
 
@@ -163,201 +388,381 @@ function CampaignDetailPage() {
   const sector = getSector(campaign.sectorId);
   const currentTier = getCurrentTier(campaign);
   const nextTier = getNextTier(campaign);
-  const progress = getCampaignProgress(campaign);
-  const daysLeft = Math.max(0, Math.ceil((new Date(campaign.endDate).getTime() - Date.now()) / 86400000));
-  const totalPrice = qty * currentTier.pricePerUnit;
+  const progress = Math.min(100, (campaign.currentQty / campaign.targetQty) * 100);
   const similarCampaigns = campaigns.filter((c) => c.sectorId === campaign.sectorId && c.id !== campaign.id).slice(0, 3);
-
-  const handleJoin = () => {
-    if (qty < campaign.moq) {
-      toast.error(`Quantité minimum : ${formatQty(campaign.moq)} ${campaign.unit}`);
-      return;
-    }
-    setJoined(true);
-    toast.success("Inscription confirmée !", {
-      description: `${formatQty(qty)} ${campaign.unit} · ${formatPrice(totalPrice, currentTier.currency)}. Vos fonds seront placés en escrow.`,
-    });
-  };
+  const maxDiscount = Math.max(...campaign.priceTiers.map((t) => t.discount));
 
   return (
-    <PageLayout>
-      {/* Breadcrumb */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
-        <div className="flex items-center gap-2 text-sm text-gray-500">
-          <Link to="/campaigns" className="flex items-center gap-1 hover:text-gray-700">
-            <ArrowLeft className="h-3.5 w-3.5" /> Campagnes
-          </Link>
-          <ChevronRight className="h-3 w-3" />
-          <span className="text-gray-800 font-medium line-clamp-1">{campaign.title}</span>
-        </div>
-      </div>
+    <AppLayout>
+      <div className="flex" style={{ height: "calc(100vh - 54px)" }}>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-16">
-        <div className="grid lg:grid-cols-3 gap-8">
+        {/* ── Scrollable main content ── */}
+        <div className="flex-1 overflow-y-auto" style={{ background: "#F8F2E8" }}>
 
-          {/* ── Main column ── */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
+          {/* Breadcrumb */}
+          <div className="px-6 py-3 bg-white border-b flex items-center gap-2 text-[12px] text-gray-500" style={{ borderColor: "#F0ECE6" }}>
+            <Link to="/campaigns" className="flex items-center gap-1 hover:text-gray-700">
+              <ArrowLeft size={13} /> Campagnes
+            </Link>
+            {sector && (
+              <>
+                <ChevronRight size={12} />
+                <span>{sector.icon} {sector.name}</span>
+              </>
+            )}
+            <ChevronRight size={12} />
+            <span className="text-gray-800 font-medium truncate max-w-xs">{campaign.title}</span>
+          </div>
 
-            {/* Hero */}
-            <div className="bg-white rounded-2xl overflow-hidden card-shadow">
-              <div className="h-2 kente-border" />
-              <div className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="text-6xl">{campaign.image}</div>
-                  <div className="flex-1">
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      {sector && <span className="badge badge-terra text-xs">{sector.icon} {sector.name}</span>}
-                      <span className={`badge text-xs ${campaign.status === "active" ? "badge-forest" : "badge-blue"}`}>
-                        {campaign.status === "active" ? "● Actif" : "Terminé"}
+          <div className="p-5 flex flex-col gap-4 max-w-4xl">
+
+            {/* ── 1. Product header card ── */}
+            <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.05)" }}>
+              <div className="h-1.5" style={{ background: `linear-gradient(90deg, ${campaign.imageColor}, #E8A820)` }} />
+              <div className="p-5">
+                <div className="flex items-start gap-5">
+                  {/* Icon */}
+                  <div
+                    className="w-24 h-24 rounded-2xl flex items-center justify-center text-5xl shrink-0"
+                    style={{ background: `${campaign.imageColor}12`, border: `1px solid ${campaign.imageColor}20` }}
+                  >
+                    {campaign.image}
+                  </div>
+
+                  {/* Info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap gap-1.5 mb-2">
+                      {sector && (
+                        <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full" style={{ background: `${campaign.imageColor}12`, color: campaign.imageColor }}>
+                          {sector.icon} {sector.name}
+                        </span>
+                      )}
+                      <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full" style={{ background: campaign.status === "active" ? "rgba(27,94,62,0.1)" : "#F3F4F6", color: campaign.status === "active" ? "#1B5E3E" : "#6B7280" }}>
+                        {campaign.status === "active" ? "● Actif" : campaign.status === "upcoming" ? "Bientôt" : "Terminé"}
                       </span>
-                      {campaign.certifications.slice(0, 2).map((c) => (
-                        <span key={c} className="badge badge-blue text-xs">{c}</span>
+                    </div>
+                    <h1 className="font-display text-[18px] font-bold text-[#2B1507] leading-snug mb-2">{campaign.title}</h1>
+                    {supplier && (
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-5 h-5 rounded-md flex items-center justify-center text-white text-[10px] font-bold" style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>{supplier.name[0]}</div>
+                        <span className="text-[12px] font-semibold text-gray-700">Par {supplier.name}</span>
+                        {supplier.verified && (
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1" style={{ background: "rgba(27,94,62,0.1)", color: "#1B5E3E" }}>
+                            <CheckCircle size={10} /> Fournisseur vérifié
+                          </span>
+                        )}
+                      </div>
+                    )}
+                    {/* Cert badges */}
+                    <div className="flex flex-wrap gap-1.5 mb-2">
+                      {campaign.certifications.map((c) => (
+                        <span key={c} className="text-[10px] px-2 py-0.5 rounded-md border font-medium" style={{ borderColor: "#E5E7EB", color: "#374151", background: "white" }}>
+                          {c}
+                        </span>
+                      ))}
+                      {campaign.deliveryZones.includes("Monde entier") && (
+                        <span className="text-[10px] px-2 py-0.5 rounded-md border font-medium" style={{ borderColor: "#E5E7EB", color: "#374151", background: "white" }}>
+                          🌍 Livraison mondiale
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[12px] text-gray-500 leading-relaxed line-clamp-2">{campaign.description}</p>
+                  </div>
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t" style={{ borderColor: "#F0ECE6" }}>
+                  {campaign.tags.map((tag) => (
+                    <span key={tag} className="text-[11px] px-2.5 py-1 rounded-lg text-gray-600" style={{ background: "#F8F2E8" }}>
+                      {tag}
+                    </span>
+                  ))}
+                  <span className="ml-auto text-[11px] text-gray-400 flex items-center gap-1">
+                    <Users size={11} />
+                    {campaign.participantCount} participants · MOQ {formatQty(campaign.moq)} {campaign.unit}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* ── 2. Progress card ── */}
+            <div className="bg-white rounded-2xl p-5" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.05)" }}>
+              <h2 className="font-display font-bold text-[15px] text-[#2B1507] mb-4">Progression de la campagne</h2>
+
+              <div className="flex items-center gap-6">
+                {/* Left stats */}
+                <div className="flex-1">
+                  <div className="text-[11px] text-gray-400 mb-1">Quantité réservée</div>
+                  <div className="font-display text-[26px] font-bold text-[#2B1507] leading-none">
+                    {formatQty(campaign.currentQty)}
+                  </div>
+                  <div className="text-[12px] text-gray-400 mt-0.5">
+                    {campaign.unit} <span className="text-gray-300">sur</span> {formatQty(campaign.targetQty)} {campaign.unit}
+                  </div>
+
+                  <div className="mt-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Users size={13} className="text-gray-400" />
+                      <span className="text-[12px] text-gray-500">Participants</span>
+                    </div>
+                    <div className="font-display text-[22px] font-bold text-[#2B1507]">{campaign.participantCount}</div>
+                  </div>
+
+                  <div className="mt-3 p-3 rounded-xl" style={{ background: "rgba(193,75,29,0.05)", border: "1px solid rgba(193,75,29,0.1)" }}>
+                    <div className="text-[10px] font-semibold mb-0.5" style={{ color: "#C14B1D" }}>
+                      Prix actuel — {currentTier.label}
+                    </div>
+                    <div className="font-bold text-[15px]" style={{ color: "#C14B1D" }}>
+                      {formatPrice(currentTier.pricePerUnit, currentTier.currency)}/{campaign.unit}
+                    </div>
+                    {nextTier && (
+                      <div className="text-[10px] text-gray-400 mt-0.5">
+                        Palier suivant : {formatPrice(nextTier.pricePerUnit, nextTier.currency)} (-{nextTier.discount}%)
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Circle progress */}
+                <div className="shrink-0">
+                  <CircleProgress pct={progress} />
+                </div>
+
+                {/* Right info */}
+                <div className="flex-1">
+                  <div className="text-[11px] text-gray-400 mb-1">Économie maximum</div>
+                  <div className="font-display text-[26px] font-bold leading-none" style={{ color: "#C14B1D" }}>
+                    -{maxDiscount}%
+                  </div>
+                  <div className="text-[12px] text-gray-400 mt-0.5">au palier {campaign.priceTiers[campaign.priceTiers.length - 1].label}</div>
+
+                  {nextTier && (
+                    <div className="mt-4 p-3 rounded-xl" style={{ background: "rgba(27,94,62,0.06)", border: "1px solid rgba(27,94,62,0.12)" }}>
+                      <div className="text-[10px] font-semibold text-green-700 mb-1 flex items-center gap-1">
+                        <TrendingDown size={11} /> Prochain palier
+                      </div>
+                      <div className="text-[12px] text-green-800 font-semibold">
+                        encore {formatQty(nextTier.minQty - campaign.currentQty)} {campaign.unit}
+                      </div>
+                      <div className="text-[10px] text-green-600 mt-0.5">
+                        → {formatPrice(nextTier.pricePerUnit, nextTier.currency)} pour tout le monde
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="mt-3">
+                    <div className="text-[11px] text-gray-400 mb-1.5">Zones de livraison</div>
+                    <div className="flex flex-wrap gap-1">
+                      {campaign.deliveryZones.slice(0, 3).map((z) => (
+                        <span key={z} className="text-[10px] px-2 py-0.5 rounded-md border" style={{ borderColor: "#E5E7EB", color: "#6B7280" }}>{z}</span>
                       ))}
                     </div>
-                    <h1 className="font-display text-xl lg:text-2xl font-bold text-[#2B1507] leading-tight mb-2">{campaign.title}</h1>
-                    <p className="text-gray-500 text-sm leading-relaxed">{campaign.description}</p>
                   </div>
                 </div>
+              </div>
 
-                {/* Key stats bar */}
-                <div className="grid grid-cols-3 gap-3 mt-6 pt-6 border-t border-gray-100">
-                  <div className="text-center">
-                    <div className="flex items-center justify-center gap-1 text-gray-400 text-xs mb-1">
-                      <Clock className="h-3 w-3" /> Fermeture
+              {/* Tier progress bar */}
+              <div className="mt-6 pt-6 border-t" style={{ borderColor: "#F0ECE6" }}>
+                <TierProgressBar campaign={campaign} />
+              </div>
+            </div>
+
+            {/* ── 3. Tabs + content ── */}
+            <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.05)" }}>
+              {/* Tab nav */}
+              <div className="flex border-b overflow-x-auto" style={{ borderColor: "#F0ECE6" }}>
+                {[...TABS, `Participants (${campaign.participantCount})`].map((tab) => {
+                  const isActive = tab === activeTab || (activeTab === "Détails" && tab === "Détails");
+                  return (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      className="shrink-0 px-5 py-3.5 text-[12px] font-semibold border-b-2 transition-colors"
+                      style={{
+                        borderColor: isActive ? "#C14B1D" : "transparent",
+                        color: isActive ? "#C14B1D" : "#6B7280",
+                      }}
+                    >
+                      {tab}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Tab content */}
+              <div className="p-5">
+                {(activeTab === "Détails" || activeTab === "Paliers de prix") && (
+                  <table className="w-full text-[12px]">
+                    <thead>
+                      <tr className="border-b" style={{ borderColor: "#F0ECE6" }}>
+                        <th className="text-left py-2.5 text-gray-500 font-semibold">Palier</th>
+                        <th className="text-center py-2.5 text-gray-500 font-semibold">Quantité totale</th>
+                        <th className="text-center py-2.5 text-gray-500 font-semibold">Prix / {campaign.unit}</th>
+                        <th className="text-center py-2.5 text-gray-500 font-semibold">Économie</th>
+                        <th className="text-right py-2.5 text-gray-500 font-semibold">Statut</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {campaign.priceTiers.map((tier, i) => {
+                        const currentTierIdx = campaign.priceTiers.indexOf(currentTier);
+                        const isAchieved = i < currentTierIdx;
+                        const isCurrent = i === currentTierIdx;
+                        return (
+                          <tr key={tier.label} className="border-b" style={{ borderColor: "#F8F2E8", background: isCurrent ? "rgba(193,75,29,0.03)" : "transparent" }}>
+                            <td className="py-3 font-semibold" style={{ color: isCurrent ? "#C14B1D" : "#374151" }}>
+                              {tier.label}
+                              {isCurrent && (
+                                <span className="ml-2 text-[9px] font-bold px-1.5 py-0.5 rounded-full text-white" style={{ background: "#C14B1D" }}>
+                                  Palier actuel
+                                </span>
+                              )}
+                            </td>
+                            <td className="py-3 text-center text-gray-600">{formatQty(tier.minQty)} {campaign.unit}</td>
+                            <td className="py-3 text-center font-bold" style={{ color: isCurrent ? "#C14B1D" : "#374151" }}>
+                              {formatPrice(tier.pricePerUnit, tier.currency)}
+                            </td>
+                            <td className="py-3 text-center">
+                              {tier.discount > 0 ? (
+                                <span className="font-bold" style={{ color: "#1B5E3E" }}>-{tier.discount}%</span>
+                              ) : (
+                                <span className="text-gray-400">—</span>
+                              )}
+                            </td>
+                            <td className="py-3 text-right">
+                              {isAchieved ? (
+                                <span className="text-green-600 font-semibold">Atteint ✓</span>
+                              ) : isCurrent ? (
+                                <span className="font-semibold" style={{ color: "#C14B1D" }}>En cours</span>
+                              ) : (
+                                <span className="text-gray-400">À venir</span>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                )}
+
+                {activeTab === "Fournisseur" && supplier && (
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-bold text-xl shrink-0" style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>
+                      {supplier.name[0]}
                     </div>
-                    <div className="font-bold text-[#2B1507]">{daysLeft}j</div>
-                    <div className="text-[10px] text-gray-400">{new Date(campaign.endDate).toLocaleDateString("fr-FR")}</div>
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-bold text-[#2B1507] text-[15px]">{supplier.name}</span>
+                        {supplier.verified && <CheckCircle className="w-4 h-4 text-green-500" />}
+                      </div>
+                      <div className="text-[12px] text-gray-500 mb-3">{supplier.flag} {supplier.city}, {supplier.country} · Membre depuis {supplier.established}</div>
+                      <div className="flex gap-4 mb-3">
+                        <div><div className="font-bold text-[#2B1507]">⭐ {supplier.rating}/5</div><div className="text-[11px] text-gray-400">{supplier.reviewCount} avis</div></div>
+                        <div><div className="font-bold text-[#2B1507]">{supplier.activeCampaigns}</div><div className="text-[11px] text-gray-400">Campagnes</div></div>
+                      </div>
+                      <p className="text-[12px] text-gray-600 leading-relaxed mb-3">{supplier.description}</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {supplier.certifications.map((c) => (
+                          <span key={c} className="text-[10px] px-2 py-0.5 rounded-md border font-medium" style={{ borderColor: "#E5E7EB", color: "#374151" }}>{c}</span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-center border-x border-gray-100">
-                    <div className="flex items-center justify-center gap-1 text-gray-400 text-xs mb-1">
-                      <Package className="h-3 w-3" /> MOQ
+                )}
+
+                {activeTab === "Livraison & Paiement" && (
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <h3 className="font-semibold text-[#2B1507] mb-2 text-[13px]">Zones de livraison</h3>
+                      <div className="flex flex-wrap gap-1.5">
+                        {campaign.deliveryZones.map((z) => (
+                          <span key={z} className="text-[11px] px-2.5 py-1 rounded-lg border" style={{ borderColor: "#E5E7EB" }}>{z}</span>
+                        ))}
+                      </div>
                     </div>
-                    <div className="font-bold text-[#2B1507]">{formatQty(campaign.moq)}</div>
-                    <div className="text-[10px] text-gray-400">{campaign.unit}</div>
+                    <div>
+                      <h3 className="font-semibold text-[#2B1507] mb-2 text-[13px]">Conditions de paiement</h3>
+                      {supplier && (
+                        <div className="flex flex-col gap-1">
+                          {supplier.paymentTerms.map((p) => (
+                            <div key={p} className="flex items-center gap-2 text-[12px] text-gray-600">
+                              <CheckCircle className="w-3.5 h-3.5 text-green-500 shrink-0" /> {p}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div className="sm:col-span-2 p-3 rounded-xl flex items-center gap-2" style={{ background: "rgba(27,94,62,0.06)", border: "1px solid rgba(27,94,62,0.15)" }}>
+                      <Shield className="w-4 h-4 text-green-600 shrink-0" />
+                      <span className="text-[12px] text-green-700">Paiement sécurisé par escrow — les fonds sont libérés uniquement à la réception confirmée de votre commande.</span>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <div className="flex items-center justify-center gap-1 text-gray-400 text-xs mb-1">
-                      <TrendingDown className="h-3 w-3" /> Max. économie
+                )}
+
+                {activeTab.startsWith("Participants") && (
+                  <div className="text-center py-8">
+                    <div className="font-display text-[48px] font-bold text-[#2B1507]">{campaign.participantCount}</div>
+                    <div className="text-gray-500 mt-1">acheteurs ont rejoint cette campagne</div>
+                    <div className="flex justify-center gap-2 mt-4 flex-wrap">
+                      {campaign.deliveryZones.map((z) => (
+                        <span key={z} className="text-[11px] px-3 py-1.5 rounded-lg" style={{ background: "#F8F2E8", color: "#6B7280" }}>🌍 {z}</span>
+                      ))}
                     </div>
-                    <div className="font-bold" style={{ color: "#C14B1D" }}>
-                      -{campaign.priceTiers[campaign.priceTiers.length - 1].discount}%
-                    </div>
-                    <div className="text-[10px] text-gray-400">palier Or</div>
                   </div>
+                )}
+
+                {/* Tagline */}
+                <div className="mt-4 pt-4 border-t text-center text-[12px] text-gray-400" style={{ borderColor: "#F8F2E8" }}>
+                  💡 Plus la quantité totale augmente, plus le prix baisse pour <strong className="text-gray-600">tous</strong> !
                 </div>
               </div>
             </div>
 
-            {/* ── PRICE TIERS GAMIFIED ── */}
-            <div className="bg-white rounded-2xl p-6 card-shadow">
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="font-display font-bold text-[#2B1507] text-lg">Paliers de prix</h2>
-                <div className="text-xs text-gray-400 flex items-center gap-1">
-                  <Users className="h-3 w-3" />
-                  Niveau actif :
-                  <span className="font-bold ml-1" style={{ color: "#C14B1D" }}>{currentTier.label}</span>
-                </div>
+            {/* ── 4. Escrow card ── */}
+            <div className="bg-white rounded-2xl p-5" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.05)" }}>
+              <div className="flex items-center gap-2 mb-4">
+                <Lock size={16} style={{ color: "#C14B1D" }} />
+                <h2 className="font-display font-bold text-[15px] text-[#2B1507]">Votre paiement est sécurisé</h2>
               </div>
-
-              <TierBar tiers={campaign.priceTiers} currentQty={campaign.currentQty} unit={campaign.unit} />
-
-              {nextTier && (
-                <div className="mt-4 p-3 rounded-xl flex items-start gap-2" style={{ background: "rgba(193,75,29,0.06)", border: "1px solid rgba(193,75,29,0.15)" }}>
-                  <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" style={{ color: "#C14B1D" }} />
-                  <p className="text-xs leading-relaxed" style={{ color: "#C14B1D" }}>
-                    <strong>+{formatQty(nextTier.minQty - campaign.currentQty)} {campaign.unit}</strong> manquants pour débloquer le palier <strong>{nextTier.label}</strong> et faire passer le prix à <strong>{formatPrice(nextTier.pricePerUnit, nextTier.currency)}/{campaign.unit}</strong> (-{nextTier.discount}%) pour <strong>tous les participants</strong>.
-                  </p>
-                </div>
-              )}
-            </div>
-
-            {/* ── ESCROW EXPLAINER ── */}
-            <div className="bg-white rounded-2xl p-6 card-shadow">
-              <h2 className="font-display font-bold text-[#2B1507] text-lg mb-4 flex items-center gap-2">
-                <Lock className="h-5 w-5" style={{ color: "#C14B1D" }} />
-                Votre paiement est sécurisé
-              </h2>
-              <div className="grid grid-cols-2 gap-3 mb-5">
+              <div className="grid sm:grid-cols-2 gap-3">
                 {[
-                  { icon: "🔒", title: "Fonds en escrow", desc: "Votre paiement est bloqué sur un compte neutre. Ni le fournisseur ni Dolly Trade n'y accèdent avant livraison." },
-                  { icon: "📉", title: "Prix garanti ou moins", desc: "Si un palier supérieur est atteint après votre paiement, la différence vous est remboursée automatiquement." },
-                  { icon: "🚫", title: "Zéro risque fournisseur", desc: "Le fournisseur est payé uniquement à la réception des marchandises, vérifiée par notre équipe." },
-                  { icon: "↩️", title: "Remboursement automatique", desc: "Si la campagne n'atteint pas le palier minimum ou si la livraison échoue, vous êtes remboursé intégralement." },
+                  { icon: "🔒", title: "Fonds en escrow", desc: "Votre paiement est bloqué sur un compte neutre jusqu'à livraison confirmée." },
+                  { icon: "📉", title: "Prix garanti ou moins", desc: "Si un palier supérieur est atteint, la différence vous est remboursée automatiquement." },
+                  { icon: "🚫", title: "Zéro risque", desc: "Le fournisseur est payé uniquement après réception vérifiée des marchandises." },
+                  { icon: "↩️", title: "Remboursement intégral", desc: "Si la campagne échoue ou la livraison n'a pas lieu, vous êtes remboursé automatiquement." },
                 ].map((item) => (
-                  <div key={item.title} className="p-3 rounded-xl" style={{ background: "#F8F2E8" }}>
-                    <div className="text-xl mb-1">{item.icon}</div>
-                    <div className="font-semibold text-xs text-[#2B1507] mb-1">{item.title}</div>
-                    <div className="text-[11px] text-gray-500 leading-relaxed">{item.desc}</div>
+                  <div key={item.title} className="flex items-start gap-3 p-3 rounded-xl" style={{ background: "#F8F2E8" }}>
+                    <span className="text-xl">{item.icon}</span>
+                    <div>
+                      <div className="font-semibold text-[12px] text-[#2B1507] mb-0.5">{item.title}</div>
+                      <div className="text-[11px] text-gray-500 leading-relaxed">{item.desc}</div>
+                    </div>
                   </div>
                 ))}
               </div>
-              <div className="flex items-center gap-2 p-3 rounded-xl" style={{ background: "rgba(27,94,62,0.06)", border: "1px solid rgba(27,94,62,0.15)" }}>
-                <Shield className="h-4 w-4 text-green-600 shrink-0" />
-                <p className="text-xs text-green-700">Tous les fournisseurs sont vérifiés (documents légaux, références clients, visite usine).</p>
-              </div>
             </div>
 
-            {/* Supplier */}
-            {supplier && (
-              <div className="bg-white rounded-2xl p-6 card-shadow">
-                <h2 className="font-display font-bold text-[#2B1507] text-lg mb-4">Le fournisseur</h2>
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-xl flex items-center justify-center text-white font-bold text-xl shrink-0"
-                    style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>
-                    {supplier.name[0]}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-bold text-[#2B1507]">{supplier.name}</span>
-                      {supplier.verified && <CheckCircle className="h-4 w-4 text-green-500" />}
-                      <span className="badge badge-forest text-xs">Vérifié</span>
-                    </div>
-                    <div className="text-sm text-gray-400 mb-3">📍 {supplier.city}, {supplier.country}</div>
-                    <div className="flex gap-4 text-sm">
-                      <div>
-                        <div className="font-bold text-[#2B1507]">{supplier.rating}/5</div>
-                        <div className="text-xs text-gray-400">Note</div>
-                      </div>
-                      <div>
-                        <div className="font-bold text-[#2B1507]">{supplier.reviewCount}</div>
-                        <div className="text-xs text-gray-400">Avis</div>
-                      </div>
-                      <div>
-                        <div className="font-bold text-[#2B1507]">{supplier.activeCampaigns}</div>
-                        <div className="text-xs text-gray-400">Campagnes</div>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-1 mt-3">
-                      {supplier.certifications.slice(0, 4).map((c) => (
-                        <span key={c} className="badge badge-blue text-xs">{c}</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Similar campaigns */}
+            {/* ── 5. Similar campaigns ── */}
             {similarCampaigns.length > 0 && (
               <div>
-                <h2 className="font-display font-bold text-[#2B1507] text-lg mb-4">Campagnes similaires</h2>
-                <div className="flex flex-col gap-3">
+                <h2 className="font-display font-bold text-[15px] text-[#2B1507] mb-3">Campagnes similaires</h2>
+                <div className="flex flex-col gap-2">
                   {similarCampaigns.map((c) => {
                     const t = getCurrentTier(c);
-                    const p = getCampaignProgress(c);
+                    const p = Math.min(100, (c.currentQty / c.targetQty) * 100);
                     return (
                       <Link key={c.id} to="/campaigns/$id" params={{ id: c.id }}
-                        className="bg-white rounded-xl p-4 card-shadow flex items-center gap-4 hover:shadow-md transition-all">
-                        <div className="text-3xl">{c.image}</div>
+                        className="bg-white rounded-xl p-4 flex items-center gap-4 hover:-translate-y-0.5 transition-all"
+                        style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04)" }}>
+                        <div className="text-2xl">{c.image}</div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-semibold text-sm text-[#2B1507] truncate">{c.title}</div>
-                          <div className="progress-track mt-1.5" style={{ height: 4 }}>
-                            <div className="progress-fill" style={{ width: `${p}%` }} />
+                          <div className="font-semibold text-[12px] text-[#2B1507] truncate">{c.title}</div>
+                          <div className="h-1.5 rounded-full overflow-hidden mt-1.5" style={{ background: "#F0ECE6" }}>
+                            <div className="h-full rounded-full" style={{ width: `${p}%`, background: "linear-gradient(90deg, #C14B1D, #E8A820)" }} />
                           </div>
                         </div>
                         <div className="text-right shrink-0">
-                          <div className="font-bold text-sm" style={{ color: "#C14B1D" }}>{formatPrice(t.pricePerUnit, t.currency)}</div>
-                          <div className="text-xs text-gray-400">/{c.unit}</div>
+                          <div className="font-bold text-[13px]" style={{ color: "#C14B1D" }}>{formatPrice(t.pricePerUnit, t.currency)}</div>
+                          <div className="text-[10px] text-gray-400">/{c.unit}</div>
                         </div>
                       </Link>
                     );
@@ -365,127 +770,16 @@ function CampaignDetailPage() {
                 </div>
               </div>
             )}
-          </div>
 
-          {/* ── STICKY ORDER WIDGET ── */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-20">
-              <div className="bg-white rounded-2xl card-shadow overflow-hidden">
-                {/* Current price header */}
-                <div className="p-5 pb-4" style={{ background: "linear-gradient(135deg, #FFF7ED, #FFFBEB)" }}>
-                  <div className="text-xs text-gray-500 mb-1">Prix actuel — Palier {currentTier.label}</div>
-                  <div className="flex items-baseline gap-1">
-                    <span className="font-display text-3xl font-bold" style={{ color: "#C14B1D" }}>
-                      {formatPrice(currentTier.pricePerUnit, currentTier.currency)}
-                    </span>
-                    <span className="text-gray-400">/{campaign.unit}</span>
-                  </div>
-                  {currentTier.discount > 0 && (
-                    <div className="text-xs text-green-600 font-semibold mt-1">
-                      -{currentTier.discount}% vs prix Starter
-                    </div>
-                  )}
-                  <div className="mt-3 progress-track" style={{ height: 8 }}>
-                    <div className="progress-fill" style={{ width: `${progress}%` }} />
-                  </div>
-                  <div className="text-[10px] text-gray-400 mt-1">
-                    {formatQty(campaign.currentQty)} / {formatQty(campaign.priceTiers[campaign.priceTiers.length - 1].minQty)} {campaign.unit}
-                  </div>
-                </div>
-
-                <div className="p-5 flex flex-col gap-4">
-                  {/* Qty input */}
-                  {!joined ? (
-                    <>
-                      <div>
-                        <label className="block text-xs font-semibold text-[#2B1507] mb-2">
-                          Quantité (min. {formatQty(campaign.moq)} {campaign.unit})
-                        </label>
-                        <input
-                          type="number"
-                          min={campaign.moq}
-                          step={campaign.moq}
-                          value={qty}
-                          onChange={(e) => setQty(Number(e.target.value))}
-                          className="w-full px-3 py-2.5 border-2 rounded-xl text-sm font-semibold focus:outline-none transition-colors"
-                          style={{ borderColor: qty >= campaign.moq ? "#E8A820" : "#E5E7EB" }}
-                        />
-                      </div>
-
-                      {/* Total */}
-                      <div className="p-3 rounded-xl" style={{ background: "#F8F2E8" }}>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span className="text-gray-500">{formatQty(qty)} × {formatPrice(currentTier.pricePerUnit, currentTier.currency)}</span>
-                          <span className="font-bold text-[#2B1507]">{formatPrice(totalPrice, currentTier.currency)}</span>
-                        </div>
-                        {nextTier && qty >= campaign.moq && (
-                          <div className="text-[10px] text-green-600 flex items-center gap-1">
-                            <TrendingDown className="h-3 w-3" />
-                            Si Silver atteint → {formatPrice(qty * nextTier.pricePerUnit, nextTier.currency)} (-{nextTier.discount}%)
-                          </div>
-                        )}
-                      </div>
-
-                      <button onClick={handleJoin} className="btn-primary w-full justify-center text-base py-3.5">
-                        Rejoindre la campagne →
-                      </button>
-
-                      <a href={buildWhatsAppLink(campaign)} target="_blank" rel="noreferrer"
-                        className="btn-whatsapp w-full justify-center">
-                        <WhatsAppIcon size={16} />
-                        Commander via WhatsApp
-                      </a>
-
-                      <div className="flex items-center gap-1.5 justify-center text-xs text-gray-400">
-                        <Lock className="h-3 w-3" />
-                        Paiement placé en escrow · Remboursement garanti
-                      </div>
-                    </>
-                  ) : (
-                    <div className="text-center py-4">
-                      <div className="text-4xl mb-3">🎉</div>
-                      <div className="font-bold text-[#2B1507] mb-1">Vous avez rejoint !</div>
-                      <div className="text-sm text-gray-500 mb-4">
-                        {formatQty(qty)} {campaign.unit} · {formatPrice(totalPrice, currentTier.currency)}
-                      </div>
-                      <div className="text-xs text-gray-400 p-3 rounded-xl" style={{ background: "#F8F2E8" }}>
-                        Prochaine étape : paiement et blocage en escrow. Vous recevrez un lien de paiement sécurisé.
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Escrow mini flow */}
-                  <EscrowFlow joined={joined} />
-                </div>
-              </div>
-
-              {/* Countdown */}
-              <div className="mt-4 bg-white rounded-2xl p-4 card-shadow flex items-center gap-3">
-                <Clock className="h-5 w-5 shrink-0" style={{ color: daysLeft <= 7 ? "#C14B1D" : "#6B7280" }} />
-                <div>
-                  <div className="font-bold text-[#2B1507] text-sm">{daysLeft} jours restants</div>
-                  <div className="text-xs text-gray-400">Clôture le {new Date(campaign.endDate).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</div>
-                </div>
-                {daysLeft <= 7 && (
-                  <span className="ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: "#FEE2E2", color: "#C14B1D" }}>URGENT</span>
-                )}
-              </div>
-
-              {/* Certifications */}
-              {campaign.certifications.length > 0 && (
-                <div className="mt-4 bg-white rounded-2xl p-4 card-shadow">
-                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Certifications</div>
-                  <div className="flex flex-wrap gap-1">
-                    {campaign.certifications.map((c) => (
-                      <span key={c} className="badge badge-blue text-xs">{c}</span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
         </div>
+
+        {/* ── Sticky right panel (order widget) ── */}
+        <div style={{ width: 320, position: "sticky", top: 0, height: "calc(100vh - 54px)", overflowY: "auto", flexShrink: 0 }}>
+          <OrderWidget campaign={campaign} />
+        </div>
+
       </div>
-    </PageLayout>
+    </AppLayout>
   );
 }
