@@ -73,7 +73,7 @@ function CampaignCard({ c }: { c: (typeof campaigns)[0] }) {
           {c.image}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-[13px] font-semibold text-[#1A1630] leading-snug line-clamp-2">{c.title}</div>
+          <div className="text-[13px] font-semibold text-[#2B1507] leading-snug line-clamp-2">{c.title}</div>
           <div className="text-[11px] text-gray-400 mt-0.5 flex items-center gap-1">
             <Users size={10} />
             {c.participantCount} participants
@@ -85,7 +85,7 @@ function CampaignCard({ c }: { c: (typeof campaigns)[0] }) {
       <div className="mx-4 mb-3 flex rounded-xl overflow-hidden border" style={{ borderColor: "#F0ECE6" }}>
         <div className="flex-1 px-3 py-2.5 bg-gray-50">
           <div className="text-[9px] uppercase tracking-wide text-gray-400 font-semibold mb-0.5">Palier actuel</div>
-          <div className="text-[15px] font-bold text-[#1A1630]">
+          <div className="text-[15px] font-bold text-[#2B1507]">
             {formatPrice(tier.pricePerUnit, tier.currency)}
           </div>
           <div className="text-[10px] text-gray-400">/{c.unit}</div>
@@ -144,7 +144,7 @@ function HomePage() {
   return (
     <AppLayoutHome rightPanel={<HomepageRightPanel />}>
       {/* ── HERO ── */}
-      <section className="px-6 pt-8 pb-6" style={{ background: "linear-gradient(160deg, #1A1630 0%, #2D2050 60%, #1B3E2A 100%)" }}>
+      <section className="px-6 pt-8 pb-6" style={{ background: "linear-gradient(160deg, #2B1507 0%, #3D1E0C 60%, #1B3E2A 100%)" }}>
         <div className="max-w-2xl">
           <div
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-semibold mb-5"
@@ -196,7 +196,7 @@ function HomePage() {
         <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
           <button
             className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-semibold text-white"
-            style={{ background: "#1A1630" }}
+            style={{ background: "#2B1507" }}
           >
             Toutes les catégories
           </button>
@@ -217,7 +217,7 @@ function HomePage() {
       <section className="px-6 pt-6 pb-8" style={{ background: "#F8F2E8" }}>
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h2 className="font-display text-[18px] font-bold text-[#1A1630]">Campagnes en cours</h2>
+            <h2 className="font-display text-[18px] font-bold text-[#2B1507]">Campagnes en cours</h2>
             <p className="text-[12px] text-gray-500 mt-0.5">Plus vous êtes nombreux, plus le prix baisse pour tous</p>
           </div>
           <Link to="/campaigns" className="flex items-center gap-1 text-[12px] font-semibold" style={{ color: "#C14B1D" }}>
@@ -236,7 +236,7 @@ function HomePage() {
       <section className="px-6 py-8 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-display text-[18px] font-bold text-[#1A1630]">Comment ça marche ?</h2>
+            <h2 className="font-display text-[18px] font-bold text-[#2B1507]">Comment ça marche ?</h2>
             <Shield size={20} className="text-green-600" />
           </div>
 
@@ -257,7 +257,7 @@ function HomePage() {
                     {s.icon}
                   </div>
                   <div className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: "#C14B1D" }}>{s.n}</div>
-                  <div className="font-semibold text-[13px] text-[#1A1630] mb-1">{s.title}</div>
+                  <div className="font-semibold text-[13px] text-[#2B1507] mb-1">{s.title}</div>
                   <div className="text-[11px] text-gray-500 leading-relaxed">{s.desc}</div>
                 </div>
               </div>
@@ -279,7 +279,7 @@ function HomePage() {
       {/* ── DUAL CTA ── */}
       <section className="px-6 py-8" style={{ background: "#F8F2E8" }}>
         <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-          <div className="rounded-2xl p-6 text-white" style={{ background: "linear-gradient(135deg, #1A1630, #2D2050)" }}>
+          <div className="rounded-2xl p-6 text-white" style={{ background: "linear-gradient(135deg, #2B1507, #3D1E0C)" }}>
             <div className="text-3xl mb-3">🏭</div>
             <h3 className="font-display text-[17px] font-bold mb-2">Vous êtes fournisseur ?</h3>
             <p className="text-white/60 text-[13px] leading-relaxed mb-4">
@@ -291,7 +291,7 @@ function HomePage() {
           </div>
           <div className="rounded-2xl p-6" style={{ background: "white", border: "1px solid #F0ECE6" }}>
             <div className="text-3xl mb-3">🛒</div>
-            <h3 className="font-display text-[17px] font-bold text-[#1A1630] mb-2">Vous êtes acheteur ?</h3>
+            <h3 className="font-display text-[17px] font-bold text-[#2B1507] mb-2">Vous êtes acheteur ?</h3>
             <p className="text-gray-500 text-[13px] leading-relaxed mb-4">
               Rejoignez des campagnes actives, mutualisez vos achats et économisez jusqu'à 43% grâce au volume collectif.
             </p>

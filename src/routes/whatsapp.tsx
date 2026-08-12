@@ -78,7 +78,7 @@ function WhatsAppPage() {
             ].map((s) => (
               <div key={s.label} className="bg-white rounded-2xl p-6 text-center shadow-sm">
                 <div className="text-3xl mb-2">{s.icon}</div>
-                <div className="font-display text-2xl font-bold text-[#1A1630] mb-1">{s.val}</div>
+                <div className="font-display text-2xl font-bold text-[#2B1507] mb-1">{s.val}</div>
                 <div className="text-xs text-gray-500 leading-relaxed">{s.label}</div>
               </div>
             ))}
@@ -91,7 +91,7 @@ function WhatsAppPage() {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="font-display text-3xl font-bold text-[#1A1630] mb-4">
+              <h2 className="font-display text-3xl font-bold text-[#2B1507] mb-4">
                 Une expérience d'achat
                 <br />
                 <span style={{ color: "#25D366" }}>100% conversationnelle</span>
@@ -169,14 +169,14 @@ function WhatsAppPage() {
       <section className="py-16" style={{ background: "#F8F2E8" }}>
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold text-[#1A1630] mb-3">Automatisations incluses</h2>
+            <h2 className="font-display text-3xl font-bold text-[#2B1507] mb-3">Automatisations incluses</h2>
             <p className="text-gray-600 max-w-xl mx-auto">Toutes ces notifications sont envoyées automatiquement — aucune action manuelle requise de votre part</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {automations.map((a) => (
               <div key={a.title} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
                 <div className="text-3xl mb-3">{a.icon}</div>
-                <div className="font-semibold text-[#1A1630] mb-2">{a.title}</div>
+                <div className="font-semibold text-[#2B1507] mb-2">{a.title}</div>
                 <div className="text-sm text-gray-500 leading-relaxed">{a.desc}</div>
               </div>
             ))}
@@ -188,7 +188,7 @@ function WhatsAppPage() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold text-[#1A1630] mb-3">Démarrez en 4 étapes</h2>
+            <h2 className="font-display text-3xl font-bold text-[#2B1507] mb-3">Démarrez en 4 étapes</h2>
             <p className="text-gray-600">Configuration WhatsApp Business complète en moins de 15 minutes</p>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -197,7 +197,7 @@ function WhatsAppPage() {
                 <div className="font-display text-4xl font-bold shrink-0" style={{ color: "rgba(37,211,102,0.3)" }}>{step.num}</div>
                 <div>
                   <div className="text-2xl mb-2">{step.icon}</div>
-                  <div className="font-semibold text-[#1A1630] mb-1">{step.title}</div>
+                  <div className="font-semibold text-[#2B1507] mb-1">{step.title}</div>
                   <div className="text-sm text-gray-500 leading-relaxed">{step.desc}</div>
                 </div>
               </div>
@@ -207,7 +207,7 @@ function WhatsAppPage() {
       </section>
 
       {/* Countries */}
-      <section className="py-16" style={{ background: "linear-gradient(135deg, #1A1630 0%, #2D2050 60%, #1B5E3E 100%)" }}>
+      <section className="py-16" style={{ background: "linear-gradient(135deg, #2B1507 0%, #3D1E0C 60%, #1B5E3E 100%)" }}>
         <div className="container mx-auto px-4 max-w-5xl text-center">
           <div className="kente-bg absolute inset-0 opacity-5 pointer-events-none" />
           <h2 className="font-display text-3xl font-bold text-white mb-3">Présent dans le monde entier</h2>
@@ -230,7 +230,7 @@ function WhatsAppPage() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold text-[#1A1630] mb-3">Options d'intégration WhatsApp</h2>
+            <h2 className="font-display text-3xl font-bold text-[#2B1507] mb-3">Options d'intégration WhatsApp</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -259,7 +259,7 @@ function WhatsAppPage() {
               <div key={plan.name} className={`rounded-2xl p-6 ${plan.highlighted ? "text-white shadow-xl" : "border border-gray-100"}`}
                 style={plan.highlighted ? { background: "linear-gradient(135deg, #1B5E3E, #25D366)" } : {}}>
                 <div className={`text-sm font-semibold mb-1 ${plan.highlighted ? "text-green-200" : "text-gray-500"}`}>{plan.name}</div>
-                <div className={`font-display text-2xl font-bold mb-4 ${plan.highlighted ? "text-white" : "text-[#1A1630]"}`}>{plan.price}</div>
+                <div className={`font-display text-2xl font-bold mb-4 ${plan.highlighted ? "text-white" : "text-[#2B1507]"}`}>{plan.price}</div>
                 <div className="flex flex-col gap-2 mb-6">
                   {plan.features.map((f) => (
                     <div key={f} className="flex items-start gap-2">
@@ -285,7 +285,7 @@ function WhatsAppPage() {
       <section className="py-16" style={{ background: "#F8F2E8" }}>
         <div className="container mx-auto px-4 text-center max-w-2xl">
           <div className="text-5xl mb-4">📱</div>
-          <h2 className="font-display text-3xl font-bold text-[#1A1630] mb-4">Prêt à commercer sur WhatsApp?</h2>
+          <h2 className="font-display text-3xl font-bold text-[#2B1507] mb-4">Prêt à commercer sur WhatsApp?</h2>
           <p className="text-gray-600 mb-8">Rejoignez plus de 1 240 fournisseurs qui utilisent déjà Dolly Trade B2B pour leurs campagnes d'achats groupés</p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link to="/register/supplier" className="btn-whatsapp text-base px-6 py-3">

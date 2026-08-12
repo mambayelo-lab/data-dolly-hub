@@ -44,7 +44,7 @@ function AppSidebar() {
   return (
     <aside
       className="fixed inset-y-0 left-0 z-40 flex flex-col"
-      style={{ width: 220, background: "#1A1630" }}
+      style={{ width: 220, background: "#2B1507" }}
     >
       {/* Logo */}
       <div className="px-5 pt-6 pb-4 border-b" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
@@ -196,7 +196,7 @@ function AppTopBar() {
           <ShoppingCart size={17} className="text-gray-500" />
           <span
             className="absolute top-1 right-1 w-3.5 h-3.5 rounded-full text-[8px] font-bold flex items-center justify-center"
-            style={{ background: "#E8A820", color: "#1A1630" }}
+            style={{ background: "#E8A820", color: "#2B1507" }}
           >
             4
           </span>
@@ -260,7 +260,7 @@ export function HomepageRightPanel() {
           <Link
             to="/register/supplier"
             className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[12px] font-bold"
-            style={{ background: "#E8A820", color: "#1A1630" }}
+            style={{ background: "#E8A820", color: "#2B1507" }}
           >
             Devenir fournisseur →
           </Link>

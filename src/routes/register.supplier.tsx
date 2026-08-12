@@ -93,7 +93,7 @@ export default function RegisterSupplierPage() {
   return (
     <div className="min-h-screen" style={{ background: "#F8F2E8" }}>
       {/* Top bar */}
-      <div className="py-4 px-6 border-b border-white/20" style={{ background: "#1A1630" }}>
+      <div className="py-4 px-6 border-b border-white/20" style={{ background: "#2B1507" }}>
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5">
             <div className="h-8 w-8 rounded-lg flex items-center justify-center text-white font-bold"
@@ -123,7 +123,7 @@ export default function RegisterSupplierPage() {
           {/* STEP 1 */}
           {step === 1 && (
             <div>
-              <h2 className="font-display text-2xl text-[#1A1630] mb-1">Informations de votre société</h2>
+              <h2 className="font-display text-2xl text-[#2B1507] mb-1">Informations de votre société</h2>
               <p className="text-gray-500 text-sm mb-6">Ces informations seront visibles par les acheteurs sur votre profil.</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="field-group sm:col-span-2">
@@ -183,7 +183,7 @@ export default function RegisterSupplierPage() {
           {/* STEP 2 */}
           {step === 2 && (
             <div>
-              <h2 className="font-display text-2xl text-[#1A1630] mb-1">Données légales</h2>
+              <h2 className="font-display text-2xl text-[#2B1507] mb-1">Données légales</h2>
               <p className="text-gray-500 text-sm mb-6">Informations requises pour la vérification de votre compte. Restent confidentielles.</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="field-group">
@@ -230,7 +230,7 @@ export default function RegisterSupplierPage() {
           {/* STEP 3 */}
           {step === 3 && (
             <div>
-              <h2 className="font-display text-2xl text-[#1A1630] mb-1">Secteurs & Produits</h2>
+              <h2 className="font-display text-2xl text-[#2B1507] mb-1">Secteurs & Produits</h2>
               <p className="text-gray-500 text-sm mb-6">Sélectionnez vos secteurs d'activité pour apparaître dans les bonnes catégories.</p>
               <div className="grid sm:grid-cols-2 gap-3 mb-6">
                 {sectors.map((s) => {
@@ -243,7 +243,7 @@ export default function RegisterSupplierPage() {
                         : { borderColor: "#E5E7EB", background: "white" }}>
                       <div className="text-2xl shrink-0">{s.icon}</div>
                       <div>
-                        <div className="font-semibold text-sm" style={selected ? { color: s.color } : { color: "#1A1630" }}>{s.name}</div>
+                        <div className="font-semibold text-sm" style={selected ? { color: s.color } : { color: "#2B1507" }}>{s.name}</div>
                         <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{s.description}</div>
                         <div className="text-xs mt-1 text-gray-400">{s.stats.products.toLocaleString("fr-FR")} produits · {s.stats.suppliers} fournisseurs</div>
                       </div>
@@ -263,7 +263,7 @@ export default function RegisterSupplierPage() {
           {/* STEP 4 */}
           {step === 4 && (
             <div>
-              <h2 className="font-display text-2xl text-[#1A1630] mb-1">Paramètres WhatsApp Business</h2>
+              <h2 className="font-display text-2xl text-[#2B1507] mb-1">Paramètres WhatsApp Business</h2>
               <p className="text-gray-500 text-sm mb-6">Connectez votre WhatsApp Business pour recevoir les commandes et notifier vos acheteurs.</p>
               <div className="field-group mb-6">
                 <label>Numéro WhatsApp Business (international)</label>
@@ -279,7 +279,7 @@ export default function RegisterSupplierPage() {
                     {form.whatsappNotifCampaigns && <span className="text-white text-xs">✓</span>}
                   </div>
                   <div>
-                    <div className="font-semibold text-sm text-[#1A1630]">Notifications de paliers atteints</div>
+                    <div className="font-semibold text-sm text-[#2B1507]">Notifications de paliers atteints</div>
                     <div className="text-xs text-gray-500 mt-0.5">Recevoir un message WhatsApp quand une campagne change de palier de prix</div>
                   </div>
                 </div>
@@ -291,7 +291,7 @@ export default function RegisterSupplierPage() {
                     {form.whatsappNotifOrders && <span className="text-white text-xs">✓</span>}
                   </div>
                   <div>
-                    <div className="font-semibold text-sm text-[#1A1630]">Notifications de nouvelles commandes</div>
+                    <div className="font-semibold text-sm text-[#2B1507]">Notifications de nouvelles commandes</div>
                     <div className="text-xs text-gray-500 mt-0.5">Recevoir un message WhatsApp quand un acheteur rejoint votre campagne</div>
                   </div>
                 </div>
@@ -303,7 +303,7 @@ export default function RegisterSupplierPage() {
                     {form.whatsappAutoReply && <span className="text-white text-xs">✓</span>}
                   </div>
                   <div>
-                    <div className="font-semibold text-sm text-[#1A1630]">Réponse automatique aux acheteurs</div>
+                    <div className="font-semibold text-sm text-[#2B1507]">Réponse automatique aux acheteurs</div>
                     <div className="text-xs text-gray-500 mt-0.5">Activer un bot WhatsApp pour répondre aux premières questions des acheteurs 24h/24</div>
                   </div>
                 </div>
@@ -315,7 +315,7 @@ export default function RegisterSupplierPage() {
           {step === 5 && (
             <div className="text-center">
               <div className="text-6xl mb-6">🎉</div>
-              <h2 className="font-display text-2xl text-[#1A1630] mb-2">Vérifiez votre inscription</h2>
+              <h2 className="font-display text-2xl text-[#2B1507] mb-2">Vérifiez votre inscription</h2>
               <p className="text-gray-500 text-sm mb-8">Vérifiez vos informations avant de soumettre votre dossier.</p>
               <div className="text-left bg-gray-50 rounded-xl p-5 mb-6 flex flex-col gap-3">
                 {[
@@ -329,7 +329,7 @@ export default function RegisterSupplierPage() {
                 ].map((r) => (
                   <div key={r.label} className="flex justify-between items-start gap-4">
                     <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide shrink-0">{r.label}</span>
-                    <span className="text-sm text-[#1A1630] text-right">{r.val || "—"}</span>
+                    <span className="text-sm text-[#2B1507] text-right">{r.val || "—"}</span>
                   </div>
                 ))}
               </div>

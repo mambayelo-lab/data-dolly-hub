@@ -116,7 +116,7 @@ export default function RegisterClientPage() {
           {/* STEP 1 */}
           {step === 1 && (
             <div>
-              <h2 className="font-display text-2xl text-[#1A1630] mb-1">Votre entreprise</h2>
+              <h2 className="font-display text-2xl text-[#2B1507] mb-1">Votre entreprise</h2>
               <p className="text-gray-500 text-sm mb-6">Seules les entreprises professionnelles peuvent s'inscrire sur Dolly Trade B2B.</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="field-group sm:col-span-2">
@@ -160,7 +160,7 @@ export default function RegisterClientPage() {
           {/* STEP 2 */}
           {step === 2 && (
             <div>
-              <h2 className="font-display text-2xl text-[#1A1630] mb-1">Données légales</h2>
+              <h2 className="font-display text-2xl text-[#2B1507] mb-1">Données légales</h2>
               <p className="text-gray-500 text-sm mb-6">Nécessaire pour les documents export (factures, BL, certificats d'origine).</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="field-group">
@@ -200,7 +200,7 @@ export default function RegisterClientPage() {
           {/* STEP 3 */}
           {step === 3 && (
             <div>
-              <h2 className="font-display text-2xl text-[#1A1630] mb-1">Vos besoins d'achat</h2>
+              <h2 className="font-display text-2xl text-[#2B1507] mb-1">Vos besoins d'achat</h2>
               <p className="text-gray-500 text-sm mb-6">Sélectionnez les secteurs qui correspondent à vos besoins d'approvisionnement.</p>
               <div className="grid sm:grid-cols-2 gap-3 mb-5">
                 {sectors.map((s) => {
@@ -211,7 +211,7 @@ export default function RegisterClientPage() {
                       style={selected ? { borderColor: s.color, background: `${s.color}08` } : { borderColor: "#E5E7EB", background: "white" }}>
                       <span className="text-xl">{s.icon}</span>
                       <div className="flex-1">
-                        <div className="font-semibold text-sm" style={selected ? { color: s.color } : { color: "#1A1630" }}>{s.name}</div>
+                        <div className="font-semibold text-sm" style={selected ? { color: s.color } : { color: "#2B1507" }}>{s.name}</div>
                         <div className="text-xs text-gray-400">{s.stats.campaigns} campagnes en cours</div>
                       </div>
                       {selected && <CheckCircle className="h-4 w-4 text-green-600 shrink-0" />}
@@ -232,7 +232,7 @@ export default function RegisterClientPage() {
           {/* STEP 4 */}
           {step === 4 && (
             <div>
-              <h2 className="font-display text-2xl text-[#1A1630] mb-1">WhatsApp & Notifications</h2>
+              <h2 className="font-display text-2xl text-[#2B1507] mb-1">WhatsApp & Notifications</h2>
               <p className="text-gray-500 text-sm mb-6">Recevez les alertes de campagnes et les confirmations de commandes sur votre téléphone.</p>
               <div className="field-group mb-6">
                 <label>Votre numéro WhatsApp</label>
@@ -252,7 +252,7 @@ export default function RegisterClientPage() {
                       {form[item.key] && <span className="text-white text-xs font-bold">✓</span>}
                     </div>
                     <div>
-                      <div className="font-semibold text-sm text-[#1A1630]">{item.label}</div>
+                      <div className="font-semibold text-sm text-[#2B1507]">{item.label}</div>
                       <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
                     </div>
                   </div>
@@ -265,7 +265,7 @@ export default function RegisterClientPage() {
           {step === 5 && (
             <div className="text-center">
               <div className="text-6xl mb-4">🌍</div>
-              <h2 className="font-display text-2xl text-[#1A1630] mb-2">Prêt à rejoindre Dolly Trade?</h2>
+              <h2 className="font-display text-2xl text-[#2B1507] mb-2">Prêt à rejoindre Dolly Trade?</h2>
               <p className="text-gray-500 text-sm mb-6">Vérifiez vos informations et activez votre compte acheteur professionnel.</p>
               <div className="text-left bg-gray-50 rounded-xl p-5 mb-6 flex flex-col gap-3">
                 {[
@@ -278,7 +278,7 @@ export default function RegisterClientPage() {
                 ].map((r) => (
                   <div key={r.label} className="flex justify-between gap-4">
                     <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide shrink-0">{r.label}</span>
-                    <span className="text-sm text-[#1A1630] text-right">{r.val || "—"}</span>
+                    <span className="text-sm text-[#2B1507] text-right">{r.val || "—"}</span>
                   </div>
                 ))}
               </div>

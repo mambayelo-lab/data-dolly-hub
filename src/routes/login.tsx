@@ -30,20 +30,20 @@ function LoginPage() {
           <div className="h-9 w-9 rounded-xl flex items-center justify-center text-white font-bold"
             style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>D</div>
           <div>
-            <div className="font-display font-bold text-[#1A1630] text-base">DOLLY TRADE B2B</div>
+            <div className="font-display font-bold text-[#2B1507] text-base">DOLLY TRADE B2B</div>
             <div className="text-[10px] text-gray-400 tracking-wider">MARKETPLACE INTERNATIONALE</div>
           </div>
         </Link>
 
-        <h1 className="font-display text-3xl text-[#1A1630] mb-2">Connexion</h1>
+        <h1 className="font-display text-3xl text-[#2B1507] mb-2">Connexion</h1>
         <p className="text-gray-500 text-sm mb-8">Accédez à votre espace professionnel</p>
 
         {/* Role switcher */}
-        <div className="flex gap-1 p-1 rounded-xl mb-6" style={{ background: "rgba(26,22,48,0.08)" }}>
+        <div className="flex gap-1 p-1 rounded-xl mb-6" style={{ background: "rgba(43,21,7,0.08)" }}>
           {(["client", "supplier"] as const).map((r) => (
             <button key={r} onClick={() => setRole(r)}
               className="flex-1 py-2 rounded-lg text-sm font-semibold transition-all"
-              style={role === r ? { background: "#1A1630", color: "white" } : { color: "#6B7280" }}>
+              style={role === r ? { background: "#2B1507", color: "white" } : { color: "#6B7280" }}>
               {r === "client" ? "🛒 Acheteur" : "🏭 Fournisseur"}
             </button>
           ))}
@@ -93,7 +93,7 @@ function LoginPage() {
 
       {/* Right: brand panel */}
       <div className="hidden lg:flex flex-1 flex-col justify-center p-12 text-white relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #1A1630 0%, #2D2050 60%, #1B5E3E 100%)" }}>
+        style={{ background: "linear-gradient(135deg, #2B1507 0%, #3D1E0C 60%, #1B5E3E 100%)" }}>
         <div className="kente-bg absolute inset-0 opacity-10" />
         <div className="relative z-10">
           <div className="text-4xl mb-6">🌍</div>

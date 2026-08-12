@@ -72,7 +72,7 @@ function ClientDashboardPage() {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-display font-bold text-[#1A1630] text-xl">Bonjour, Pharmacie Centrale! 👋</h2>
+              <h2 className="font-display font-bold text-[#2B1507] text-xl">Bonjour, Pharmacie Centrale! 👋</h2>
               <p className="text-sm text-gray-500">Lundi 11 août 2026 · 2 campagnes actives vous concernent</p>
             </div>
             <Link to="/campaigns" className="btn-primary text-sm">
@@ -85,7 +85,7 @@ function ClientDashboardPage() {
             <div key={i} className="flex items-start gap-3 p-4 rounded-xl border-l-4" style={{ background: "rgba(193,75,29,0.06)", borderLeftColor: "#C14B1D" }}>
               <Bell className="h-4 w-4 shrink-0 mt-0.5" style={{ color: "#C14B1D" }} />
               <div className="flex-1">
-                <div className="text-sm font-semibold text-[#1A1630]">{n.text}</div>
+                <div className="text-sm font-semibold text-[#2B1507]">{n.text}</div>
                 <div className="text-xs text-gray-400 mt-0.5">{n.time}</div>
               </div>
               <button className="btn-primary text-xs" style={{ padding: "6px 12px", fontSize: 11 }}
@@ -109,7 +109,7 @@ function ClientDashboardPage() {
           {/* My active campaigns */}
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-display font-bold text-[#1A1630] text-lg">Mes campagnes actives</h3>
+              <h3 className="font-display font-bold text-[#2B1507] text-lg">Mes campagnes actives</h3>
               <button onClick={() => setActiveSection("my-campaigns")} className="text-sm font-semibold flex items-center gap-1" style={{ color: "#1B5E3E" }}>
                 Toutes <ChevronRight className="h-3.5 w-3.5" />
               </button>
@@ -124,7 +124,7 @@ function ClientDashboardPage() {
                     <div className="flex items-start gap-3 mb-3">
                       <div className="text-3xl">{c.image}</div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-semibold text-sm text-[#1A1630] line-clamp-2">{c.title}</div>
+                        <div className="font-semibold text-sm text-[#2B1507] line-clamp-2">{c.title}</div>
                         <div className="text-xs text-gray-500 mt-0.5">{supplier?.flag} {supplier?.name}</div>
                       </div>
                     </div>
@@ -158,7 +158,7 @@ function ClientDashboardPage() {
           {/* Orders */}
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-display font-bold text-[#1A1630] text-lg">Mes commandes</h3>
+              <h3 className="font-display font-bold text-[#2B1507] text-lg">Mes commandes</h3>
               <button onClick={() => setActiveSection("orders")} className="text-sm font-semibold flex items-center gap-1" style={{ color: "#1B5E3E" }}>
                 Toutes <ChevronRight className="h-3.5 w-3.5" />
               </button>
@@ -174,12 +174,12 @@ function ClientDashboardPage() {
                   {MY_ORDERS.map((o) => (
                     <tr key={o.id} className="border-t border-gray-100 hover:bg-gray-50">
                       <td className="px-4 py-3 font-mono text-xs text-gray-400">{o.id}</td>
-                      <td className="px-4 py-3 font-medium text-[#1A1630] max-w-[160px]">
+                      <td className="px-4 py-3 font-medium text-[#2B1507] max-w-[160px]">
                         <div className="line-clamp-1">{o.campaign}</div>
                       </td>
                       <td className="px-4 py-3 text-xs text-gray-500">{o.supplier}</td>
                       <td className="px-4 py-3 text-gray-600">{o.qty}</td>
-                      <td className="px-4 py-3 font-bold text-[#1A1630]">{o.amount}</td>
+                      <td className="px-4 py-3 font-bold text-[#2B1507]">{o.amount}</td>
                       <td className="px-4 py-3">
                         <span className="badge text-[11px]" style={{ background: `${o.statusColor}15`, color: o.statusColor }}>
                           {o.status}
@@ -195,13 +195,13 @@ function ClientDashboardPage() {
 
           {/* All notifications */}
           <div>
-            <h3 className="font-display font-bold text-[#1A1630] text-lg mb-4">Notifications récentes</h3>
+            <h3 className="font-display font-bold text-[#2B1507] text-lg mb-4">Notifications récentes</h3>
             <div className="bg-white rounded-xl card-shadow">
               {NOTIFS.map((n, i) => (
                 <div key={i} className={`flex items-start gap-3 px-4 py-3 ${i < NOTIFS.length - 1 ? "border-b border-gray-100" : ""}`}>
                   <span className="text-lg shrink-0">{n.icon}</span>
                   <div className="flex-1">
-                    <div className="text-sm text-[#1A1630]">{n.text}</div>
+                    <div className="text-sm text-[#2B1507]">{n.text}</div>
                     <div className="text-xs text-gray-400 mt-0.5">{n.time}</div>
                   </div>
                 </div>
@@ -215,7 +215,7 @@ function ClientDashboardPage() {
       {activeSection === "browse" && (
         <div>
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-display font-bold text-[#1A1630] text-xl">Explorer les campagnes</h2>
+            <h2 className="font-display font-bold text-[#2B1507] text-xl">Explorer les campagnes</h2>
             <Link to="/campaigns" className="btn-primary text-sm">Voir toutes les campagnes</Link>
           </div>
           <div className="flex flex-col gap-4">
@@ -234,7 +234,7 @@ function ClientDashboardPage() {
                       {c.whatsappEnabled && <span className="badge badge-green text-[10px] flex items-center gap-1"><WhatsAppIcon size={9} />WA</span>}
                       <span className="badge badge-blue text-[10px]">{daysLeft}j</span>
                     </div>
-                    <h4 className="font-semibold text-sm text-[#1A1630] line-clamp-2 mb-1">{c.title}</h4>
+                    <h4 className="font-semibold text-sm text-[#2B1507] line-clamp-2 mb-1">{c.title}</h4>
                     <div className="text-xs text-gray-500 mb-2">{supplier?.flag} {supplier?.name}</div>
                     <div className="progress-track" style={{ height: 5 }}>
                       <div className="progress-fill" style={{ width: `${prog}%`, height: "100%" }} />
@@ -261,14 +261,14 @@ function ClientDashboardPage() {
       {/* ── WHATSAPP ─────────────────────────────────── */}
       {activeSection === "whatsapp" && (
         <div className="max-w-xl">
-          <h2 className="font-display font-bold text-[#1A1630] text-xl mb-6">Mon WhatsApp B2B</h2>
+          <h2 className="font-display font-bold text-[#2B1507] text-xl mb-6">Mon WhatsApp B2B</h2>
           <div className="bg-white rounded-2xl card-shadow p-6 mb-4">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white" style={{ background: "#25D366" }}>
                 <WhatsAppIcon size={20} />
               </div>
               <div>
-                <div className="font-semibold text-[#1A1630]">+221 77 123 45 67</div>
+                <div className="font-semibold text-[#2B1507]">+221 77 123 45 67</div>
                 <div className="badge badge-forest text-xs w-fit">✓ Connecté</div>
               </div>
             </div>
@@ -293,7 +293,7 @@ function ClientDashboardPage() {
       {!["overview", "browse", "whatsapp"].includes(activeSection) && (
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <div className="text-6xl mb-4">{NAV.find((n) => n.id === activeSection)?.icon}</div>
-          <h2 className="font-display font-bold text-[#1A1630] text-xl mb-2">{NAV.find((n) => n.id === activeSection)?.label}</h2>
+          <h2 className="font-display font-bold text-[#2B1507] text-xl mb-2">{NAV.find((n) => n.id === activeSection)?.label}</h2>
           <p className="text-gray-500 text-sm max-w-sm">Section disponible après connexion complète à votre compte.</p>
           <button onClick={() => setActiveSection("overview")} className="btn-secondary mt-6">Retour</button>
         </div>

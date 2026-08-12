@@ -27,7 +27,7 @@ function ProductCard({ p }: { p: Product }) {
           {p.inStock && <span className="badge badge-forest text-[10px]">✓ Stock</span>}
           {p.featured && <span className="badge badge-gold text-[10px]">⭐ Featured</span>}
         </div>
-        <h3 className="font-semibold text-[#1A1630] text-sm leading-snug mb-1 line-clamp-2">{p.name}</h3>
+        <h3 className="font-semibold text-[#2B1507] text-sm leading-snug mb-1 line-clamp-2">{p.name}</h3>
         <div className="text-xs text-gray-500 mb-2">{supplier?.flag} {supplier?.name}</div>
         <p className="text-xs text-gray-500 line-clamp-2 mb-3">{p.description}</p>
         <div className="flex items-center justify-between mb-3">
@@ -71,7 +71,7 @@ function SupplierCard({ s }: { s: typeof suppliers[0] }) {
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1 flex-wrap">
-          <span className="font-semibold text-[#1A1630] text-sm">{s.name}</span>
+          <span className="font-semibold text-[#2B1507] text-sm">{s.name}</span>
           {s.verified && <span className="badge badge-forest text-[10px] flex items-center gap-0.5"><Shield className="h-2.5 w-2.5" />Vérifié</span>}
         </div>
         <div className="text-xs text-gray-500 mb-1">{s.flag} {s.city}, {s.country}</div>
@@ -79,7 +79,7 @@ function SupplierCard({ s }: { s: typeof suppliers[0] }) {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1 text-xs">
             <Star className="h-3 w-3 fill-current" style={{ color: "#E8A820" }} />
-            <span className="font-semibold text-[#1A1630]">{s.rating}</span>
+            <span className="font-semibold text-[#2B1507]">{s.rating}</span>
             <span className="text-gray-400">({s.reviewCount} avis)</span>
           </div>
           <span className="badge badge-terra text-[10px]">{s.activeCampaigns} campagnes</span>
@@ -135,7 +135,7 @@ function ProductsPage() {
           {(["products", "suppliers"] as const).map((t) => (
             <button key={t} onClick={() => setTab(t)}
               className="px-5 py-2 rounded-lg text-sm font-semibold transition-all"
-              style={tab === t ? { background: "#1A1630", color: "white" } : { color: "#6B7280" }}>
+              style={tab === t ? { background: "#2B1507", color: "white" } : { color: "#6B7280" }}>
               {t === "products" ? `📦 Produits (${filteredProducts.length})` : `🏭 Fournisseurs (${filteredSuppliers.length})`}
             </button>
           ))}
@@ -160,7 +160,7 @@ function ProductsPage() {
         <div className="flex gap-2 flex-wrap mb-6">
           <button onClick={() => setFilterSector("all")}
             className="px-4 py-1.5 rounded-full text-sm font-medium transition-all"
-            style={filterSector === "all" ? { background: "#1A1630", color: "white" } : { background: "white", color: "#6B7280", border: "1px solid #E5E7EB" }}>
+            style={filterSector === "all" ? { background: "#2B1507", color: "white" } : { background: "white", color: "#6B7280", border: "1px solid #E5E7EB" }}>
             Tout
           </button>
           {sectors.map((s) => (
@@ -202,7 +202,7 @@ function ProductsPage() {
 
         {/* Sector info cards */}
         <div className="mt-16">
-          <h2 className="font-display font-bold text-[#1A1630] text-2xl mb-6">Explorer par secteur</h2>
+          <h2 className="font-display font-bold text-[#2B1507] text-2xl mb-6">Explorer par secteur</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {sectors.map((s) => (
               <button key={s.id} onClick={() => { setFilterSector(s.id); setTab("products"); }}

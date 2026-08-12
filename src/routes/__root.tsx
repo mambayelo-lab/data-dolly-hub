@@ -86,7 +86,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Plateforme B2B d'achats groupés à paliers dégressifs. Rejoignez une campagne, payez par escrow sécurisé et économisez jusqu'à -42% grâce au volume collectif." },
       { name: "twitter:description", content: "Plateforme B2B d'achats groupés à paliers dégressifs. Rejoignez une campagne, payez par escrow sécurisé et économisez jusqu'à -42% grâce au volume collectif." },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#1A1630" },
+      { name: "theme-color", content: "#2B1507" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },

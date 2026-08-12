@@ -67,9 +67,9 @@ function TierBar({ tiers, currentQty, unit }: { tiers: ReturnType<typeof getCamp
                 {formatPrice(tier.pricePerUnit, tier.currency)}
               </div>
               <div className="text-[10px] text-gray-400">/{unit}</div>
-              {tier.discountPct > 0 && (
+              {tier.discount > 0 && (
                 <div className="text-[10px] font-bold mt-1 px-1 py-0.5 rounded" style={{ background: isAchieved ? "#D1FAE5" : isActive ? `${meta.ring}30` : "#F3F4F6", color: isAchieved ? "#059669" : meta.color }}>
-                  -{tier.discountPct}%
+                  -{tier.discount}%
                 </div>
               )}
             </div>
@@ -99,12 +99,12 @@ function TierBar({ tiers, currentQty, unit }: { tiers: ReturnType<typeof getCamp
       <div className="mt-2 flex items-center justify-between text-sm">
         <div className="flex items-center gap-1.5">
           <Users className="h-4 w-4 text-gray-400" />
-          <span className="font-semibold text-[#1A1630]">{formatQty(currentQty)}</span>
+          <span className="font-semibold text-[#2B1507]">{formatQty(currentQty)}</span>
           <span className="text-gray-400">{unit} inscrits</span>
         </div>
         {nextTierIdx !== null && (
           <div className="text-xs font-semibold px-2 py-1 rounded-lg" style={{ background: "rgba(193,75,29,0.08)", color: "#C14B1D" }}>
-            +{formatQty(tiers[nextTierIdx].minQty - currentQty)} → {tiers[nextTierIdx].label} (-{tiers[nextTierIdx].discountPct}%)
+            +{formatQty(tiers[nextTierIdx].minQty - currentQty)} → {tiers[nextTierIdx].label} (-{tiers[nextTierIdx].discount}%)
           </div>
         )}
       </div>
@@ -152,7 +152,7 @@ function CampaignDetailPage() {
       <PageLayout>
         <div className="max-w-7xl mx-auto px-6 py-20 text-center">
           <div className="text-5xl mb-4">❌</div>
-          <h1 className="font-display text-2xl text-[#1A1630] mb-2">Campagne introuvable</h1>
+          <h1 className="font-display text-2xl text-[#2B1507] mb-2">Campagne introuvable</h1>
           <Link to="/campaigns" className="btn-primary mt-4">Retour aux campagnes</Link>
         </div>
       </PageLayout>
@@ -214,7 +214,7 @@ function CampaignDetailPage() {
                         <span key={c} className="badge badge-blue text-xs">{c}</span>
                       ))}
                     </div>
-                    <h1 className="font-display text-xl lg:text-2xl font-bold text-[#1A1630] leading-tight mb-2">{campaign.title}</h1>
+                    <h1 className="font-display text-xl lg:text-2xl font-bold text-[#2B1507] leading-tight mb-2">{campaign.title}</h1>
                     <p className="text-gray-500 text-sm leading-relaxed">{campaign.description}</p>
                   </div>
                 </div>
@@ -225,14 +225,14 @@ function CampaignDetailPage() {
                     <div className="flex items-center justify-center gap-1 text-gray-400 text-xs mb-1">
                       <Clock className="h-3 w-3" /> Fermeture
                     </div>
-                    <div className="font-bold text-[#1A1630]">{daysLeft}j</div>
+                    <div className="font-bold text-[#2B1507]">{daysLeft}j</div>
                     <div className="text-[10px] text-gray-400">{new Date(campaign.endDate).toLocaleDateString("fr-FR")}</div>
                   </div>
                   <div className="text-center border-x border-gray-100">
                     <div className="flex items-center justify-center gap-1 text-gray-400 text-xs mb-1">
                       <Package className="h-3 w-3" /> MOQ
                     </div>
-                    <div className="font-bold text-[#1A1630]">{formatQty(campaign.moq)}</div>
+                    <div className="font-bold text-[#2B1507]">{formatQty(campaign.moq)}</div>
                     <div className="text-[10px] text-gray-400">{campaign.unit}</div>
                   </div>
                   <div className="text-center">
@@ -240,7 +240,7 @@ function CampaignDetailPage() {
                       <TrendingDown className="h-3 w-3" /> Max. économie
                     </div>
                     <div className="font-bold" style={{ color: "#C14B1D" }}>
-                      -{campaign.priceTiers[campaign.priceTiers.length - 1].discountPct}%
+                      -{campaign.priceTiers[campaign.priceTiers.length - 1].discount}%
                     </div>
                     <div className="text-[10px] text-gray-400">palier Or</div>
                   </div>
@@ -251,7 +251,7 @@ function CampaignDetailPage() {
             {/* ── PRICE TIERS GAMIFIED ── */}
             <div className="bg-white rounded-2xl p-6 card-shadow">
               <div className="flex items-center justify-between mb-5">
-                <h2 className="font-display font-bold text-[#1A1630] text-lg">Paliers de prix</h2>
+                <h2 className="font-display font-bold text-[#2B1507] text-lg">Paliers de prix</h2>
                 <div className="text-xs text-gray-400 flex items-center gap-1">
                   <Users className="h-3 w-3" />
                   Niveau actif :
@@ -265,7 +265,7 @@ function CampaignDetailPage() {
                 <div className="mt-4 p-3 rounded-xl flex items-start gap-2" style={{ background: "rgba(193,75,29,0.06)", border: "1px solid rgba(193,75,29,0.15)" }}>
                   <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" style={{ color: "#C14B1D" }} />
                   <p className="text-xs leading-relaxed" style={{ color: "#C14B1D" }}>
-                    <strong>+{formatQty(nextTier.minQty - campaign.currentQty)} {campaign.unit}</strong> manquants pour débloquer le palier <strong>{nextTier.label}</strong> et faire passer le prix à <strong>{formatPrice(nextTier.pricePerUnit, nextTier.currency)}/{campaign.unit}</strong> (-{nextTier.discountPct}%) pour <strong>tous les participants</strong>.
+                    <strong>+{formatQty(nextTier.minQty - campaign.currentQty)} {campaign.unit}</strong> manquants pour débloquer le palier <strong>{nextTier.label}</strong> et faire passer le prix à <strong>{formatPrice(nextTier.pricePerUnit, nextTier.currency)}/{campaign.unit}</strong> (-{nextTier.discount}%) pour <strong>tous les participants</strong>.
                   </p>
                 </div>
               )}
@@ -273,7 +273,7 @@ function CampaignDetailPage() {
 
             {/* ── ESCROW EXPLAINER ── */}
             <div className="bg-white rounded-2xl p-6 card-shadow">
-              <h2 className="font-display font-bold text-[#1A1630] text-lg mb-4 flex items-center gap-2">
+              <h2 className="font-display font-bold text-[#2B1507] text-lg mb-4 flex items-center gap-2">
                 <Lock className="h-5 w-5" style={{ color: "#C14B1D" }} />
                 Votre paiement est sécurisé
               </h2>
@@ -286,7 +286,7 @@ function CampaignDetailPage() {
                 ].map((item) => (
                   <div key={item.title} className="p-3 rounded-xl" style={{ background: "#F8F2E8" }}>
                     <div className="text-xl mb-1">{item.icon}</div>
-                    <div className="font-semibold text-xs text-[#1A1630] mb-1">{item.title}</div>
+                    <div className="font-semibold text-xs text-[#2B1507] mb-1">{item.title}</div>
                     <div className="text-[11px] text-gray-500 leading-relaxed">{item.desc}</div>
                   </div>
                 ))}
@@ -300,7 +300,7 @@ function CampaignDetailPage() {
             {/* Supplier */}
             {supplier && (
               <div className="bg-white rounded-2xl p-6 card-shadow">
-                <h2 className="font-display font-bold text-[#1A1630] text-lg mb-4">Le fournisseur</h2>
+                <h2 className="font-display font-bold text-[#2B1507] text-lg mb-4">Le fournisseur</h2>
                 <div className="flex items-start gap-4">
                   <div className="w-14 h-14 rounded-xl flex items-center justify-center text-white font-bold text-xl shrink-0"
                     style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>
@@ -308,23 +308,23 @@ function CampaignDetailPage() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-bold text-[#1A1630]">{supplier.name}</span>
+                      <span className="font-bold text-[#2B1507]">{supplier.name}</span>
                       {supplier.verified && <CheckCircle className="h-4 w-4 text-green-500" />}
                       <span className="badge badge-forest text-xs">Vérifié</span>
                     </div>
-                    <div className="text-sm text-gray-400 mb-3">📍 {supplier.country} · {supplier.origin}</div>
+                    <div className="text-sm text-gray-400 mb-3">📍 {supplier.city}, {supplier.country}</div>
                     <div className="flex gap-4 text-sm">
                       <div>
-                        <div className="font-bold text-[#1A1630]">{supplier.rating}/5</div>
+                        <div className="font-bold text-[#2B1507]">{supplier.rating}/5</div>
                         <div className="text-xs text-gray-400">Note</div>
                       </div>
                       <div>
-                        <div className="font-bold text-[#1A1630]">{supplier.completedOrders}+</div>
-                        <div className="text-xs text-gray-400">Commandes</div>
+                        <div className="font-bold text-[#2B1507]">{supplier.reviewCount}</div>
+                        <div className="text-xs text-gray-400">Avis</div>
                       </div>
                       <div>
-                        <div className="font-bold text-[#1A1630]">{supplier.responseTime}</div>
-                        <div className="text-xs text-gray-400">Réponse</div>
+                        <div className="font-bold text-[#2B1507]">{supplier.activeCampaigns}</div>
+                        <div className="text-xs text-gray-400">Campagnes</div>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-1 mt-3">
@@ -340,7 +340,7 @@ function CampaignDetailPage() {
             {/* Similar campaigns */}
             {similarCampaigns.length > 0 && (
               <div>
-                <h2 className="font-display font-bold text-[#1A1630] text-lg mb-4">Campagnes similaires</h2>
+                <h2 className="font-display font-bold text-[#2B1507] text-lg mb-4">Campagnes similaires</h2>
                 <div className="flex flex-col gap-3">
                   {similarCampaigns.map((c) => {
                     const t = getCurrentTier(c);
@@ -350,7 +350,7 @@ function CampaignDetailPage() {
                         className="bg-white rounded-xl p-4 card-shadow flex items-center gap-4 hover:shadow-md transition-all">
                         <div className="text-3xl">{c.image}</div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-semibold text-sm text-[#1A1630] truncate">{c.title}</div>
+                          <div className="font-semibold text-sm text-[#2B1507] truncate">{c.title}</div>
                           <div className="progress-track mt-1.5" style={{ height: 4 }}>
                             <div className="progress-fill" style={{ width: `${p}%` }} />
                           </div>
@@ -380,9 +380,9 @@ function CampaignDetailPage() {
                     </span>
                     <span className="text-gray-400">/{campaign.unit}</span>
                   </div>
-                  {currentTier.discountPct > 0 && (
+                  {currentTier.discount > 0 && (
                     <div className="text-xs text-green-600 font-semibold mt-1">
-                      -{currentTier.discountPct}% vs prix Starter
+                      -{currentTier.discount}% vs prix Starter
                     </div>
                   )}
                   <div className="mt-3 progress-track" style={{ height: 8 }}>
@@ -398,7 +398,7 @@ function CampaignDetailPage() {
                   {!joined ? (
                     <>
                       <div>
-                        <label className="block text-xs font-semibold text-[#1A1630] mb-2">
+                        <label className="block text-xs font-semibold text-[#2B1507] mb-2">
                           Quantité (min. {formatQty(campaign.moq)} {campaign.unit})
                         </label>
                         <input
@@ -416,12 +416,12 @@ function CampaignDetailPage() {
                       <div className="p-3 rounded-xl" style={{ background: "#F8F2E8" }}>
                         <div className="flex justify-between text-sm mb-1">
                           <span className="text-gray-500">{formatQty(qty)} × {formatPrice(currentTier.pricePerUnit, currentTier.currency)}</span>
-                          <span className="font-bold text-[#1A1630]">{formatPrice(totalPrice, currentTier.currency)}</span>
+                          <span className="font-bold text-[#2B1507]">{formatPrice(totalPrice, currentTier.currency)}</span>
                         </div>
                         {nextTier && qty >= campaign.moq && (
                           <div className="text-[10px] text-green-600 flex items-center gap-1">
                             <TrendingDown className="h-3 w-3" />
-                            Si Silver atteint → {formatPrice(qty * nextTier.pricePerUnit, nextTier.currency)} (-{nextTier.discountPct}%)
+                            Si Silver atteint → {formatPrice(qty * nextTier.pricePerUnit, nextTier.currency)} (-{nextTier.discount}%)
                           </div>
                         )}
                       </div>
@@ -430,7 +430,7 @@ function CampaignDetailPage() {
                         Rejoindre la campagne →
                       </button>
 
-                      <a href={buildWhatsAppLink(campaign, supplier)} target="_blank" rel="noreferrer"
+                      <a href={buildWhatsAppLink(campaign)} target="_blank" rel="noreferrer"
                         className="btn-whatsapp w-full justify-center">
                         <WhatsAppIcon size={16} />
                         Commander via WhatsApp
@@ -444,7 +444,7 @@ function CampaignDetailPage() {
                   ) : (
                     <div className="text-center py-4">
                       <div className="text-4xl mb-3">🎉</div>
-                      <div className="font-bold text-[#1A1630] mb-1">Vous avez rejoint !</div>
+                      <div className="font-bold text-[#2B1507] mb-1">Vous avez rejoint !</div>
                       <div className="text-sm text-gray-500 mb-4">
                         {formatQty(qty)} {campaign.unit} · {formatPrice(totalPrice, currentTier.currency)}
                       </div>
@@ -463,7 +463,7 @@ function CampaignDetailPage() {
               <div className="mt-4 bg-white rounded-2xl p-4 card-shadow flex items-center gap-3">
                 <Clock className="h-5 w-5 shrink-0" style={{ color: daysLeft <= 7 ? "#C14B1D" : "#6B7280" }} />
                 <div>
-                  <div className="font-bold text-[#1A1630] text-sm">{daysLeft} jours restants</div>
+                  <div className="font-bold text-[#2B1507] text-sm">{daysLeft} jours restants</div>
                   <div className="text-xs text-gray-400">Clôture le {new Date(campaign.endDate).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</div>
                 </div>
                 {daysLeft <= 7 && (

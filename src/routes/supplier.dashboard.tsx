@@ -73,7 +73,7 @@ function NewCampaignForm() {
           <Plus className="h-5 w-5" />
         </div>
         <div>
-          <h2 className="font-display font-bold text-[#1A1630] text-xl">Lancer une nouvelle campagne</h2>
+          <h2 className="font-display font-bold text-[#2B1507] text-xl">Lancer une nouvelle campagne</h2>
           <p className="text-sm text-gray-500">Créez une campagne d'achat groupé avec vos paliers de prix</p>
         </div>
       </div>
@@ -81,7 +81,7 @@ function NewCampaignForm() {
       <div className="flex flex-col gap-6">
         {/* Basic info */}
         <div className="bg-white rounded-2xl card-shadow p-6">
-          <h3 className="font-semibold text-[#1A1630] mb-4 flex items-center gap-2">
+          <h3 className="font-semibold text-[#2B1507] mb-4 flex items-center gap-2">
             <span className="h-6 w-6 rounded-full bg-orange-100 text-orange-600 text-xs flex items-center justify-center font-bold">1</span>
             Informations de base
           </h3>
@@ -132,7 +132,7 @@ function NewCampaignForm() {
 
         {/* Price tiers */}
         <div className="bg-white rounded-2xl card-shadow p-6">
-          <h3 className="font-semibold text-[#1A1630] mb-1 flex items-center gap-2">
+          <h3 className="font-semibold text-[#2B1507] mb-1 flex items-center gap-2">
             <span className="h-6 w-6 rounded-full bg-orange-100 text-orange-600 text-xs flex items-center justify-center font-bold">2</span>
             Paliers de prix dégressifs
           </h3>
@@ -171,12 +171,12 @@ function NewCampaignForm() {
 
         {/* Delivery & WhatsApp */}
         <div className="bg-white rounded-2xl card-shadow p-6">
-          <h3 className="font-semibold text-[#1A1630] mb-4 flex items-center gap-2">
+          <h3 className="font-semibold text-[#2B1507] mb-4 flex items-center gap-2">
             <span className="h-6 w-6 rounded-full bg-orange-100 text-orange-600 text-xs flex items-center justify-center font-bold">3</span>
             Zones de livraison & WhatsApp
           </h3>
           <div className="mb-4">
-            <label className="block text-xs font-semibold text-[#1A1630] mb-2">Zones de livraison couvertes</label>
+            <label className="block text-xs font-semibold text-[#2B1507] mb-2">Zones de livraison couvertes</label>
             <div className="flex flex-wrap gap-2">
               {ZONES.map((z) => (
                 <button key={z} type="button" onClick={() => toggleZone(z)}
@@ -197,7 +197,7 @@ function NewCampaignForm() {
               {form.whatsapp && <span className="text-white text-xs font-bold">✓</span>}
             </div>
             <div>
-              <div className="font-semibold text-sm text-[#1A1630]">Activer les commandes WhatsApp</div>
+              <div className="font-semibold text-sm text-[#2B1507]">Activer les commandes WhatsApp</div>
               <div className="text-xs text-gray-500">Les acheteurs pourront rejoindre cette campagne directement depuis WhatsApp</div>
             </div>
           </div>
@@ -250,7 +250,7 @@ function SupplierDashboardPage() {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-display font-bold text-[#1A1630] text-xl">Bonjour, MedEquip! 👋</h2>
+              <h2 className="font-display font-bold text-[#2B1507] text-xl">Bonjour, MedEquip! 👋</h2>
               <p className="text-sm text-gray-500">Lundi 11 août 2026 · 3 campagnes actives</p>
             </div>
             <button onClick={() => setActiveSection("new-campaign")} className="btn-primary">
@@ -275,7 +275,7 @@ function SupplierDashboardPage() {
           {/* Active campaigns */}
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-display font-bold text-[#1A1630] text-lg">Campagnes actives</h3>
+              <h3 className="font-display font-bold text-[#2B1507] text-lg">Campagnes actives</h3>
               <button onClick={() => setActiveSection("campaigns")} className="text-sm font-semibold flex items-center gap-1" style={{ color: "#C14B1D" }}>
                 Toutes <ChevronRight className="h-3.5 w-3.5" />
               </button>
@@ -289,7 +289,7 @@ function SupplierDashboardPage() {
                     <div className="h-12 w-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
                       style={{ background: `${c.imageColor}15` }}>{c.image}</div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-sm text-[#1A1630] line-clamp-1 mb-1">{c.title}</div>
+                      <div className="font-semibold text-sm text-[#2B1507] line-clamp-1 mb-1">{c.title}</div>
                       <div className="progress-track" style={{ height: 6 }}>
                         <div className="progress-fill" style={{ width: `${prog}%`, height: "100%" }} />
                       </div>
@@ -313,7 +313,7 @@ function SupplierDashboardPage() {
           {/* Recent orders */}
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-display font-bold text-[#1A1630] text-lg">Commandes récentes</h3>
+              <h3 className="font-display font-bold text-[#2B1507] text-lg">Commandes récentes</h3>
               <button onClick={() => setActiveSection("orders")} className="text-sm font-semibold flex items-center gap-1" style={{ color: "#C14B1D" }}>
                 Toutes <ChevronRight className="h-3.5 w-3.5" />
               </button>
@@ -332,10 +332,10 @@ function SupplierDashboardPage() {
                     <tr key={o.id} className="border-t border-gray-100 hover:bg-gray-50">
                       <td className="px-4 py-3 font-mono text-xs text-gray-500">{o.id}</td>
                       <td className="px-4 py-3">
-                        <div className="font-medium text-[#1A1630]">{o.country} {o.company}</div>
+                        <div className="font-medium text-[#2B1507]">{o.country} {o.company}</div>
                       </td>
                       <td className="px-4 py-3 text-gray-600">{o.qty}</td>
-                      <td className="px-4 py-3 font-bold text-[#1A1630]">{o.amount}</td>
+                      <td className="px-4 py-3 font-bold text-[#2B1507]">{o.amount}</td>
                       <td className="px-4 py-3">
                         <span className={`badge text-[11px] ${o.status === "Confirmée" ? "badge-forest" : o.status === "En attente" ? "badge-gold" : "badge-blue"}`}>
                           {o.status}
@@ -357,7 +357,7 @@ function SupplierDashboardPage() {
       {/* ── WHATSAPP ─────────────────────────────────── */}
       {activeSection === "whatsapp" && (
         <div className="max-w-2xl">
-          <h2 className="font-display font-bold text-[#1A1630] text-xl mb-6">Configuration WhatsApp Business</h2>
+          <h2 className="font-display font-bold text-[#2B1507] text-xl mb-6">Configuration WhatsApp Business</h2>
           <div className="bg-white rounded-2xl card-shadow p-6 mb-5">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white" style={{ background: "#25D366" }}>
@@ -366,7 +366,7 @@ function SupplierDashboardPage() {
                 </svg>
               </div>
               <div>
-                <div className="font-semibold text-[#1A1630]">WhatsApp Business API</div>
+                <div className="font-semibold text-[#2B1507]">WhatsApp Business API</div>
                 <div className="badge badge-forest text-xs flex items-center gap-1 w-fit"><span>✓</span> Connecté</div>
               </div>
             </div>
@@ -380,7 +380,7 @@ function SupplierDashboardPage() {
             </div>
           </div>
           <div className="bg-white rounded-2xl card-shadow p-6">
-            <h3 className="font-semibold text-[#1A1630] mb-4">Messages automatiques actifs</h3>
+            <h3 className="font-semibold text-[#2B1507] mb-4">Messages automatiques actifs</h3>
             {["Confirmation de réception commande", "Alerte palier de prix atteint", "Mise à jour statut expédition", "Facture pro-forma envoyée"].map((m) => (
               <div key={m} className="flex items-center gap-3 py-3 border-b border-gray-100 last:border-0">
                 <div className="h-2 w-2 rounded-full bg-green-400 shrink-0" />
@@ -396,7 +396,7 @@ function SupplierDashboardPage() {
       {!["overview", "new-campaign", "whatsapp"].includes(activeSection) && (
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <div className="text-6xl mb-4">{NAV.find((n) => n.id === activeSection)?.icon}</div>
-          <h2 className="font-display font-bold text-[#1A1630] text-xl mb-2">{NAV.find((n) => n.id === activeSection)?.label}</h2>
+          <h2 className="font-display font-bold text-[#2B1507] text-xl mb-2">{NAV.find((n) => n.id === activeSection)?.label}</h2>
           <p className="text-gray-500 text-sm max-w-sm">Cette section est en cours de développement. Les données réelles seront disponibles après connexion à l'API.</p>
           <button onClick={() => setActiveSection("overview")} className="btn-secondary mt-6">
             Retour à l'accueil

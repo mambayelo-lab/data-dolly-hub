@@ -839,10 +839,11 @@ export function getCampaignProgress(campaign: Campaign): number {
   return Math.min(100, (campaign.currentQty / campaign.targetQty) * 100);
 }
 
-export function formatQty(qty: number, unit: string): string {
-  if (qty >= 1_000_000) return `${(qty / 1_000_000).toFixed(1)}M ${unit}`;
-  if (qty >= 1_000) return `${(qty / 1_000).toFixed(0)}K ${unit}`;
-  return `${qty.toLocaleString("fr-FR")} ${unit}`;
+export function formatQty(qty: number, unit?: string): string {
+  const u = unit ? ` ${unit}` : "";
+  if (qty >= 1_000_000) return `${(qty / 1_000_000).toFixed(1)}M${u}`;
+  if (qty >= 1_000) return `${(qty / 1_000).toFixed(0)}k${u}`;
+  return `${qty.toLocaleString("fr-FR")}${u}`;
 }
 
 export function formatPrice(price: number, currency: string): string {

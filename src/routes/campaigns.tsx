@@ -63,7 +63,7 @@ function CampaignCard({ c }: { c: Campaign }) {
           {c.image}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-[13px] font-semibold text-[#1A1630] leading-snug line-clamp-2">{c.title}</div>
+          <div className="text-[13px] font-semibold text-[#2B1507] leading-snug line-clamp-2">{c.title}</div>
           <div className="text-[11px] text-gray-400 mt-0.5 flex items-center gap-1">
             <Users size={10} />
             {c.participantCount} participants
@@ -75,7 +75,7 @@ function CampaignCard({ c }: { c: Campaign }) {
       <div className="mx-4 mb-3 flex rounded-xl overflow-hidden border" style={{ borderColor: "#F0ECE6" }}>
         <div className="flex-1 px-3 py-2.5 bg-gray-50">
           <div className="text-[9px] uppercase tracking-wide text-gray-400 font-semibold mb-0.5">Palier actuel</div>
-          <div className="text-[15px] font-bold text-[#1A1630]">{formatPrice(tier.pricePerUnit, tier.currency)}</div>
+          <div className="text-[15px] font-bold text-[#2B1507]">{formatPrice(tier.pricePerUnit, tier.currency)}</div>
           <div className="text-[10px] text-gray-400">/{c.unit}</div>
         </div>
         {next ? (
@@ -151,17 +151,17 @@ function CampaignsPage() {
             <div className="text-[11px] font-bold uppercase tracking-widest mb-1" style={{ color: "#C14B1D" }}>
               Achats groupés
             </div>
-            <h1 className="font-display text-2xl font-bold text-[#1A1630] mb-1">Campagnes en cours</h1>
+            <h1 className="font-display text-2xl font-bold text-[#2B1507] mb-1">Campagnes en cours</h1>
             <p className="text-gray-500 text-sm">
               Rejoignez une commande collective · prix dégressifs par paliers · escrow sécurisé
             </p>
           </div>
           <div className="flex gap-2 shrink-0">
             <div className="px-3 py-1.5 rounded-lg text-[12px] text-gray-600 border" style={{ borderColor: "#F0ECE6" }}>
-              <span className="font-bold text-[#1A1630]">{activeCnt}</span> actives
+              <span className="font-bold text-[#2B1507]">{activeCnt}</span> actives
             </div>
             <div className="px-3 py-1.5 rounded-lg text-[12px] text-gray-600 border" style={{ borderColor: "#F0ECE6" }}>
-              <span className="font-bold text-[#1A1630]">{upcomingCnt}</span> à venir
+              <span className="font-bold text-[#2B1507]">{upcomingCnt}</span> à venir
             </div>
           </div>
         </div>
@@ -176,7 +176,7 @@ function CampaignsPage() {
                 onClick={() => setActiveSector(s.id)}
                 className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all"
                 style={{
-                  background: isActive ? "#1A1630" : "#F8F2E8",
+                  background: isActive ? "#2B1507" : "#F8F2E8",
                   color: isActive ? "white" : "#6B7280",
                   whiteSpace: "nowrap",
                 }}
@@ -245,7 +245,7 @@ function CampaignsPage() {
         <Link
           to="/"
           className="shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-[12px] font-semibold"
-          style={{ background: "#F8F2E8", color: "#1A1630" }}
+          style={{ background: "#F8F2E8", color: "#2B1507" }}
         >
           <HelpCircle size={14} /> Comment ça marche ?
         </Link>
