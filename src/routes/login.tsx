@@ -30,7 +30,7 @@ function LoginPage() {
           <div className="h-9 w-9 rounded-xl flex items-center justify-center text-white font-bold"
             style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}>D</div>
           <div>
-            <div className="font-display font-bold text-[#2B1507] text-base">DOLLY TRADE B2B</div>
+            <div className="font-display font-bold text-[#2B1507] text-base">WAOUMAS</div>
             <div className="text-[10px] text-gray-400 tracking-wider">MARKETPLACE INTERNATIONALE</div>
           </div>
         </Link>

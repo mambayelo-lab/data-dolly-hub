@@ -56,8 +56,8 @@ function AppSidebar() {
             D
           </div>
           <div>
-            <div className="text-white font-bold text-[14px] leading-none font-display">DOLLY TRADE</div>
-            <div className="text-[9px] text-white/40 leading-none mt-1 tracking-widest">B2B MARKETPLACE</div>
+            <div className="text-white font-bold text-[14px] leading-none font-display">WAOUMAS</div>
+            <div className="text-[9px] text-white/40 leading-none mt-1 tracking-widest">ACHATS GROUPÉS B2B</div>
           </div>
         </Link>
       </div>
@@ -412,8 +412,8 @@ export function DashboardLayout({
             <div className="h-8 w-8 rounded-lg flex items-center justify-center text-white font-bold"
               style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}>D</div>
             <div>
-              <div className="text-white font-bold text-sm font-display">DOLLY TRADE</div>
-              <div className="text-[9px] text-white/40 tracking-wider">B2B MARKETPLACE</div>
+              <div className="text-white font-bold text-sm font-display">WAOUMAS</div>
+              <div className="text-[9px] text-white/40 tracking-wider">ACHATS GROUPÉS B2B</div>
             </div>
           </Link>
         </div>
