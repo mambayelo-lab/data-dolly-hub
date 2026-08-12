@@ -51,7 +51,7 @@ function WhatsAppPage() {
             <span style={{ color: "#25D366" }}>directement sur WhatsApp</span>
           </h1>
           <p className="text-white/70 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-            WhatsApp est le canal d'affaires numéro 1 dans le monde. Dolly Trade B2B intègre nativement WhatsApp pour gérer vos campagnes d'achats groupés B2B sans friction.
+            WhatsApp est le canal d'affaires numéro 1 dans le monde. WAOUMAS intègre nativement WhatsApp pour gérer vos campagnes d'achats groupés B2B sans friction.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link to="/register/supplier" className="btn-whatsapp text-base px-6 py-3">
@@ -128,7 +128,7 @@ function WhatsAppPage() {
               <div className="px-4 py-3 flex items-center gap-3" style={{ background: "#25D366" }}>
                 <div className="w-10 h-10 rounded-full bg-white/30 flex items-center justify-center text-white font-bold text-sm">DT</div>
                 <div>
-                  <div className="font-semibold text-white text-sm">Dolly Trade B2B</div>
+                  <div className="font-semibold text-white text-sm">WAOUMAS</div>
                   <div className="text-green-100 text-xs">● En ligne</div>
                 </div>
                 <Phone className="h-4 w-4 text-white ml-auto" />
@@ -237,7 +237,7 @@ function WhatsAppPage() {
               {
                 name: "Starter",
                 price: "Gratuit",
-                features: ["Numéro WhatsApp partagé Dolly Trade", "200 messages/mois", "Notifications campagnes", "Templates pré-approuvés"],
+                features: ["Numéro WhatsApp partagé WAOUMAS", "200 messages/mois", "Notifications campagnes", "Templates pré-approuvés"],
                 cta: "Commencer gratuitement",
                 highlighted: false,
               },
@@ -286,7 +286,7 @@ function WhatsAppPage() {
         <div className="container mx-auto px-4 text-center max-w-2xl">
           <div className="text-5xl mb-4">📱</div>
           <h2 className="font-display text-3xl font-bold text-[#2B1507] mb-4">Prêt à commercer sur WhatsApp?</h2>
-          <p className="text-gray-600 mb-8">Rejoignez plus de 1 240 fournisseurs qui utilisent déjà Dolly Trade B2B pour leurs campagnes d'achats groupés</p>
+          <p className="text-gray-600 mb-8">Rejoignez plus de 1 240 fournisseurs qui utilisent déjà WAOUMAS pour leurs campagnes d'achats groupés</p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link to="/register/supplier" className="btn-whatsapp text-base px-6 py-3">
               <MessageCircle className="h-5 w-5" />

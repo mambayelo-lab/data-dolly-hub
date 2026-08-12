@@ -148,7 +148,7 @@ function CampaignCard({ c }: { c: (typeof campaigns)[0] }) {
 
 const STEPS = [
   { n: "01", icon: "🛒", title: "Rejoignez la campagne", desc: "Choisissez votre quantité. Ce prix est votre maximum garanti — il peut seulement baisser." },
-  { n: "02", icon: "🔒", title: "Votre argent est protégé", desc: "Vos fonds sont bloqués sur un compte sécurisé. Ni le fournisseur ni la plateforme ne peut y accéder." },
+  { n: "02", icon: "🔒", title: "Votre argent est sécurisé", desc: "Vos fonds sont bloqués sur un compte sécurisé. Ni le fournisseur ni la plateforme ne peut y accéder." },
   { n: "03", icon: "🎯", title: "Prix collectif appliqué", desc: "Quand la campagne se termine, le prix baisse automatiquement pour tous si le palier est dépassé." },
   { n: "04", icon: "✅", title: "Livraison → Paiement libéré", desc: "À la réception confirmée, votre paiement est libéré et le fournisseur est payé. Zéro risque." },
 ];
@@ -180,7 +180,7 @@ function HomePage() {
             <span style={{ color: "#F5BE25" }}>meilleur prix.</span>
           </h1>
           <p className="text-white/65 text-[14px] leading-relaxed mb-6 max-w-lg">
-            Rejoignez des commandes collectives B2B. Le prix baisse automatiquement à chaque palier. Paiement sécurisé par escrow — jusqu'à <strong className="text-white font-bold">−43%</strong> sur le prix marché.
+            Rejoignez des commandes collectives B2B. Le prix baisse automatiquement à chaque palier. Paiement 100% sécurisé — jusqu'à <strong className="text-white font-bold">−43%</strong> sur le prix marché.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
