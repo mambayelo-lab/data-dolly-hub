@@ -175,12 +175,15 @@ function HomePage() {
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
             {activeCampaigns.length} campagnes actives en ce moment
           </div>
+          <div className="text-[10px] font-bold uppercase tracking-widest mb-3" style={{ color: "rgba(245,190,37,0.7)", letterSpacing: "0.15em" }}>
+            Achats Groupés B2B
+          </div>
           <h1 className="font-display text-3xl lg:text-4xl font-bold text-white leading-tight mb-4">
             Plus nombreux,{" "}
-            <span style={{ color: "#F5BE25" }}>meilleur prix.</span>
+            <span style={{ color: "#F5BE25" }}>moins vous payez.</span>
           </h1>
           <p className="text-white/65 text-[14px] leading-relaxed mb-6 max-w-lg">
-            Rejoignez des commandes collectives B2B. Le prix baisse automatiquement à chaque palier. Paiement 100% sécurisé — jusqu'à <strong className="text-white font-bold">−43%</strong> sur le prix marché.
+            Rejoignez une commande collective. Chaque nouveau participant fait baisser le prix pour <strong className="text-white font-bold">tout le groupe</strong>. Aucun achat individuel — uniquement des volumes groupés jusqu'à <strong className="text-white font-bold">−43%</strong>.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
@@ -248,7 +251,7 @@ function HomePage() {
         <div className="flex items-center justify-between mb-5">
           <div>
             <h2 className="font-display text-[18px] font-bold text-[#2B1507]">Campagnes en cours</h2>
-            <p className="text-[12px] text-gray-500 mt-0.5">Plus vous êtes nombreux, plus le prix baisse pour tous</p>
+            <p className="text-[12px] text-gray-500 mt-0.5">Achetez en groupe · chaque participant fait baisser le prix · aucun achat individuel</p>
           </div>
           <Link to="/campaigns" className="flex items-center gap-1 text-[12px] font-semibold" style={{ color: "#D4581C" }}>
             Toutes <ArrowRight size={13} />
@@ -263,44 +266,62 @@ function HomePage() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section className="px-6 py-8 bg-white">
+      <section className="px-6 py-10 bg-white">
         <div className="max-w-4xl mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="font-display text-[18px] font-bold text-[#2B1507]">Comment ça marche ?</h2>
+          <div className="flex items-center justify-between mb-10">
+            <div>
+              <div className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: "#D4581C", letterSpacing: "0.12em" }}>
+                Simple &amp; Transparent
+              </div>
+              <h2 className="font-display text-[20px] font-bold text-[#2B1507]">Comment ça marche ?</h2>
+            </div>
             <Shield size={20} className="text-green-600" />
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {STEPS.map((s, i) => (
-              <div key={s.n} className="relative">
-                {i < STEPS.length - 1 && (
+          {/* Timeline grid with single continuous line */}
+          <div className="relative">
+            {/* Continuous line behind all icons — desktop only */}
+            <div
+              className="hidden lg:block absolute h-0.5 z-0"
+              style={{
+                top: "24px",
+                left: "12.5%",
+                right: "12.5%",
+                background: "linear-gradient(90deg, #D4581C, #F5BE25)",
+              }}
+            />
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {STEPS.map((s, i) => (
+                <div key={s.n} className="flex flex-col items-center text-center lg:items-center">
+                  {/* Icon on the timeline */}
                   <div
-                    className="hidden lg:block absolute top-6 left-full w-full h-0.5 z-0"
-                    style={{ background: "linear-gradient(90deg, #D4581C40, #F5BE2540)", width: "calc(100% - 3rem)" }}
-                  />
-                )}
-                <div className="relative z-10 flex flex-col items-start">
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-3"
-                    style={{ background: "linear-gradient(135deg, rgba(212,88,28,0.1), rgba(245,190,37,0.1))", border: "1px solid rgba(212,88,28,0.15)" }}
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl mb-4 relative z-10"
+                    style={{
+                      background: i === 0 ? "linear-gradient(135deg, #D4581C, #E8722E)" : "white",
+                      border: `2px solid ${i === 0 ? "transparent" : "#E9E1D3"}`,
+                      boxShadow: i === 0
+                        ? "0 4px 14px rgba(212,88,28,0.40)"
+                        : "0 2px 8px rgba(43,21,7,0.08)",
+                    }}
                   >
                     {s.icon}
                   </div>
                   <div className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: "#D4581C" }}>{s.n}</div>
-                  <div className="font-semibold text-[13px] text-[#2B1507] mb-1">{s.title}</div>
-                  <div className="text-[11px] text-gray-500 leading-relaxed">{s.desc}</div>
+                  <div className="font-semibold text-[14px] text-[#2B1507] mb-1.5">{s.title}</div>
+                  <div className="text-[12px] text-gray-500 leading-relaxed">{s.desc}</div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           <div
-            className="mt-6 p-4 rounded-xl flex items-center gap-3"
+            className="mt-8 p-4 rounded-xl flex items-center gap-3"
             style={{ background: "rgba(21,128,61,0.06)", border: "1px solid rgba(21,128,61,0.15)" }}
           >
             <CheckCircle size={16} className="text-green-600 shrink-0" />
-            <p className="text-[12px] text-green-700">
-              Fonds libérés uniquement après livraison confirmée. Remboursement intégral automatique en cas de non-livraison.
+            <p className="text-[12px] text-green-700 font-medium">
+              Votre argent est libéré <strong>uniquement après livraison confirmée</strong>. Remboursement intégral automatique en cas de non-livraison.
             </p>
           </div>
         </div>
