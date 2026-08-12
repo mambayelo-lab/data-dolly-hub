@@ -133,7 +133,7 @@ function CampaignCard({ c }: { c: Campaign }) {
               boxShadow: "0 3px 12px rgba(212,88,28,0.35)",
             }}
           >
-            {next ? `Acheter à ${formatPrice(next.pricePerUnit, next.currency)}` : "Rejoindre la campagne"}
+            {next ? `Rejoindre — ${formatPrice(next.pricePerUnit, next.currency)}/u` : "Rejoindre la campagne"}
             <ArrowRight size={14} />
           </div>
         )}
@@ -252,7 +252,7 @@ function CampaignsPage() {
       >
         <div className="flex items-center gap-4 overflow-x-auto">
           <span className="text-[12px] text-gray-500 shrink-0">
-            💡 <span className="font-semibold text-gray-700">Plus nous sommes nombreux</span>, moins on paie
+            👥 <span className="font-semibold text-gray-700">Achats groupés uniquement</span> — plus on est nombreux, moins on paie
           </span>
           <div className="hidden sm:flex items-center gap-1 text-[11px] text-gray-400 shrink-0">
             <Shield size={12} className="text-green-600" /> Paiement 100% sécurisé
