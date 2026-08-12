@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { sectors } from "@/data/marketplace";
 
 export const Route = createFileRoute("/register/supplier")({
-  head: () => ({ meta: [{ title: "Inscription Fournisseur — Dolly Trade B2B" }] }),
+  head: () => ({ meta: [{ title: "Inscription Fournisseur — WAOUMAS" }] }),
   component: RegisterSupplierPage,
 });
 
@@ -336,7 +336,7 @@ export default function RegisterSupplierPage() {
               <div className="flex items-start gap-3 p-4 rounded-xl mb-6 text-left" style={{ background: "#F9F7F4" }}>
                 <input type="checkbox" id="terms" checked={form.acceptTerms} onChange={(e) => set("acceptTerms", e.target.checked)} className="mt-0.5" />
                 <label htmlFor="terms" className="text-sm text-gray-600 cursor-pointer">
-                  J'accepte les <a href="#" className="underline" style={{ color: "#D4581C" }}>Conditions générales d'utilisation</a> et la <a href="#" className="underline" style={{ color: "#D4581C" }}>Politique de confidentialité</a> de Dolly Trade B2B. Je certifie que les informations fournies sont exactes.
+                  J'accepte les <a href="#" className="underline" style={{ color: "#D4581C" }}>Conditions générales d'utilisation</a> et la <a href="#" className="underline" style={{ color: "#D4581C" }}>Politique de confidentialité</a> de WAOUMAS. Je certifie que les informations fournies sont exactes.
                 </label>
               </div>
               <button onClick={submit} className="btn-primary w-full justify-center text-base py-3.5">

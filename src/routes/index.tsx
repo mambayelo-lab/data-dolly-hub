@@ -6,8 +6,8 @@ import { campaigns, sectors, getCurrentTier, getNextTier, formatPrice } from "@/
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Dolly Trade B2B — Achats groupés inter-entreprises" },
-      { name: "description", content: "Rejoignez des campagnes d'achats groupés B2B. Paliers de prix dégressifs jusqu'à -43%. Paiement sécurisé par escrow — vos fonds sont bloqués jusqu'à livraison." },
+      { title: "WAOUMAS — Achats groupés B2B, prix dégressifs" },
+      { name: "description", content: "Rejoignez des campagnes d'achats groupés B2B. Paliers de prix dégressifs jusqu'à -43%. Paiement 100% sécurisé — vos fonds sont bloqués jusqu'à livraison." },
     ],
   }),
   component: HomePage,
@@ -147,10 +147,10 @@ function CampaignCard({ c }: { c: (typeof campaigns)[0] }) {
 }
 
 const STEPS = [
-  { n: "01", icon: "🛒", title: "Rejoignez la campagne", desc: "Choisissez votre quantité ≥ MOQ. Le prix affiché est votre prix garanti minimum." },
-  { n: "02", icon: "🔒", title: "Paiement en escrow", desc: "Vos fonds sont bloqués sur un compte séquestre. Ni le fournisseur ni la plateforme ne peut y accéder." },
-  { n: "03", icon: "🎯", title: "Palier atteint", desc: "Quand la campagne clôt, le prix baisse automatiquement pour tous si le palier est dépassé." },
-  { n: "04", icon: "✅", title: "Livraison → Paiement", desc: "À la réception confirmée, l'escrow se libère et le fournisseur est payé. Zéro risque." },
+  { n: "01", icon: "🛒", title: "Rejoignez la campagne", desc: "Choisissez votre quantité. Ce prix est votre maximum garanti — il peut seulement baisser." },
+  { n: "02", icon: "🔒", title: "Votre argent est protégé", desc: "Vos fonds sont bloqués sur un compte sécurisé. Ni le fournisseur ni la plateforme ne peut y accéder." },
+  { n: "03", icon: "🎯", title: "Prix collectif appliqué", desc: "Quand la campagne se termine, le prix baisse automatiquement pour tous si le palier est dépassé." },
+  { n: "04", icon: "✅", title: "Livraison → Paiement libéré", desc: "À la réception confirmée, votre paiement est libéré et le fournisseur est payé. Zéro risque." },
 ];
 
 const activeCampaigns = campaigns.filter((c) => c.status === "active");

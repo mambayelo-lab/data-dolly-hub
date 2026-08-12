@@ -6,7 +6,7 @@ import { campaigns, sectors, getCurrentTier, getNextTier, formatPrice, type Camp
 
 export const Route = createFileRoute("/campaigns/")({
   head: () => ({
-    meta: [{ title: "Campagnes d'achats groupés — Dolly Trade B2B" }],
+    meta: [{ title: "Campagnes d'achats groupés — WAOUMAS" }],
   }),
   component: CampaignsPage,
 });
@@ -172,7 +172,7 @@ function CampaignsPage() {
             </div>
             <h1 className="font-display text-2xl font-bold text-[#2B1507] mb-1">Campagnes en cours</h1>
             <p className="text-gray-500 text-sm">
-              Rejoignez une commande collective · prix dégressifs par paliers · escrow sécurisé
+              Rejoignez une commande collective · prix dégressifs par paliers · paiement sécurisé
             </p>
           </div>
           <div className="flex gap-2 shrink-0">

@@ -6,7 +6,7 @@ import { campaigns, sectors, getSupplier, getCurrentTier, getCampaignProgress, f
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/client/dashboard")({
-  head: () => ({ meta: [{ title: "Espace Acheteur — Dolly Trade B2B" }] }),
+  head: () => ({ meta: [{ title: "Espace Acheteur — WAOUMAS" }] }),
   component: ClientDashboardPage,
 });
 
@@ -282,7 +282,7 @@ function ClientDashboardPage() {
               ))}
             </div>
           </div>
-          <a href="https://wa.me/33612345678?text=Bonjour+Dolly+Trade+B2B%2C+je+voudrais+voir+les+campagnes+actives"
+          <a href="https://wa.me/33612345678?text=Bonjour+WAOUMAS%2C+je+voudrais+voir+les+campagnes+actives"
             target="_blank" rel="noopener noreferrer" className="btn-whatsapp w-full justify-center">
             <WhatsAppIcon size={20} /> Ouvrir WhatsApp Business
           </a>

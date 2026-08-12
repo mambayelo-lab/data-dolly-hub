@@ -273,7 +273,7 @@ export function HomepageRightPanel() {
         <div className="px-3 py-2.5 flex items-center gap-2.5" style={{ background: "#25D366" }}>
           <div className="w-8 h-8 rounded-full bg-white/25 flex items-center justify-center text-white text-xs font-bold">DT</div>
           <div>
-            <div className="text-white font-semibold text-[12px]">Dolly Trade B2B</div>
+            <div className="text-white font-semibold text-[12px]">WAOUMAS</div>
             <div className="text-green-100 text-[9px]">● En ligne</div>
           </div>
         </div>
@@ -308,7 +308,7 @@ export function HomepageRightPanel() {
       <div className="mx-4 mt-4 mb-4 rounded-2xl p-4 border" style={{ borderColor: "#E5E7EB", background: "#FAFAFA" }}>
         <div className="flex items-center gap-2 mb-2">
           <Shield size={14} className="text-green-600" />
-          <span className="text-[12px] font-semibold text-gray-800">Paiement sécurisé & Escrow</span>
+          <span className="text-[12px] font-semibold text-gray-800">Paiement 100% sécurisé</span>
         </div>
         <p className="text-[10px] text-gray-500 mb-3 leading-relaxed">
           Vos paiements sont protégés jusqu'à la livraison confirmée.
@@ -325,7 +325,7 @@ export function HomepageRightPanel() {
           ))}
         </div>
         <div className="flex items-center gap-1.5 text-[10px] font-medium" style={{ color: "#15803D" }}>
-          <Shield size={11} /> Fonds protégés par notre système Escrow
+          <Shield size={11} /> Votre argent est bloqué jusqu'à la livraison
         </div>
       </div>
     </div>

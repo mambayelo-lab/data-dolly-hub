@@ -5,7 +5,7 @@ import { PageLayout } from "@/components/B2BLayout";
 import { products, sectors, suppliers, getSupplier, getSector, formatPrice, type Product } from "@/data/marketplace";
 
 export const Route = createFileRoute("/products")({
-  head: () => ({ meta: [{ title: "Catalogue Produits B2B — Dolly Trade" }] }),
+  head: () => ({ meta: [{ title: "Catalogue Produits B2B — WAOUMAS" }] }),
   component: ProductsPage,
 });
 

@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { sectors } from "@/data/marketplace";
 
 export const Route = createFileRoute("/register/client")({
-  head: () => ({ meta: [{ title: "Inscription Acheteur B2B — Dolly Trade" }] }),
+  head: () => ({ meta: [{ title: "Inscription Acheteur B2B — WAOUMAS" }] }),
   component: RegisterClientPage,
 });
 
@@ -117,7 +117,7 @@ export default function RegisterClientPage() {
           {step === 1 && (
             <div>
               <h2 className="font-display text-2xl text-[#2B1507] mb-1">Votre entreprise</h2>
-              <p className="text-gray-500 text-sm mb-6">Seules les entreprises professionnelles peuvent s'inscrire sur Dolly Trade B2B.</p>
+              <p className="text-gray-500 text-sm mb-6">Seules les entreprises professionnelles peuvent s'inscrire sur WAOUMAS.</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="field-group sm:col-span-2">
                   <label>Nom de l'entreprise *</label>
@@ -265,7 +265,7 @@ export default function RegisterClientPage() {
           {step === 5 && (
             <div className="text-center">
               <div className="text-6xl mb-4">🌍</div>
-              <h2 className="font-display text-2xl text-[#2B1507] mb-2">Prêt à rejoindre Dolly Trade?</h2>
+              <h2 className="font-display text-2xl text-[#2B1507] mb-2">Prêt à rejoindre WAOUMAS ?</h2>
               <p className="text-gray-500 text-sm mb-6">Vérifiez vos informations et activez votre compte acheteur professionnel.</p>
               <div className="text-left bg-gray-50 rounded-xl p-5 mb-6 flex flex-col gap-3">
                 {[

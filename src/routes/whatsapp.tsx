@@ -3,7 +3,7 @@ import { MessageCircle, Bell, ShoppingCart, Zap, CheckCircle, Phone, ArrowRight,
 import { PageLayout } from "../components/B2BLayout";
 
 export const Route = createFileRoute("/whatsapp")({
-  head: () => ({ meta: [{ title: "WhatsApp B2B — Dolly Trade B2B" }] }),
+  head: () => ({ meta: [{ title: "WhatsApp B2B — WAOUMAS" }] }),
   component: WhatsAppPage,
 });
 

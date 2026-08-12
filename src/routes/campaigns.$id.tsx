@@ -11,7 +11,7 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/campaigns/$id")({
   head: ({ params }) => {
     const c = getCampaign(params.id);
-    return { meta: [{ title: c ? `${c.title} — Dolly Trade B2B` : "Campagne — Dolly Trade B2B" }] };
+    return { meta: [{ title: c ? `${c.title} — WAOUMAS` : "Campagne — WAOUMAS" }] };
   },
   component: CampaignDetailPage,
 });
@@ -172,7 +172,7 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
     }
     setJoined(true);
     toast.success("Inscription confirmée !", {
-      description: `${formatQty(qty)} ${campaign.unit} · ${formatPrice(total, currentTier.currency)} — fonds bloqués en escrow.`,
+      description: `${formatQty(qty)} ${campaign.unit} · ${formatPrice(total, currentTier.currency)} — fonds bloqués jusqu'à livraison.`,
     });
   };
 
@@ -282,7 +282,7 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
 
           <div className="flex items-center justify-center gap-1.5 text-[10px] text-gray-400">
             <Lock size={10} />
-            Paiement 100% sécurisé · Fonds bloqués en escrow jusqu'à livraison
+            Paiement 100% sécurisé · Fonds bloqués jusqu'à livraison confirmée
           </div>
 
           {campaign.whatsappEnabled && (
@@ -306,7 +306,7 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
             {formatQty(qty)} {campaign.unit} · {formatPrice(total, currentTier.currency)}
           </div>
           <div className="text-[11px] text-gray-400 p-3 rounded-xl" style={{ background: "#FAF6EF" }}>
-            Vous allez recevoir un lien de paiement sécurisé. Vos fonds seront bloqués en escrow jusqu'à la livraison confirmée.
+            Vous allez recevoir un lien de paiement sécurisé. Vos fonds seront bloqués jusqu'à la livraison confirmée.
           </div>
         </div>
       )}
@@ -354,7 +354,7 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
         </div>
         {[
           "Meilleurs prix grâce aux achats groupés",
-          "Paiement sécurisé par Escrow",
+          "Paiement 100% sécurisé",
           "Livraison garantie dans les délais",
         ].map((g) => (
           <div key={g} className="flex items-center gap-2 mb-1.5">
@@ -368,12 +368,12 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
 }
 
 /* ── Main page ───────────────────────────────────── */
-const TABS = ["Détails", "Paliers de prix", "Fournisseur", "Livraison & Paiement"];
+const TABS = ["Le produit", "Les prix", "Fournisseur", "Livraison & Paiement"];
 
 function CampaignDetailPage() {
   const { id } = Route.useParams();
   const campaign = getCampaign(id);
-  const [activeTab, setActiveTab] = useState("Détails");
+  const [activeTab, setActiveTab] = useState("Le produit");
 
   if (!campaign) {
     return (
@@ -575,7 +575,7 @@ function CampaignDetailPage() {
               {/* Tab nav */}
               <div className="flex border-b overflow-x-auto" style={{ borderColor: "#E9E1D3" }}>
                 {[...TABS, `Participants (${campaign.participantCount})`].map((tab) => {
-                  const isActive = tab === activeTab || (activeTab === "Détails" && tab === "Détails");
+                  const isActive = tab === activeTab || (activeTab === "Le produit" && tab === "Le produit");
                   return (
                     <button
                       key={tab}
@@ -594,7 +594,7 @@ function CampaignDetailPage() {
 
               {/* Tab content */}
               <div className="p-5">
-                {(activeTab === "Détails" || activeTab === "Paliers de prix") && (
+                {(activeTab === "Le produit" || activeTab === "Les prix") && (
                   <table className="w-full text-[12px]">
                     <thead>
                       <tr className="border-b" style={{ borderColor: "#E9E1D3" }}>
@@ -696,7 +696,7 @@ function CampaignDetailPage() {
                     </div>
                     <div className="sm:col-span-2 p-3 rounded-xl flex items-center gap-2" style={{ background: "rgba(21,128,61,0.06)", border: "1px solid rgba(21,128,61,0.15)" }}>
                       <Shield className="w-4 h-4 text-green-600 shrink-0" />
-                      <span className="text-[12px] text-green-700">Paiement sécurisé par escrow — les fonds sont libérés uniquement à la réception confirmée de votre commande.</span>
+                      <span className="text-[12px] text-green-700">Paiement 100% sécurisé — les fonds sont libérés uniquement à la réception confirmée de votre commande.</span>
                     </div>
                   </div>
                 )}
@@ -728,8 +728,8 @@ function CampaignDetailPage() {
               </div>
               <div className="grid sm:grid-cols-2 gap-3">
                 {[
-                  { icon: "🔒", title: "Fonds en escrow", desc: "Votre paiement est bloqué sur un compte neutre jusqu'à livraison confirmée." },
-                  { icon: "📉", title: "Prix garanti ou moins", desc: "Si un palier supérieur est atteint, la différence vous est remboursée automatiquement." },
+                  { icon: "🔒", title: "Votre argent est protégé", desc: "Votre paiement est bloqué sur un compte neutre jusqu'à livraison confirmée." },
+                  { icon: "📉", title: "Ce prix — ou encore moins", desc: "Si un palier supérieur est atteint, la différence vous est remboursée automatiquement." },
                   { icon: "🚫", title: "Zéro risque", desc: "Le fournisseur est payé uniquement après réception vérifiée des marchandises." },
                   { icon: "↩️", title: "Remboursement intégral", desc: "Si la campagne échoue ou la livraison n'a pas lieu, vous êtes remboursé automatiquement." },
                 ].map((item) => (

@@ -6,7 +6,7 @@ import { campaigns, sectors, formatPrice, formatQty, getCurrentTier, getCampaign
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/supplier/dashboard")({
-  head: () => ({ meta: [{ title: "Tableau de bord Fournisseur — Dolly Trade B2B" }] }),
+  head: () => ({ meta: [{ title: "Tableau de bord Fournisseur — WAOUMAS" }] }),
   component: SupplierDashboardPage,
 });
 
@@ -134,7 +134,7 @@ function NewCampaignForm() {
         <div className="bg-white rounded-2xl card-shadow p-6">
           <h3 className="font-semibold text-[#2B1507] mb-1 flex items-center gap-2">
             <span className="h-6 w-6 rounded-full bg-orange-100 text-orange-600 text-xs flex items-center justify-center font-bold">2</span>
-            Paliers de prix dégressifs
+            Prix dégressifs par quantité
           </h3>
           <p className="text-sm text-gray-500 mb-4">Définissez vos prix par quantité. Plus les quantités augmentent, plus le prix unitaire baisse.</p>
           <div className="flex flex-col gap-3">
