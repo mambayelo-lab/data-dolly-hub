@@ -11,7 +11,7 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/campaigns/$id")({
   head: ({ params }) => {
     const c = getCampaign(params.id);
-    return { meta: [{ title: c ? `${c.title} — Dolly Trade B2B` : "Campagne — Dolly Trade B2B" }] };
+    return { meta: [{ title: c ? `${c.title} — WAOUMAS` : "Campagne — WAOUMAS" }] };
   },
   component: CampaignDetailPage,
 });
@@ -53,11 +53,11 @@ function CircleProgress({ pct }: { pct: number }) {
     <svg width={152} height={152} viewBox="0 0 152 152">
       <defs>
         <linearGradient id="cpGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#C14B1D" />
-          <stop offset="100%" stopColor="#E8A820" />
+          <stop offset="0%" stopColor="#D4581C" />
+          <stop offset="100%" stopColor="#F5BE25" />
         </linearGradient>
       </defs>
-      <circle cx="76" cy="76" r={r} fill="none" stroke="#F0ECE6" strokeWidth="12" />
+      <circle cx="76" cy="76" r={r} fill="none" stroke="#E9E1D3" strokeWidth="12" />
       <circle
         cx="76" cy="76" r={r} fill="none"
         stroke="url(#cpGrad)" strokeWidth="12"
@@ -90,10 +90,10 @@ function TierProgressBar({ campaign }: { campaign: NonNullable<ReturnType<typeof
   return (
     <div>
       {/* Track + nodes */}
-      <div className="relative h-3 rounded-full mb-8 mt-4" style={{ background: "#F0ECE6" }}>
+      <div className="relative h-3 rounded-full mb-8 mt-4" style={{ background: "#E9E1D3" }}>
         <div
           className="absolute left-0 top-0 h-full rounded-full transition-all duration-700"
-          style={{ width: `${progress}%`, background: "linear-gradient(90deg, #C14B1D, #E8A820)" }}
+          style={{ width: `${progress}%`, background: "linear-gradient(90deg, #D4581C, #F5BE25)" }}
         />
         {campaign.priceTiers.map((tier, i) => {
           const isAchieved = i < currentIdx;
@@ -108,9 +108,9 @@ function TierProgressBar({ campaign }: { campaign: NonNullable<ReturnType<typeof
               <div
                 className="w-6 h-6 rounded-full border-2 flex items-center justify-center"
                 style={{
-                  background: isAchieved ? "#E8A820" : isCurrent ? "#C14B1D" : "white",
-                  borderColor: isAchieved ? "#E8A820" : isCurrent ? "#C14B1D" : "#E5E7EB",
-                  boxShadow: isCurrent ? "0 0 0 3px rgba(193,75,29,0.2)" : "none",
+                  background: isAchieved ? "#F5BE25" : isCurrent ? "#D4581C" : "white",
+                  borderColor: isAchieved ? "#F5BE25" : isCurrent ? "#D4581C" : "#E5E7EB",
+                  boxShadow: isCurrent ? "0 0 0 3px rgba(212,88,28,0.2)" : "none",
                 }}
               >
                 {(isAchieved || isCurrent) && <CheckCircle className="w-3.5 h-3.5 text-white" />}
@@ -127,11 +127,11 @@ function TierProgressBar({ campaign }: { campaign: NonNullable<ReturnType<typeof
           const isCurrent = i === currentIdx;
           return (
             <div key={tier.label} className="text-center px-1">
-              <div className="font-bold text-[12px]" style={{ color: isCurrent ? "#C14B1D" : isAchieved ? "#92400E" : "#9CA3AF" }}>
+              <div className="font-bold text-[12px]" style={{ color: isCurrent ? "#D4581C" : isAchieved ? "#92400E" : "#9CA3AF" }}>
                 {tier.label}
               </div>
               <div className="text-[10px] text-gray-400 mt-0.5">{formatQty(tier.minQty)} {campaign.unit}</div>
-              <div className="font-semibold text-[12px] mt-0.5" style={{ color: isCurrent ? "#C14B1D" : "#374151" }}>
+              <div className="font-semibold text-[12px] mt-0.5" style={{ color: isCurrent ? "#D4581C" : "#374151" }}>
                 {formatPrice(tier.pricePerUnit, tier.currency)}
               </div>
               <div className="mt-2">
@@ -140,7 +140,7 @@ function TierProgressBar({ campaign }: { campaign: NonNullable<ReturnType<typeof
                     <CheckCircle className="w-3 h-3" /> Atteint
                   </span>
                 ) : isCurrent ? (
-                  <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full text-white" style={{ background: "#C14B1D" }}>
+                  <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full text-white" style={{ background: "#D4581C" }}>
                     En cours
                   </span>
                 ) : (
@@ -172,15 +172,15 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
     }
     setJoined(true);
     toast.success("Inscription confirmée !", {
-      description: `${formatQty(qty)} ${campaign.unit} · ${formatPrice(total, currentTier.currency)} — fonds bloqués en escrow.`,
+      description: `${formatQty(qty)} ${campaign.unit} · ${formatPrice(total, currentTier.currency)} — fonds bloqués jusqu'à livraison.`,
     });
   };
 
   return (
-    <div className="flex flex-col gap-4 p-4 h-full overflow-y-auto" style={{ background: "white", borderLeft: "1px solid #F0ECE6" }}>
+    <div className="flex flex-col gap-4 p-4 h-full overflow-y-auto" style={{ background: "white", borderLeft: "1px solid #E9E1D3" }}>
 
       {/* Countdown */}
-      <div className="rounded-2xl p-4 border" style={{ borderColor: "#F0ECE6" }}>
+      <div className="rounded-2xl p-4 border" style={{ borderColor: "#E9E1D3" }}>
         <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wide text-gray-400 font-semibold mb-3">
           <Clock size={10} /> Fin de la campagne dans
         </div>
@@ -207,10 +207,10 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
       {!joined ? (
         <>
           {/* Current price */}
-          <div className="rounded-xl p-3 border" style={{ background: "rgba(193,75,29,0.04)", borderColor: "rgba(193,75,29,0.12)" }}>
+          <div className="rounded-xl p-3 border" style={{ background: "rgba(212,88,28,0.04)", borderColor: "rgba(212,88,28,0.12)" }}>
             <div className="text-[10px] text-gray-500 mb-0.5">Prix actuel — {currentTier.label}</div>
             <div className="flex items-baseline gap-1.5">
-              <span className="font-display text-[24px] font-bold" style={{ color: "#C14B1D" }}>
+              <span className="font-display text-[24px] font-bold" style={{ color: "#D4581C" }}>
                 {formatPrice(currentTier.pricePerUnit, currentTier.currency)}
               </span>
               <span className="text-[12px] text-gray-400">/ {campaign.unit}</span>
@@ -231,7 +231,7 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
             </div>
             <div
               className="flex items-center rounded-xl border-2 overflow-hidden"
-              style={{ borderColor: qty >= campaign.moq ? "#C14B1D" : "#E5E7EB" }}
+              style={{ borderColor: qty >= campaign.moq ? "#D4581C" : "#E5E7EB" }}
             >
               <button
                 onClick={() => setQty(Math.max(campaign.moq, qty - campaign.moq))}
@@ -256,7 +256,7 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
           </div>
 
           {/* Total */}
-          <div className="rounded-xl p-3" style={{ background: "#F8F2E8" }}>
+          <div className="rounded-xl p-3" style={{ background: "#FAF6EF" }}>
             <div className="flex items-baseline justify-between">
               <span className="text-[12px] text-gray-500">Total estimé</span>
               <span className="font-display text-[18px] font-bold text-[#2B1507]">
@@ -271,15 +271,18 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
           {/* CTA */}
           <button
             onClick={handleJoin}
-            className="w-full py-3.5 rounded-xl text-[14px] font-bold text-white transition-opacity hover:opacity-90"
-            style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}
+            className="w-full py-4 rounded-2xl text-[15px] font-bold text-white transition-all hover:-translate-y-0.5 active:translate-y-0"
+            style={{
+              background: "linear-gradient(135deg, #D4581C 0%, #E8722E 50%, #F5BE25 100%)",
+              boxShadow: "0 4px 20px rgba(212,88,28,0.45), 0 1px 3px rgba(0,0,0,0.1)",
+            }}
           >
-            Réserver maintenant
+            Réserver maintenant — {formatPrice(total, currentTier.currency)}
           </button>
 
           <div className="flex items-center justify-center gap-1.5 text-[10px] text-gray-400">
             <Lock size={10} />
-            Paiement 100% sécurisé · Vos fonds sont bloqués (Escrow)
+            Paiement 100% sécurisé · Fonds bloqués jusqu'à livraison confirmée
           </div>
 
           {campaign.whatsappEnabled && (
@@ -295,27 +298,27 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
         </>
       ) : (
         <div className="flex flex-col items-center gap-3 text-center py-3">
-          <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl" style={{ background: "rgba(27,94,62,0.08)" }}>
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl" style={{ background: "rgba(21,128,61,0.08)" }}>
             🎉
           </div>
           <div className="font-bold text-[15px] text-[#2B1507]">Vous avez rejoint !</div>
           <div className="text-[12px] text-gray-500">
             {formatQty(qty)} {campaign.unit} · {formatPrice(total, currentTier.currency)}
           </div>
-          <div className="text-[11px] text-gray-400 p-3 rounded-xl" style={{ background: "#F8F2E8" }}>
-            Vous allez recevoir un lien de paiement sécurisé. Vos fonds seront bloqués en escrow jusqu'à la livraison confirmée.
+          <div className="text-[11px] text-gray-400 p-3 rounded-xl" style={{ background: "#FAF6EF" }}>
+            Vous allez recevoir un lien de paiement sécurisé. Vos fonds seront bloqués jusqu'à la livraison confirmée.
           </div>
         </div>
       )}
 
       {/* Supplier mini */}
       {supplier && (
-        <div className="rounded-xl p-3 border" style={{ borderColor: "#F0ECE6" }}>
+        <div className="rounded-xl p-3 border" style={{ borderColor: "#E9E1D3" }}>
           <div className="text-[10px] uppercase tracking-wide text-gray-400 font-semibold mb-2.5">À propos du fournisseur</div>
           <div className="flex items-center gap-2.5">
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-[13px] shrink-0"
-              style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}
+              style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}
             >
               {supplier.name[0]}
             </div>
@@ -327,7 +330,7 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
               <div className="text-[10px] text-gray-400">{supplier.flag} {supplier.city}, {supplier.country}</div>
             </div>
           </div>
-          <div className="flex gap-4 mt-2.5 pt-2.5 border-t" style={{ borderColor: "#F0ECE6" }}>
+          <div className="flex gap-4 mt-2.5 pt-2.5 border-t" style={{ borderColor: "#E9E1D3" }}>
             <div>
               <div className="text-[12px] font-bold text-[#2B1507]">⭐ {supplier.rating}</div>
               <div className="text-[9px] text-gray-400">{supplier.reviewCount} avis</div>
@@ -351,7 +354,7 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
         </div>
         {[
           "Meilleurs prix grâce aux achats groupés",
-          "Paiement sécurisé par Escrow",
+          "Paiement 100% sécurisé",
           "Livraison garantie dans les délais",
         ].map((g) => (
           <div key={g} className="flex items-center gap-2 mb-1.5">
@@ -365,12 +368,12 @@ function OrderWidget({ campaign }: { campaign: NonNullable<ReturnType<typeof get
 }
 
 /* ── Main page ───────────────────────────────────── */
-const TABS = ["Détails", "Paliers de prix", "Fournisseur", "Livraison & Paiement"];
+const TABS = ["Le produit", "Les prix", "Fournisseur", "Livraison & Paiement"];
 
 function CampaignDetailPage() {
   const { id } = Route.useParams();
   const campaign = getCampaign(id);
-  const [activeTab, setActiveTab] = useState("Détails");
+  const [activeTab, setActiveTab] = useState("Le produit");
 
   if (!campaign) {
     return (
@@ -397,10 +400,10 @@ function CampaignDetailPage() {
       <div className="flex" style={{ height: "calc(100vh - 54px)" }}>
 
         {/* ── Scrollable main content ── */}
-        <div className="flex-1 overflow-y-auto" style={{ background: "#F8F2E8" }}>
+        <div className="flex-1 overflow-y-auto" style={{ background: "#FAF6EF" }}>
 
           {/* Breadcrumb */}
-          <div className="px-6 py-3 bg-white border-b flex items-center gap-2 text-[12px] text-gray-500" style={{ borderColor: "#F0ECE6" }}>
+          <div className="px-6 py-3 bg-white border-b flex items-center gap-2 text-[12px] text-gray-500" style={{ borderColor: "#E9E1D3" }}>
             <Link to="/campaigns" className="flex items-center gap-1 hover:text-gray-700">
               <ArrowLeft size={13} /> Campagnes
             </Link>
@@ -418,7 +421,7 @@ function CampaignDetailPage() {
 
             {/* ── 1. Product header card ── */}
             <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.05)" }}>
-              <div className="h-1.5" style={{ background: `linear-gradient(90deg, ${campaign.imageColor}, #E8A820)` }} />
+              <div className="h-1.5" style={{ background: `linear-gradient(90deg, ${campaign.imageColor}, #F5BE25)` }} />
               <div className="p-5">
                 <div className="flex items-start gap-5">
                   {/* Icon */}
@@ -437,17 +440,17 @@ function CampaignDetailPage() {
                           {sector.icon} {sector.name}
                         </span>
                       )}
-                      <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full" style={{ background: campaign.status === "active" ? "rgba(27,94,62,0.1)" : "#F3F4F6", color: campaign.status === "active" ? "#1B5E3E" : "#6B7280" }}>
+                      <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full" style={{ background: campaign.status === "active" ? "rgba(21,128,61,0.1)" : "#F3F4F6", color: campaign.status === "active" ? "#15803D" : "#6B7280" }}>
                         {campaign.status === "active" ? "● Actif" : campaign.status === "upcoming" ? "Bientôt" : "Terminé"}
                       </span>
                     </div>
                     <h1 className="font-display text-[18px] font-bold text-[#2B1507] leading-snug mb-2">{campaign.title}</h1>
                     {supplier && (
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="w-5 h-5 rounded-md flex items-center justify-center text-white text-[10px] font-bold" style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>{supplier.name[0]}</div>
+                        <div className="w-5 h-5 rounded-md flex items-center justify-center text-white text-[10px] font-bold" style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}>{supplier.name[0]}</div>
                         <span className="text-[12px] font-semibold text-gray-700">Par {supplier.name}</span>
                         {supplier.verified && (
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1" style={{ background: "rgba(27,94,62,0.1)", color: "#1B5E3E" }}>
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1" style={{ background: "rgba(21,128,61,0.1)", color: "#15803D" }}>
                             <CheckCircle size={10} /> Fournisseur vérifié
                           </span>
                         )}
@@ -471,9 +474,9 @@ function CampaignDetailPage() {
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t" style={{ borderColor: "#F0ECE6" }}>
+                <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t" style={{ borderColor: "#E9E1D3" }}>
                   {campaign.tags.map((tag) => (
-                    <span key={tag} className="text-[11px] px-2.5 py-1 rounded-lg text-gray-600" style={{ background: "#F8F2E8" }}>
+                    <span key={tag} className="text-[11px] px-2.5 py-1 rounded-lg text-gray-600" style={{ background: "#FAF6EF" }}>
                       {tag}
                     </span>
                   ))}
@@ -508,11 +511,11 @@ function CampaignDetailPage() {
                     <div className="font-display text-[22px] font-bold text-[#2B1507]">{campaign.participantCount}</div>
                   </div>
 
-                  <div className="mt-3 p-3 rounded-xl" style={{ background: "rgba(193,75,29,0.05)", border: "1px solid rgba(193,75,29,0.1)" }}>
-                    <div className="text-[10px] font-semibold mb-0.5" style={{ color: "#C14B1D" }}>
+                  <div className="mt-3 p-3 rounded-xl" style={{ background: "rgba(212,88,28,0.05)", border: "1px solid rgba(212,88,28,0.1)" }}>
+                    <div className="text-[10px] font-semibold mb-0.5" style={{ color: "#D4581C" }}>
                       Prix actuel — {currentTier.label}
                     </div>
-                    <div className="font-bold text-[15px]" style={{ color: "#C14B1D" }}>
+                    <div className="font-bold text-[15px]" style={{ color: "#D4581C" }}>
                       {formatPrice(currentTier.pricePerUnit, currentTier.currency)}/{campaign.unit}
                     </div>
                     {nextTier && (
@@ -531,13 +534,13 @@ function CampaignDetailPage() {
                 {/* Right info */}
                 <div className="flex-1">
                   <div className="text-[11px] text-gray-400 mb-1">Économie maximum</div>
-                  <div className="font-display text-[26px] font-bold leading-none" style={{ color: "#C14B1D" }}>
+                  <div className="font-display text-[26px] font-bold leading-none" style={{ color: "#D4581C" }}>
                     -{maxDiscount}%
                   </div>
                   <div className="text-[12px] text-gray-400 mt-0.5">au palier {campaign.priceTiers[campaign.priceTiers.length - 1].label}</div>
 
                   {nextTier && (
-                    <div className="mt-4 p-3 rounded-xl" style={{ background: "rgba(27,94,62,0.06)", border: "1px solid rgba(27,94,62,0.12)" }}>
+                    <div className="mt-4 p-3 rounded-xl" style={{ background: "rgba(21,128,61,0.06)", border: "1px solid rgba(21,128,61,0.12)" }}>
                       <div className="text-[10px] font-semibold text-green-700 mb-1 flex items-center gap-1">
                         <TrendingDown size={11} /> Prochain palier
                       </div>
@@ -562,7 +565,7 @@ function CampaignDetailPage() {
               </div>
 
               {/* Tier progress bar */}
-              <div className="mt-6 pt-6 border-t" style={{ borderColor: "#F0ECE6" }}>
+              <div className="mt-6 pt-6 border-t" style={{ borderColor: "#E9E1D3" }}>
                 <TierProgressBar campaign={campaign} />
               </div>
             </div>
@@ -570,17 +573,17 @@ function CampaignDetailPage() {
             {/* ── 3. Tabs + content ── */}
             <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.05)" }}>
               {/* Tab nav */}
-              <div className="flex border-b overflow-x-auto" style={{ borderColor: "#F0ECE6" }}>
+              <div className="flex border-b overflow-x-auto" style={{ borderColor: "#E9E1D3" }}>
                 {[...TABS, `Participants (${campaign.participantCount})`].map((tab) => {
-                  const isActive = tab === activeTab || (activeTab === "Détails" && tab === "Détails");
+                  const isActive = tab === activeTab || (activeTab === "Le produit" && tab === "Le produit");
                   return (
                     <button
                       key={tab}
                       onClick={() => setActiveTab(tab)}
                       className="shrink-0 px-5 py-3.5 text-[12px] font-semibold border-b-2 transition-colors"
                       style={{
-                        borderColor: isActive ? "#C14B1D" : "transparent",
-                        color: isActive ? "#C14B1D" : "#6B7280",
+                        borderColor: isActive ? "#D4581C" : "transparent",
+                        color: isActive ? "#D4581C" : "#6B7280",
                       }}
                     >
                       {tab}
@@ -591,10 +594,10 @@ function CampaignDetailPage() {
 
               {/* Tab content */}
               <div className="p-5">
-                {(activeTab === "Détails" || activeTab === "Paliers de prix") && (
+                {(activeTab === "Le produit" || activeTab === "Les prix") && (
                   <table className="w-full text-[12px]">
                     <thead>
-                      <tr className="border-b" style={{ borderColor: "#F0ECE6" }}>
+                      <tr className="border-b" style={{ borderColor: "#E9E1D3" }}>
                         <th className="text-left py-2.5 text-gray-500 font-semibold">Palier</th>
                         <th className="text-center py-2.5 text-gray-500 font-semibold">Quantité totale</th>
                         <th className="text-center py-2.5 text-gray-500 font-semibold">Prix / {campaign.unit}</th>
@@ -608,22 +611,22 @@ function CampaignDetailPage() {
                         const isAchieved = i < currentTierIdx;
                         const isCurrent = i === currentTierIdx;
                         return (
-                          <tr key={tier.label} className="border-b" style={{ borderColor: "#F8F2E8", background: isCurrent ? "rgba(193,75,29,0.03)" : "transparent" }}>
-                            <td className="py-3 font-semibold" style={{ color: isCurrent ? "#C14B1D" : "#374151" }}>
+                          <tr key={tier.label} className="border-b" style={{ borderColor: "#FAF6EF", background: isCurrent ? "rgba(212,88,28,0.03)" : "transparent" }}>
+                            <td className="py-3 font-semibold" style={{ color: isCurrent ? "#D4581C" : "#374151" }}>
                               {tier.label}
                               {isCurrent && (
-                                <span className="ml-2 text-[9px] font-bold px-1.5 py-0.5 rounded-full text-white" style={{ background: "#C14B1D" }}>
+                                <span className="ml-2 text-[9px] font-bold px-1.5 py-0.5 rounded-full text-white" style={{ background: "#D4581C" }}>
                                   Palier actuel
                                 </span>
                               )}
                             </td>
                             <td className="py-3 text-center text-gray-600">{formatQty(tier.minQty)} {campaign.unit}</td>
-                            <td className="py-3 text-center font-bold" style={{ color: isCurrent ? "#C14B1D" : "#374151" }}>
+                            <td className="py-3 text-center font-bold" style={{ color: isCurrent ? "#D4581C" : "#374151" }}>
                               {formatPrice(tier.pricePerUnit, tier.currency)}
                             </td>
                             <td className="py-3 text-center">
                               {tier.discount > 0 ? (
-                                <span className="font-bold" style={{ color: "#1B5E3E" }}>-{tier.discount}%</span>
+                                <span className="font-bold" style={{ color: "#15803D" }}>-{tier.discount}%</span>
                               ) : (
                                 <span className="text-gray-400">—</span>
                               )}
@@ -632,7 +635,7 @@ function CampaignDetailPage() {
                               {isAchieved ? (
                                 <span className="text-green-600 font-semibold">Atteint ✓</span>
                               ) : isCurrent ? (
-                                <span className="font-semibold" style={{ color: "#C14B1D" }}>En cours</span>
+                                <span className="font-semibold" style={{ color: "#D4581C" }}>En cours</span>
                               ) : (
                                 <span className="text-gray-400">À venir</span>
                               )}
@@ -646,7 +649,7 @@ function CampaignDetailPage() {
 
                 {activeTab === "Fournisseur" && supplier && (
                   <div className="flex items-start gap-4">
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-bold text-xl shrink-0" style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>
+                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-bold text-xl shrink-0" style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}>
                       {supplier.name[0]}
                     </div>
                     <div>
@@ -691,9 +694,9 @@ function CampaignDetailPage() {
                         </div>
                       )}
                     </div>
-                    <div className="sm:col-span-2 p-3 rounded-xl flex items-center gap-2" style={{ background: "rgba(27,94,62,0.06)", border: "1px solid rgba(27,94,62,0.15)" }}>
+                    <div className="sm:col-span-2 p-3 rounded-xl flex items-center gap-2" style={{ background: "rgba(21,128,61,0.06)", border: "1px solid rgba(21,128,61,0.15)" }}>
                       <Shield className="w-4 h-4 text-green-600 shrink-0" />
-                      <span className="text-[12px] text-green-700">Paiement sécurisé par escrow — les fonds sont libérés uniquement à la réception confirmée de votre commande.</span>
+                      <span className="text-[12px] text-green-700">Paiement 100% sécurisé — les fonds sont libérés uniquement à la réception confirmée de votre commande.</span>
                     </div>
                   </div>
                 )}
@@ -704,14 +707,14 @@ function CampaignDetailPage() {
                     <div className="text-gray-500 mt-1">acheteurs ont rejoint cette campagne</div>
                     <div className="flex justify-center gap-2 mt-4 flex-wrap">
                       {campaign.deliveryZones.map((z) => (
-                        <span key={z} className="text-[11px] px-3 py-1.5 rounded-lg" style={{ background: "#F8F2E8", color: "#6B7280" }}>🌍 {z}</span>
+                        <span key={z} className="text-[11px] px-3 py-1.5 rounded-lg" style={{ background: "#FAF6EF", color: "#6B7280" }}>🌍 {z}</span>
                       ))}
                     </div>
                   </div>
                 )}
 
                 {/* Tagline */}
-                <div className="mt-4 pt-4 border-t text-center text-[12px] text-gray-400" style={{ borderColor: "#F8F2E8" }}>
+                <div className="mt-4 pt-4 border-t text-center text-[12px] text-gray-400" style={{ borderColor: "#FAF6EF" }}>
                   💡 Plus la quantité totale augmente, plus le prix baisse pour <strong className="text-gray-600">tous</strong> !
                 </div>
               </div>
@@ -720,17 +723,17 @@ function CampaignDetailPage() {
             {/* ── 4. Escrow card ── */}
             <div className="bg-white rounded-2xl p-5" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.05)" }}>
               <div className="flex items-center gap-2 mb-4">
-                <Lock size={16} style={{ color: "#C14B1D" }} />
+                <Lock size={16} style={{ color: "#D4581C" }} />
                 <h2 className="font-display font-bold text-[15px] text-[#2B1507]">Votre paiement est sécurisé</h2>
               </div>
               <div className="grid sm:grid-cols-2 gap-3">
                 {[
-                  { icon: "🔒", title: "Fonds en escrow", desc: "Votre paiement est bloqué sur un compte neutre jusqu'à livraison confirmée." },
-                  { icon: "📉", title: "Prix garanti ou moins", desc: "Si un palier supérieur est atteint, la différence vous est remboursée automatiquement." },
+                  { icon: "🔒", title: "Votre argent est protégé", desc: "Votre paiement est bloqué sur un compte neutre jusqu'à livraison confirmée." },
+                  { icon: "📉", title: "Ce prix — ou encore moins", desc: "Si un palier supérieur est atteint, la différence vous est remboursée automatiquement." },
                   { icon: "🚫", title: "Zéro risque", desc: "Le fournisseur est payé uniquement après réception vérifiée des marchandises." },
                   { icon: "↩️", title: "Remboursement intégral", desc: "Si la campagne échoue ou la livraison n'a pas lieu, vous êtes remboursé automatiquement." },
                 ].map((item) => (
-                  <div key={item.title} className="flex items-start gap-3 p-3 rounded-xl" style={{ background: "#F8F2E8" }}>
+                  <div key={item.title} className="flex items-start gap-3 p-3 rounded-xl" style={{ background: "#FAF6EF" }}>
                     <span className="text-xl">{item.icon}</span>
                     <div>
                       <div className="font-semibold text-[12px] text-[#2B1507] mb-0.5">{item.title}</div>
@@ -756,12 +759,12 @@ function CampaignDetailPage() {
                         <div className="text-2xl">{c.image}</div>
                         <div className="flex-1 min-w-0">
                           <div className="font-semibold text-[12px] text-[#2B1507] truncate">{c.title}</div>
-                          <div className="h-1.5 rounded-full overflow-hidden mt-1.5" style={{ background: "#F0ECE6" }}>
-                            <div className="h-full rounded-full" style={{ width: `${p}%`, background: "linear-gradient(90deg, #C14B1D, #E8A820)" }} />
+                          <div className="h-1.5 rounded-full overflow-hidden mt-1.5" style={{ background: "#E9E1D3" }}>
+                            <div className="h-full rounded-full" style={{ width: `${p}%`, background: "linear-gradient(90deg, #D4581C, #F5BE25)" }} />
                           </div>
                         </div>
                         <div className="text-right shrink-0">
-                          <div className="font-bold text-[13px]" style={{ color: "#C14B1D" }}>{formatPrice(t.pricePerUnit, t.currency)}</div>
+                          <div className="font-bold text-[13px]" style={{ color: "#D4581C" }}>{formatPrice(t.pricePerUnit, t.currency)}</div>
                           <div className="text-[10px] text-gray-400">/{c.unit}</div>
                         </div>
                       </Link>

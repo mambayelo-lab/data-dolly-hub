@@ -51,7 +51,7 @@ function AppSidebar() {
         <Link to="/" className="flex items-center gap-3">
           <div
             className="h-9 w-9 rounded-xl flex items-center justify-center text-white font-bold text-lg"
-            style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}
+            style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}
           >
             D
           </div>
@@ -73,7 +73,7 @@ function AppSidebar() {
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all"
               style={{
                 color: active ? "#F87B52" : "rgba(255,255,255,0.58)",
-                background: active ? "rgba(193,75,29,0.18)" : "transparent",
+                background: active ? "rgba(212,88,28,0.18)" : "transparent",
               }}
             >
               <Icon size={17} />
@@ -81,7 +81,7 @@ function AppSidebar() {
               {(badge as number | undefined) && (
                 <span
                   className="text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none"
-                  style={{ background: "#C14B1D", color: "white" }}
+                  style={{ background: "#D4581C", color: "white" }}
                 >
                   {badge}
                 </span>
@@ -101,7 +101,7 @@ function AppSidebar() {
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all"
               style={{
                 color: active ? "#F87B52" : "rgba(255,255,255,0.45)",
-                background: active ? "rgba(193,75,29,0.18)" : "transparent",
+                background: active ? "rgba(212,88,28,0.18)" : "transparent",
               }}
             >
               <Icon size={17} />
@@ -142,7 +142,7 @@ function AppSidebar() {
         >
           <div
             className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
-            style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}
+            style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}
           >
             P
           </div>
@@ -187,7 +187,7 @@ function AppTopBar() {
           <Bell size={17} className="text-gray-500" />
           <span
             className="absolute top-1 right-1 w-3.5 h-3.5 rounded-full text-[8px] font-bold flex items-center justify-center"
-            style={{ background: "#C14B1D", color: "white" }}
+            style={{ background: "#D4581C", color: "white" }}
           >
             2
           </span>
@@ -196,7 +196,7 @@ function AppTopBar() {
           <ShoppingCart size={17} className="text-gray-500" />
           <span
             className="absolute top-1 right-1 w-3.5 h-3.5 rounded-full text-[8px] font-bold flex items-center justify-center"
-            style={{ background: "#E8A820", color: "#2B1507" }}
+            style={{ background: "#F5BE25", color: "#2B1507" }}
           >
             4
           </span>
@@ -204,7 +204,7 @@ function AppTopBar() {
         <div className="flex items-center gap-2 pl-1">
           <div
             className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold"
-            style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}
+            style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}
           >
             P
           </div>
@@ -222,9 +222,9 @@ function AppTopBar() {
 /* ── Right Panel (homepage) ──────────────────────── */
 export function HomepageRightPanel() {
   return (
-    <div className="flex flex-col h-full overflow-y-auto bg-white border-l" style={{ borderColor: "#F0ECE6" }}>
+    <div className="flex flex-col h-full overflow-y-auto bg-white border-l" style={{ borderColor: "#E9E1D3" }}>
       {/* Top buttons */}
-      <div className="flex gap-2 p-4 border-b" style={{ borderColor: "#F0ECE6" }}>
+      <div className="flex gap-2 p-4 border-b" style={{ borderColor: "#E9E1D3" }}>
         <Link
           to="/register/supplier"
           className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[11px] font-semibold border transition-colors hover:bg-gray-50"
@@ -235,7 +235,7 @@ export function HomepageRightPanel() {
         <Link
           to="/supplier/dashboard"
           className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[11px] font-semibold text-white transition-colors"
-          style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}
+          style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}
         >
           <LayoutGrid size={13} /> Tableau de bord
         </Link>
@@ -243,7 +243,7 @@ export function HomepageRightPanel() {
 
       {/* Supplier CTA card */}
       <div className="mx-4 mt-4 rounded-2xl p-5 overflow-hidden relative" style={{ background: "linear-gradient(135deg, #2D1810 0%, #4A2510 100%)" }}>
-        <div className="absolute -right-4 -top-4 w-24 h-24 rounded-full opacity-20" style={{ background: "#E8A820" }} />
+        <div className="absolute -right-4 -top-4 w-24 h-24 rounded-full opacity-20" style={{ background: "#F5BE25" }} />
         <div className="relative z-10">
           <h3 className="text-white font-display font-bold text-[15px] mb-1">Êtes-vous fournisseur ?</h3>
           <p className="text-white/60 text-[11px] mb-4 leading-relaxed">
@@ -260,7 +260,7 @@ export function HomepageRightPanel() {
           <Link
             to="/register/supplier"
             className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[12px] font-bold"
-            style={{ background: "#E8A820", color: "#2B1507" }}
+            style={{ background: "#F5BE25", color: "#2B1507" }}
           >
             Devenir fournisseur →
           </Link>
@@ -273,7 +273,7 @@ export function HomepageRightPanel() {
         <div className="px-3 py-2.5 flex items-center gap-2.5" style={{ background: "#25D366" }}>
           <div className="w-8 h-8 rounded-full bg-white/25 flex items-center justify-center text-white text-xs font-bold">DT</div>
           <div>
-            <div className="text-white font-semibold text-[12px]">Dolly Trade B2B</div>
+            <div className="text-white font-semibold text-[12px]">WAOUMAS</div>
             <div className="text-green-100 text-[9px]">● En ligne</div>
           </div>
         </div>
@@ -281,22 +281,22 @@ export function HomepageRightPanel() {
         <div className="p-3" style={{ background: "#ECE5DD" }}>
           <div className="bg-white rounded-xl rounded-tl-sm p-3 shadow-sm max-w-[90%]">
             <div className="text-[10px] text-gray-700 font-semibold mb-2">🎯 Nouveau palier atteint !</div>
-            <div className="flex items-center gap-2 p-2 rounded-lg mb-2" style={{ background: "#F8F2E8" }}>
+            <div className="flex items-center gap-2 p-2 rounded-lg mb-2" style={{ background: "#FAF6EF" }}>
               <span className="text-xl">🧤</span>
               <div>
                 <div className="text-[10px] font-semibold text-gray-800">Gants médicaux nitrile</div>
-                <div className="font-bold text-xs" style={{ color: "#C14B1D" }}>8,50 € <span className="line-through text-gray-400 font-normal">12,00 €</span></div>
+                <div className="font-bold text-xs" style={{ color: "#D4581C" }}>8,50 € <span className="line-through text-gray-400 font-normal">12,00 €</span></div>
               </div>
             </div>
             <div className="flex items-center justify-between">
               <div className="w-full h-1.5 rounded-full overflow-hidden bg-gray-200">
-                <div className="h-full rounded-full" style={{ width: "63%", background: "linear-gradient(90deg, #C14B1D, #E8A820)" }} />
+                <div className="h-full rounded-full" style={{ width: "63%", background: "linear-gradient(90deg, #D4581C, #F5BE25)" }} />
               </div>
               <span className="ml-2 text-[9px] font-bold text-gray-500 shrink-0">63%</span>
             </div>
             <button
               className="mt-2 w-full py-1.5 rounded-lg text-[10px] font-bold text-center"
-              style={{ background: "rgba(193,75,29,0.1)", color: "#C14B1D" }}
+              style={{ background: "rgba(212,88,28,0.1)", color: "#D4581C" }}
             >
               Voir la campagne →
             </button>
@@ -308,7 +308,7 @@ export function HomepageRightPanel() {
       <div className="mx-4 mt-4 mb-4 rounded-2xl p-4 border" style={{ borderColor: "#E5E7EB", background: "#FAFAFA" }}>
         <div className="flex items-center gap-2 mb-2">
           <Shield size={14} className="text-green-600" />
-          <span className="text-[12px] font-semibold text-gray-800">Paiement sécurisé & Escrow</span>
+          <span className="text-[12px] font-semibold text-gray-800">Paiement 100% sécurisé</span>
         </div>
         <p className="text-[10px] text-gray-500 mb-3 leading-relaxed">
           Vos paiements sont protégés jusqu'à la livraison confirmée.
@@ -324,8 +324,8 @@ export function HomepageRightPanel() {
             </span>
           ))}
         </div>
-        <div className="flex items-center gap-1.5 text-[10px] font-medium" style={{ color: "#1B5E3E" }}>
-          <Shield size={11} /> Fonds protégés par notre système Escrow
+        <div className="flex items-center gap-1.5 text-[10px] font-medium" style={{ color: "#15803D" }}>
+          <Shield size={11} /> Votre argent est bloqué jusqu'à la livraison
         </div>
       </div>
     </div>
@@ -335,7 +335,7 @@ export function HomepageRightPanel() {
 /* ── App Layout (standard pages) ─────────────────── */
 export function AppLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen flex" style={{ background: "#F8F2E8" }}>
+    <div className="min-h-screen flex" style={{ background: "#FAF6EF" }}>
       <AppSidebar />
       <div className="flex-1 flex flex-col" style={{ marginLeft: 220 }}>
         <AppTopBar />
@@ -348,7 +348,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
 /* ── App Layout + Right Panel (homepage) ─────────── */
 export function AppLayoutHome({ children, rightPanel }: { children: ReactNode; rightPanel?: ReactNode }) {
   return (
-    <div className="min-h-screen flex" style={{ background: "#F8F2E8" }}>
+    <div className="min-h-screen flex" style={{ background: "#FAF6EF" }}>
       <AppSidebar />
       <div className="flex-1 flex flex-col" style={{ marginLeft: 220 }}>
         <AppTopBar />
@@ -402,15 +402,15 @@ export function DashboardLayout({
   onNavClick: (id: string) => void;
   stats?: { label: string; value: string; color: string }[];
 }) {
-  const accentColor = role === "supplier" ? "#C14B1D" : "#1B5E3E";
+  const accentColor = role === "supplier" ? "#D4581C" : "#15803D";
 
   return (
-    <div className="min-h-screen flex" style={{ background: "#F8F2E8" }}>
+    <div className="min-h-screen flex" style={{ background: "#FAF6EF" }}>
       <aside className="dash-sidebar shrink-0 flex flex-col" style={{ width: 256 }}>
         <div className="px-5 py-5 border-b border-white/10">
           <Link to="/" className="flex items-center gap-3">
             <div className="h-8 w-8 rounded-lg flex items-center justify-center text-white font-bold"
-              style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>D</div>
+              style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}>D</div>
             <div>
               <div className="text-white font-bold text-sm font-display">DOLLY TRADE</div>
               <div className="text-[9px] text-white/40 tracking-wider">B2B MARKETPLACE</div>
@@ -456,7 +456,7 @@ export function DashboardLayout({
           <div className="ml-auto flex items-center gap-3">
             <button className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors">
               <Bell className="text-gray-500" size={18} />
-              <span className="absolute top-1 right-1 h-2 w-2 rounded-full" style={{ background: "#C14B1D" }} />
+              <span className="absolute top-1 right-1 h-2 w-2 rounded-full" style={{ background: "#D4581C" }} />
             </button>
             <div className="h-9 w-9 rounded-full flex items-center justify-center text-white text-sm font-bold"
               style={{ background: `linear-gradient(135deg, ${accentColor}, ${accentColor}aa)` }}>

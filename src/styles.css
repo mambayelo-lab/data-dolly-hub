@@ -77,11 +77,11 @@
   --ring:                  oklch(0.52 0.18 38);
 
   /* African palette */
-  --terra:    #C14B1D;
-  --gold:     #E8A820;
-  --forest:   #1B5E3E;
+  --terra:    #D4581C;
+  --gold:     #F5BE25;
+  --forest:   #15803D;
   --midnight: #2B1507;
-  --sand:     #F8F2E8;
+  --sand:     #FAF6EF;
   --whatsapp: #25D366;
   --kente-1:  #C41E3A;
   --kente-2:  #1E4D8C;
@@ -143,23 +143,25 @@
 /* ── HERO ────────────────────────────────────────── */
 .hero-gradient {
   background:
-    radial-gradient(ellipse 80% 60% at 0% 0%, rgba(193, 75, 29, 0.25) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 100% 100%, rgba(27, 94, 62, 0.2) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 50% at 50% 0%, rgba(232, 168, 32, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 60% at 0% 0%, rgba(212, 88, 28, 0.30) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 100% 100%, rgba(21, 128, 61, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 50% 0%, rgba(245, 190, 37, 0.18) 0%, transparent 50%),
     #2B1507;
 }
 
 /* ── CAMPAIGN CARD ──────────────────────────────── */
 .campaign-card {
   background: white;
-  border: 1px solid rgba(193, 75, 29, 0.12);
-  border-radius: 16px;
+  border: 1px solid #EDE5D8;
+  border-radius: 18px;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 4px rgba(43,21,7,0.06), 0 6px 18px rgba(43,21,7,0.07);
 }
 .campaign-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px -16px rgba(43, 21, 7, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(43,21,7,0.08), 0 20px 48px rgba(43,21,7,0.14);
+  border-color: rgba(212,88,28,0.2);
 }
 
 /* ── PRICE TIER ─────────────────────────────────── */
@@ -236,11 +238,11 @@
   border: none;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
-  box-shadow: 0 4px 16px rgba(193, 75, 29, 0.35);
+  box-shadow: 0 4px 20px rgba(212, 88, 28, 0.40);
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(193, 75, 29, 0.45);
+  box-shadow: 0 8px 28px rgba(212, 88, 28, 0.50);
   filter: brightness(1.05);
 }
 .btn-primary:disabled {
@@ -282,11 +284,11 @@
   border: none;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 4px 16px rgba(232, 168, 32, 0.35);
+  box-shadow: 0 4px 20px rgba(245, 190, 37, 0.40);
 }
 .btn-gold:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(232, 168, 32, 0.45);
+  box-shadow: 0 8px 28px rgba(245, 190, 37, 0.50);
 }
 
 /* ── STAT PILL ───────────────────────────────────── */
@@ -325,7 +327,7 @@
 .field-group select:focus,
 .field-group textarea:focus {
   border-color: var(--terra);
-  box-shadow: 0 0 0 3px rgba(193, 75, 29, 0.1);
+  box-shadow: 0 0 0 3px rgba(212, 88, 28, 0.14);
 }
 
 /* ── DASHBOARD ───────────────────────────────────── */
@@ -353,8 +355,8 @@
   color: white;
 }
 .dash-nav-item.active {
-  background: rgba(193, 75, 29, 0.25);
-  color: #F87B52;
+  background: rgba(212, 88, 28, 0.28);
+  color: #F98255;
   font-weight: 600;
 }
 
@@ -390,9 +392,9 @@
 
 /* ── BADGE TOKENS ────────────────────────────────── */
 .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
-.badge-terra  { background: rgba(193,75,29,0.12); color: var(--terra); }
-.badge-gold   { background: rgba(232,168,32,0.15); color: #9A6900; }
-.badge-forest { background: rgba(27,94,62,0.12); color: var(--forest); }
+.badge-terra  { background: rgba(212,88,28,0.12); color: var(--terra); }
+.badge-gold   { background: rgba(245,190,37,0.15); color: #9A6900; }
+.badge-forest { background: rgba(21,128,61,0.12); color: var(--forest); }
 .badge-blue   { background: rgba(30,77,140,0.12); color: var(--kente-2); }
 .badge-green  { background: rgba(37,211,102,0.12); color: #1A9E50; }
 

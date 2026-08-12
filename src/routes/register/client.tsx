@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { sectors } from "@/data/marketplace";
 
 export const Route = createFileRoute("/register/client")({
-  head: () => ({ meta: [{ title: "Inscription Acheteur B2B — Dolly Trade" }] }),
+  head: () => ({ meta: [{ title: "Inscription Acheteur B2B — WAOUMAS" }] }),
   component: RegisterClientPage,
 });
 
@@ -83,12 +83,12 @@ export default function RegisterClientPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "#F8F2E8" }}>
-      <div className="py-4 px-6 border-b" style={{ background: "#1B5E3E" }}>
+    <div className="min-h-screen" style={{ background: "#FAF6EF" }}>
+      <div className="py-4 px-6 border-b" style={{ background: "#15803D" }}>
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5">
             <div className="h-8 w-8 rounded-lg flex items-center justify-center text-white font-bold"
-              style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>D</div>
+              style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}>D</div>
             <span className="text-white font-bold text-sm font-display">DOLLY TRADE B2B</span>
           </Link>
           <span className="text-white/60 text-xs">Inscription Acheteur Pro</span>
@@ -101,13 +101,13 @@ export default function RegisterClientPage() {
           {STEPS.map((s, i) => (
             <div key={s.id} className="flex items-center gap-1 shrink-0">
               <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium"
-                style={step === s.id ? { background: "#1B5E3E", color: "white" }
-                  : step > s.id ? { background: "rgba(27,94,62,0.1)", color: "#1B5E3E" }
+                style={step === s.id ? { background: "#15803D", color: "white" }
+                  : step > s.id ? { background: "rgba(21,128,61,0.1)", color: "#15803D" }
                   : { background: "white", color: "#9CA3AF" }}>
                 <span>{step > s.id ? "✓" : s.icon}</span>
                 <span className="hidden sm:inline">{s.label}</span>
               </div>
-              {i < STEPS.length - 1 && <div className="h-px w-4 shrink-0" style={{ background: step > s.id ? "#1B5E3E" : "#E5E7EB" }} />}
+              {i < STEPS.length - 1 && <div className="h-px w-4 shrink-0" style={{ background: step > s.id ? "#15803D" : "#E5E7EB" }} />}
             </div>
           ))}
         </div>
@@ -117,7 +117,7 @@ export default function RegisterClientPage() {
           {step === 1 && (
             <div>
               <h2 className="font-display text-2xl text-[#2B1507] mb-1">Votre entreprise</h2>
-              <p className="text-gray-500 text-sm mb-6">Seules les entreprises professionnelles peuvent s'inscrire sur Dolly Trade B2B.</p>
+              <p className="text-gray-500 text-sm mb-6">Seules les entreprises professionnelles peuvent s'inscrire sur WAOUMAS.</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="field-group sm:col-span-2">
                   <label>Nom de l'entreprise *</label>
@@ -190,7 +190,7 @@ export default function RegisterClientPage() {
                   </select>
                 </div>
               </div>
-              <div className="mt-4 p-4 rounded-xl flex gap-3" style={{ background: "rgba(27,94,62,0.05)", border: "1px solid rgba(27,94,62,0.12)" }}>
+              <div className="mt-4 p-4 rounded-xl flex gap-3" style={{ background: "rgba(21,128,61,0.05)", border: "1px solid rgba(21,128,61,0.12)" }}>
                 <Shield className="h-4 w-4 text-green-600 shrink-0 mt-0.5" />
                 <div className="text-xs text-green-700">Données sécurisées · Conformité RGPD · Jamais partagées sans votre accord</div>
               </div>
@@ -265,7 +265,7 @@ export default function RegisterClientPage() {
           {step === 5 && (
             <div className="text-center">
               <div className="text-6xl mb-4">🌍</div>
-              <h2 className="font-display text-2xl text-[#2B1507] mb-2">Prêt à rejoindre Dolly Trade?</h2>
+              <h2 className="font-display text-2xl text-[#2B1507] mb-2">Prêt à rejoindre WAOUMAS ?</h2>
               <p className="text-gray-500 text-sm mb-6">Vérifiez vos informations et activez votre compte acheteur professionnel.</p>
               <div className="text-left bg-gray-50 rounded-xl p-5 mb-6 flex flex-col gap-3">
                 {[
@@ -285,10 +285,10 @@ export default function RegisterClientPage() {
               <div className="flex items-start gap-3 p-4 rounded-xl mb-6 text-left bg-gray-50">
                 <input type="checkbox" id="terms2" checked={form.acceptTerms} onChange={(e) => set("acceptTerms", e.target.checked)} className="mt-0.5" />
                 <label htmlFor="terms2" className="text-sm text-gray-600 cursor-pointer">
-                  J'accepte les <a href="#" className="underline" style={{ color: "#1B5E3E" }}>Conditions générales</a> et la <a href="#" className="underline" style={{ color: "#1B5E3E" }}>Politique de confidentialité</a>. Je certifie être un professionnel B2B.
+                  J'accepte les <a href="#" className="underline" style={{ color: "#15803D" }}>Conditions générales</a> et la <a href="#" className="underline" style={{ color: "#15803D" }}>Politique de confidentialité</a>. Je certifie être un professionnel B2B.
                 </label>
               </div>
-              <button onClick={submit} className="w-full justify-center font-bold py-3.5 rounded-xl text-white" style={{ background: "linear-gradient(135deg, #1B5E3E, #2E7D32)", fontSize: 15 }}>
+              <button onClick={submit} className="w-full justify-center font-bold py-3.5 rounded-xl text-white" style={{ background: "linear-gradient(135deg, #15803D, #2E7D32)", fontSize: 15 }}>
                 Créer mon compte acheteur <ChevronRight className="h-4 w-4 inline ml-1" />
               </button>
               <div className="mt-3 text-xs text-gray-400">Activation immédiate · Accès à toutes les campagnes</div>
@@ -304,7 +304,7 @@ export default function RegisterClientPage() {
               <Link to="/login" className="btn-secondary">Déjà inscrit?</Link>
             )}
             {step < STEPS.length && (
-              <button onClick={next} className="btn-primary" style={{ background: "linear-gradient(135deg, #1B5E3E, #2E7D32)", boxShadow: "0 4px 16px rgba(27,94,62,0.35)" }}>
+              <button onClick={next} className="btn-primary" style={{ background: "linear-gradient(135deg, #15803D, #2E7D32)", boxShadow: "0 4px 16px rgba(21,128,61,0.35)" }}>
                 Suivant <ChevronRight className="h-4 w-4" />
               </button>
             )}
