@@ -9,14 +9,36 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as VaultRouteImport } from './routes/vault'
+import { Route as WhatsappRouteImport } from './routes/whatsapp'
+import { Route as ProductsRouteImport } from './routes/products'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as CampaignsRouteImport } from './routes/campaigns'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SectorSlugRouteImport } from './routes/sector.$slug'
-import { Route as AppsAppIdRouteImport } from './routes/apps.$appId'
+import { Route as CampaignsIndexRouteImport } from './routes/campaigns.index'
+import { Route as SupplierDashboardRouteImport } from './routes/supplier.dashboard'
+import { Route as RegisterSupplierRouteImport } from './routes/register.supplier'
+import { Route as RegisterClientRouteImport } from './routes/register/client'
+import { Route as ClientDashboardRouteImport } from './routes/client.dashboard'
+import { Route as CampaignsIdRouteImport } from './routes/campaigns.$id'
 
-const VaultRoute = VaultRouteImport.update({
-  id: '/vault',
-  path: '/vault',
+const WhatsappRoute = WhatsappRouteImport.update({
+  id: '/whatsapp',
+  path: '/whatsapp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsRoute = ProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampaignsRoute = CampaignsRouteImport.update({
+  id: '/campaigns',
+  path: '/campaigns',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -24,58 +46,157 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SectorSlugRoute = SectorSlugRouteImport.update({
-  id: '/sector/$slug',
-  path: '/sector/$slug',
+const CampaignsIndexRoute = CampaignsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CampaignsRoute,
+} as any)
+const SupplierDashboardRoute = SupplierDashboardRouteImport.update({
+  id: '/supplier/dashboard',
+  path: '/supplier/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsAppIdRoute = AppsAppIdRouteImport.update({
-  id: '/apps/$appId',
-  path: '/apps/$appId',
+const RegisterSupplierRoute = RegisterSupplierRouteImport.update({
+  id: '/register/supplier',
+  path: '/register/supplier',
   getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterClientRoute = RegisterClientRouteImport.update({
+  id: '/register/client',
+  path: '/register/client',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClientDashboardRoute = ClientDashboardRouteImport.update({
+  id: '/client/dashboard',
+  path: '/client/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampaignsIdRoute = CampaignsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => CampaignsRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/vault': typeof VaultRoute
-  '/apps/$appId': typeof AppsAppIdRoute
-  '/sector/$slug': typeof SectorSlugRoute
+  '/campaigns': typeof CampaignsRouteWithChildren
+  '/login': typeof LoginRoute
+  '/products': typeof ProductsRoute
+  '/whatsapp': typeof WhatsappRoute
+  '/campaigns/$id': typeof CampaignsIdRoute
+  '/client/dashboard': typeof ClientDashboardRoute
+  '/register/client': typeof RegisterClientRoute
+  '/register/supplier': typeof RegisterSupplierRoute
+  '/supplier/dashboard': typeof SupplierDashboardRoute
+  '/campaigns/': typeof CampaignsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/vault': typeof VaultRoute
-  '/apps/$appId': typeof AppsAppIdRoute
-  '/sector/$slug': typeof SectorSlugRoute
+  '/login': typeof LoginRoute
+  '/products': typeof ProductsRoute
+  '/whatsapp': typeof WhatsappRoute
+  '/campaigns/$id': typeof CampaignsIdRoute
+  '/client/dashboard': typeof ClientDashboardRoute
+  '/register/client': typeof RegisterClientRoute
+  '/register/supplier': typeof RegisterSupplierRoute
+  '/supplier/dashboard': typeof SupplierDashboardRoute
+  '/campaigns': typeof CampaignsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/vault': typeof VaultRoute
-  '/apps/$appId': typeof AppsAppIdRoute
-  '/sector/$slug': typeof SectorSlugRoute
+  '/campaigns': typeof CampaignsRouteWithChildren
+  '/login': typeof LoginRoute
+  '/products': typeof ProductsRoute
+  '/whatsapp': typeof WhatsappRoute
+  '/campaigns/$id': typeof CampaignsIdRoute
+  '/client/dashboard': typeof ClientDashboardRoute
+  '/register/client': typeof RegisterClientRoute
+  '/register/supplier': typeof RegisterSupplierRoute
+  '/supplier/dashboard': typeof SupplierDashboardRoute
+  '/campaigns/': typeof CampaignsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/vault' | '/apps/$appId' | '/sector/$slug'
+  fullPaths:
+    | '/'
+    | '/campaigns'
+    | '/login'
+    | '/products'
+    | '/whatsapp'
+    | '/campaigns/$id'
+    | '/client/dashboard'
+    | '/register/client'
+    | '/register/supplier'
+    | '/supplier/dashboard'
+    | '/campaigns/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/vault' | '/apps/$appId' | '/sector/$slug'
-  id: '__root__' | '/' | '/vault' | '/apps/$appId' | '/sector/$slug'
+  to:
+    | '/'
+    | '/login'
+    | '/products'
+    | '/whatsapp'
+    | '/campaigns/$id'
+    | '/client/dashboard'
+    | '/register/client'
+    | '/register/supplier'
+    | '/supplier/dashboard'
+    | '/campaigns'
+  id:
+    | '__root__'
+    | '/'
+    | '/campaigns'
+    | '/login'
+    | '/products'
+    | '/whatsapp'
+    | '/campaigns/$id'
+    | '/client/dashboard'
+    | '/register/client'
+    | '/register/supplier'
+    | '/supplier/dashboard'
+    | '/campaigns/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  VaultRoute: typeof VaultRoute
-  AppsAppIdRoute: typeof AppsAppIdRoute
-  SectorSlugRoute: typeof SectorSlugRoute
+  CampaignsRoute: typeof CampaignsRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  ProductsRoute: typeof ProductsRoute
+  WhatsappRoute: typeof WhatsappRoute
+  ClientDashboardRoute: typeof ClientDashboardRoute
+  RegisterClientRoute: typeof RegisterClientRoute
+  RegisterSupplierRoute: typeof RegisterSupplierRoute
+  SupplierDashboardRoute: typeof SupplierDashboardRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/vault': {
-      id: '/vault'
-      path: '/vault'
-      fullPath: '/vault'
-      preLoaderRoute: typeof VaultRouteImport
+    '/whatsapp': {
+      id: '/whatsapp'
+      path: '/whatsapp'
+      fullPath: '/whatsapp'
+      preLoaderRoute: typeof WhatsappRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campaigns': {
+      id: '/campaigns'
+      path: '/campaigns'
+      fullPath: '/campaigns'
+      preLoaderRoute: typeof CampaignsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -85,28 +206,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sector/$slug': {
-      id: '/sector/$slug'
-      path: '/sector/$slug'
-      fullPath: '/sector/$slug'
-      preLoaderRoute: typeof SectorSlugRouteImport
+    '/campaigns/': {
+      id: '/campaigns/'
+      path: '/'
+      fullPath: '/campaigns/'
+      preLoaderRoute: typeof CampaignsIndexRouteImport
+      parentRoute: typeof CampaignsRoute
+    }
+    '/supplier/dashboard': {
+      id: '/supplier/dashboard'
+      path: '/supplier/dashboard'
+      fullPath: '/supplier/dashboard'
+      preLoaderRoute: typeof SupplierDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/apps/$appId': {
-      id: '/apps/$appId'
-      path: '/apps/$appId'
-      fullPath: '/apps/$appId'
-      preLoaderRoute: typeof AppsAppIdRouteImport
+    '/register/supplier': {
+      id: '/register/supplier'
+      path: '/register/supplier'
+      fullPath: '/register/supplier'
+      preLoaderRoute: typeof RegisterSupplierRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/register/client': {
+      id: '/register/client'
+      path: '/register/client'
+      fullPath: '/register/client'
+      preLoaderRoute: typeof RegisterClientRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/client/dashboard': {
+      id: '/client/dashboard'
+      path: '/client/dashboard'
+      fullPath: '/client/dashboard'
+      preLoaderRoute: typeof ClientDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campaigns/$id': {
+      id: '/campaigns/$id'
+      path: '/$id'
+      fullPath: '/campaigns/$id'
+      preLoaderRoute: typeof CampaignsIdRouteImport
+      parentRoute: typeof CampaignsRoute
     }
   }
 }
 
+interface CampaignsRouteChildren {
+  CampaignsIdRoute: typeof CampaignsIdRoute
+  CampaignsIndexRoute: typeof CampaignsIndexRoute
+}
+
+const CampaignsRouteChildren: CampaignsRouteChildren = {
+  CampaignsIdRoute: CampaignsIdRoute,
+  CampaignsIndexRoute: CampaignsIndexRoute,
+}
+
+const CampaignsRouteWithChildren = CampaignsRoute._addFileChildren(
+  CampaignsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  VaultRoute: VaultRoute,
-  AppsAppIdRoute: AppsAppIdRoute,
-  SectorSlugRoute: SectorSlugRoute,
+  CampaignsRoute: CampaignsRouteWithChildren,
+  LoginRoute: LoginRoute,
+  ProductsRoute: ProductsRoute,
+  WhatsappRoute: WhatsappRoute,
+  ClientDashboardRoute: ClientDashboardRoute,
+  RegisterClientRoute: RegisterClientRoute,
+  RegisterSupplierRoute: RegisterSupplierRoute,
+  SupplierDashboardRoute: SupplierDashboardRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
