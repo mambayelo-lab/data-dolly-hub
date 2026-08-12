@@ -1,402 +1,306 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Shield, Lock, TrendingDown, Users, CheckCircle, Zap, ChevronRight } from "lucide-react";
-import { PageLayout } from "@/components/B2BLayout";
-import { campaigns, sectors, getCurrentTier, getCampaignProgress, formatQty, formatPrice, getSupplier } from "@/data/marketplace";
+import { ArrowRight, Clock, Users, Shield, CheckCircle } from "lucide-react";
+import { AppLayoutHome, HomepageRightPanel } from "@/components/B2BLayout";
+import { campaigns, sectors, getCurrentTier, getNextTier, formatPrice } from "@/data/marketplace";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Dolly Trade B2B — Achats groupés inter-entreprises" },
-      { name: "description", content: "Rejoignez des campagnes d'achats groupés B2B. Plus vous êtes nombreux, moins vous payez. Paliers dégressifs jusqu'à -42%. Paiement sécurisé par escrow." },
+      { name: "description", content: "Rejoignez des campagnes d'achats groupés B2B. Paliers de prix dégressifs jusqu'à -43%. Paiement sécurisé par escrow — vos fonds sont bloqués jusqu'à livraison." },
     ],
   }),
   component: HomePage,
 });
 
-const TIER_COLORS = [
-  { name: "Starter", color: "#6B7280", bg: "#F9FAFB", border: "#E5E7EB" },
-  { name: "Bronze", color: "#B45309", bg: "#FFFBEB", border: "#FDE68A" },
-  { name: "Silver", color: "#6B7280", bg: "#F8FAFC", border: "#CBD5E1" },
-  { name: "Or", color: "#C14B1D", bg: "#FFF7ED", border: "#FED7AA" },
-];
+function getBadge(participantCount: number) {
+  if (participantCount >= 40) return { text: "Populaire", color: "#C14B1D", bg: "rgba(193,75,29,0.1)" };
+  if (participantCount >= 20) return { text: "Très demandé", color: "#B45309", bg: "rgba(232,168,32,0.12)" };
+  return { text: "Nouveau", color: "#1B5E3E", bg: "rgba(27,94,62,0.1)" };
+}
 
-function TierProgressDemo() {
-  const c = campaigns[0];
-  const progress = getCampaignProgress(c);
-  const tiers = c.priceTiers;
-  const currentTier = tiers[1]; // Bronze for demo
-  const starter = tiers[0];
+function countdown(endDate: string): string {
+  const diff = new Date(endDate).getTime() - Date.now();
+  if (diff <= 0) return "Terminée";
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  return d > 0 ? `${d}j ${h}h` : `${h}h ${m}m`;
+}
+
+function fmtQty(qty: number): string {
+  if (qty >= 1_000_000) return `${(qty / 1_000_000).toFixed(1)}M`;
+  if (qty >= 1_000) return `${(qty / 1_000).toFixed(0)}k`;
+  return qty.toLocaleString("fr-FR");
+}
+
+function CampaignCard({ c }: { c: (typeof campaigns)[0] }) {
+  const tier = getCurrentTier(c);
+  const next = getNextTier(c);
+  const badge = getBadge(c.participantCount);
+  const progress = next
+    ? Math.min(100, (c.currentQty / next.minQty) * 100)
+    : 100;
+  const toNext = next ? next.minQty - c.currentQty : 0;
 
   return (
-    <div className="bg-white rounded-2xl p-5 card-shadow border border-orange-100">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <span className="text-2xl">{c.image}</span>
-          <div>
-            <div className="font-semibold text-sm text-[#1A1630] line-clamp-1">{c.title}</div>
-            <div className="text-xs text-gray-400">{c.unit}</div>
-          </div>
+    <Link
+      to="/campaigns/$id"
+      params={{ id: c.id }}
+      className="flex flex-col bg-white rounded-2xl overflow-hidden transition-all hover:-translate-y-0.5"
+      style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06)", border: "1px solid #F0ECE6" }}
+    >
+      {/* Badge row */}
+      <div className="flex items-center justify-between px-4 pt-4 pb-2">
+        <span
+          className="text-[11px] font-bold px-2.5 py-1 rounded-full"
+          style={{ background: badge.bg, color: badge.color }}
+        >
+          {badge.text}
+        </span>
+        <span className="flex items-center gap-1 text-[11px] text-gray-400">
+          <Clock size={11} />
+          {countdown(c.endDate)}
+        </span>
+      </div>
+
+      {/* Image + title */}
+      <div className="px-4 pb-3 flex items-start gap-3">
+        <div
+          className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
+          style={{ background: `${c.imageColor}12` }}
+        >
+          {c.image}
         </div>
-        <div className="text-right">
-          <div className="text-xs text-gray-400">Prix actuel</div>
-          <div className="font-display text-lg font-bold" style={{ color: "#C14B1D" }}>
-            {formatPrice(currentTier.pricePerUnit, currentTier.currency)}<span className="text-xs font-normal text-gray-400">/{c.unit}</span>
+        <div className="flex-1 min-w-0">
+          <div className="text-[13px] font-semibold text-[#1A1630] leading-snug line-clamp-2">{c.title}</div>
+          <div className="text-[11px] text-gray-400 mt-0.5 flex items-center gap-1">
+            <Users size={10} />
+            {c.participantCount} participants
           </div>
         </div>
       </div>
 
-      {/* Tier track */}
-      <div className="flex gap-1 mb-3">
-        {tiers.map((t, i) => {
-          const isActive = i === 1;
-          const isDone = i === 0;
-          const tc = TIER_COLORS[i];
-          return (
-            <div key={t.label} className="flex-1 rounded-lg p-2 text-center border transition-all"
-              style={{ borderColor: isActive ? "#C14B1D" : tc.border, background: isActive ? "#FFF7ED" : tc.bg, boxShadow: isActive ? "0 0 0 2px rgba(193,75,29,0.2)" : "none" }}>
-              <div className="text-[9px] font-bold uppercase tracking-wide mb-0.5" style={{ color: isActive ? "#C14B1D" : tc.color }}>
-                {isDone ? "✓ " : ""}{t.label}
-              </div>
-              <div className="text-xs font-bold" style={{ color: isActive ? "#C14B1D" : "#374151" }}>
-                {formatPrice(t.pricePerUnit, t.currency)}
-              </div>
-              {t.discountPct > 0 && <div className="text-[9px] font-semibold" style={{ color: isActive ? "#C14B1D" : tc.color }}>-{t.discountPct}%</div>}
+      {/* Dual price */}
+      <div className="mx-4 mb-3 flex rounded-xl overflow-hidden border" style={{ borderColor: "#F0ECE6" }}>
+        <div className="flex-1 px-3 py-2.5 bg-gray-50">
+          <div className="text-[9px] uppercase tracking-wide text-gray-400 font-semibold mb-0.5">Palier actuel</div>
+          <div className="text-[15px] font-bold text-[#1A1630]">
+            {formatPrice(tier.pricePerUnit, tier.currency)}
+          </div>
+          <div className="text-[10px] text-gray-400">/{c.unit}</div>
+        </div>
+        {next && (
+          <div className="flex-1 px-3 py-2.5" style={{ background: "rgba(193,75,29,0.05)" }}>
+            <div className="text-[9px] uppercase tracking-wide font-semibold mb-0.5" style={{ color: "#C14B1D" }}>Prochain palier</div>
+            <div className="text-[15px] font-bold" style={{ color: "#C14B1D" }}>
+              {formatPrice(next.pricePerUnit, next.currency)}
             </div>
-          );
-        })}
-      </div>
-
-      {/* Progress bar */}
-      <div className="progress-track mb-2">
-        <div className="progress-fill" style={{ width: `${progress}%` }} />
-        {tiers.map((t, i) => i > 0 && (
-          <div key={i} className="absolute top-0 bottom-0 flex items-center" style={{ left: `${(t.minQty / c.priceTiers[c.priceTiers.length - 1].minQty) * 100}%` }}>
-            <div className="w-px h-full bg-white/60" />
+            <div className="text-[10px]" style={{ color: "#C14B1D" }}>-{next.discount}%</div>
           </div>
-        ))}
-      </div>
-      <div className="flex justify-between text-[10px] text-gray-400">
-        <span>{formatQty(Math.round(c.currentQty))} inscrits</span>
-        <span className="font-medium" style={{ color: "#C14B1D" }}>+{formatQty(tiers[2].minQty - c.currentQty)} → Silver (-{tiers[2].discountPct}%)</span>
+        )}
       </div>
 
-      <div className="mt-3 flex gap-2">
-        <Link to="/campaigns/$id" params={{ id: c.id }} className="flex-1 text-center py-2 rounded-xl text-xs font-bold text-white"
-          style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}>
-          Rejoindre la campagne →
-        </Link>
+      {/* Progress */}
+      <div className="px-4 pb-3">
+        <div className="h-1.5 rounded-full overflow-hidden bg-gray-100 mb-1.5">
+          <div
+            className="h-full rounded-full"
+            style={{ width: `${progress}%`, background: "linear-gradient(90deg, #C14B1D, #E8A820)" }}
+          />
+        </div>
+        {next && (
+          <div className="text-[10px] text-gray-400">
+            encore <span className="font-semibold text-gray-600">{fmtQty(toNext)} {c.unit}</span> pour {next.label}
+          </div>
+        )}
       </div>
-    </div>
+
+      {/* CTA */}
+      <div className="mt-auto px-4 pb-4">
+        <div
+          className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[12px] font-bold text-white"
+          style={{ background: "linear-gradient(135deg, #C14B1D, #E8A820)" }}
+        >
+          {next ? `Rejoindre · Palier suivant: ${formatPrice(next.pricePerUnit, next.currency)}` : "Rejoindre la campagne"}
+          <ArrowRight size={13} />
+        </div>
+      </div>
+    </Link>
   );
 }
 
+const STEPS = [
+  { n: "01", icon: "🛒", title: "Rejoignez la campagne", desc: "Choisissez votre quantité ≥ MOQ. Le prix affiché est votre prix garanti minimum." },
+  { n: "02", icon: "🔒", title: "Paiement en escrow", desc: "Vos fonds sont bloqués sur un compte séquestre. Ni le fournisseur ni la plateforme ne peut y accéder." },
+  { n: "03", icon: "🎯", title: "Palier atteint", desc: "Quand la campagne clôt, le prix baisse automatiquement pour tous si le palier est dépassé." },
+  { n: "04", icon: "✅", title: "Livraison → Paiement", desc: "À la réception confirmée, l'escrow se libère et le fournisseur est payé. Zéro risque." },
+];
+
+const activeCampaigns = campaigns.filter((c) => c.status === "active");
+const totalParticipants = campaigns.reduce((s, c) => s + c.participantCount, 0);
+
 function HomePage() {
   return (
-    <PageLayout>
+    <AppLayoutHome rightPanel={<HomepageRightPanel />}>
       {/* ── HERO ── */}
-      <section className="hero-gradient relative overflow-hidden pt-20 pb-16">
-        <div className="kente-bg absolute inset-0 opacity-8" />
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-6"
-                style={{ background: "rgba(232,168,32,0.15)", color: "#E8A820", border: "1px solid rgba(232,168,32,0.3)" }}>
-                <Zap className="h-3 w-3" /> Paiements sécurisés par escrow · Zéro risque
-              </div>
-
-              <h1 className="font-display text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-                Achetez ensemble.
-                <br />
-                <span style={{ color: "#E8A820" }}>Payez beaucoup moins.</span>
-              </h1>
-              <p className="text-white/70 text-lg leading-relaxed mb-8 max-w-lg">
-                Rejoignez des campagnes d'achats groupés B2B. Chaque participant fait baisser le prix pour tout le monde — jusqu'à <strong className="text-white">-42%</strong>. Vos fonds sont bloqués en escrow jusqu'à livraison.
-              </p>
-
-              <div className="flex flex-wrap gap-3 mb-10">
-                <Link to="/campaigns" className="btn-primary text-base px-5 py-3">
-                  Voir les campagnes <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link to="/register/supplier" className="btn-secondary text-base px-5 py-3">
-                  Je suis fournisseur
-                </Link>
-              </div>
-
-              {/* Trust badges */}
-              <div className="flex flex-wrap gap-4">
-                {[
-                  { icon: <Lock className="h-3.5 w-3.5" />, text: "Escrow sécurisé" },
-                  { icon: <Shield className="h-3.5 w-3.5" />, text: "Fournisseurs vérifiés" },
-                  { icon: <TrendingDown className="h-3.5 w-3.5" />, text: "Jusqu'à -42%" },
-                  { icon: <Users className="h-3.5 w-3.5" />, text: "1 240+ fournisseurs" },
-                ].map((b) => (
-                  <div key={b.text} className="flex items-center gap-1.5 text-xs text-white/60">
-                    <span style={{ color: "#E8A820" }}>{b.icon}</span>
-                    {b.text}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Live campaign demo */}
-            <div className="lg:pl-8">
-              <div className="text-xs text-white/40 uppercase tracking-widest mb-3 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                Campagne en direct
-              </div>
-              <TierProgressDemo />
-            </div>
+      <section className="px-6 pt-8 pb-6" style={{ background: "linear-gradient(160deg, #1A1630 0%, #2D2050 60%, #1B3E2A 100%)" }}>
+        <div className="max-w-2xl">
+          <div
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-semibold mb-5"
+            style={{ background: "rgba(232,168,32,0.15)", color: "#E8A820", border: "1px solid rgba(232,168,32,0.25)" }}
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+            {activeCampaigns.length} campagnes actives en ce moment
           </div>
+          <h1 className="font-display text-3xl lg:text-4xl font-bold text-white leading-tight mb-4">
+            Achats groupés.
+            <br />
+            <span style={{ color: "#E8A820" }}>Meilleurs prix.</span>
+          </h1>
+          <p className="text-white/60 text-[14px] leading-relaxed mb-6 max-w-lg">
+            Rejoignez une commande collective, faites baisser le prix à chaque palier, payez en sécurité par escrow. Jusqu'à <strong className="text-white">-43%</strong> sur le prix marché.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/campaigns" className="btn-primary text-sm">
+              Voir les campagnes <ArrowRight size={15} />
+            </Link>
+            <Link to="/register/supplier" className="btn-secondary text-sm" style={{ background: "rgba(255,255,255,0.08)", color: "white", border: "1px solid rgba(255,255,255,0.15)" }}>
+              Espace fournisseur
+            </Link>
+          </div>
+        </div>
+
+        {/* Stats bar */}
+        <div className="flex flex-wrap gap-2 mt-8">
+          {[
+            { val: activeCampaigns.length.toString(), label: "campagnes actives" },
+            { val: totalParticipants.toString(), label: "participants" },
+            { val: "-43%", label: "économie max" },
+            { val: "180+", label: "pays desservis" },
+          ].map((s) => (
+            <div
+              key={s.label}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm"
+              style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)" }}
+            >
+              <span className="font-bold text-white">{s.val}</span>
+              <span className="text-white/45 text-[12px]">{s.label}</span>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* ── ESCROW FLOW ── */}
-      <section className="py-16 bg-white">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold text-[#1A1630] mb-3">Comment ça fonctionne</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">Un système simple et sécurisé : votre argent n'est jamais à risque</p>
+      {/* ── SECTORS ── */}
+      <section className="py-5 px-6 border-b" style={{ borderColor: "#F0ECE6", background: "white" }}>
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+          <button
+            className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-semibold text-white"
+            style={{ background: "#1A1630" }}
+          >
+            Toutes les catégories
+          </button>
+          {sectors.map((s) => (
+            <Link
+              key={s.id}
+              to="/campaigns"
+              className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium text-gray-600 hover:bg-gray-100 transition-colors"
+              style={{ background: "#F8F2E8", whiteSpace: "nowrap" }}
+            >
+              {s.icon} {s.name}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ── ACTIVE CAMPAIGNS ── */}
+      <section className="px-6 pt-6 pb-8" style={{ background: "#F8F2E8" }}>
+        <div className="flex items-center justify-between mb-5">
+          <div>
+            <h2 className="font-display text-[18px] font-bold text-[#1A1630]">Campagnes en cours</h2>
+            <p className="text-[12px] text-gray-500 mt-0.5">Plus vous êtes nombreux, plus le prix baisse pour tous</p>
+          </div>
+          <Link to="/campaigns" className="flex items-center gap-1 text-[12px] font-semibold" style={{ color: "#C14B1D" }}>
+            Toutes <ArrowRight size={13} />
+          </Link>
+        </div>
+
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+          {activeCampaigns.slice(0, 3).map((c) => (
+            <CampaignCard key={c.id} c={c} />
+          ))}
+        </div>
+      </section>
+
+      {/* ── HOW IT WORKS ── */}
+      <section className="px-6 py-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="font-display text-[18px] font-bold text-[#1A1630]">Comment ça marche ?</h2>
+            <Shield size={20} className="text-green-600" />
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-            {/* Connecting line */}
-            <div className="hidden lg:block absolute top-10 left-[calc(12.5%+1rem)] right-[calc(12.5%+1rem)] h-0.5"
-              style={{ background: "linear-gradient(90deg, #C14B1D, #E8A820, #C14B1D, #1B5E3E)" }} />
-
-            {[
-              {
-                step: "01",
-                icon: "🛒",
-                title: "Rejoignez la campagne",
-                desc: "Choisissez votre quantité (≥ MOQ) et confirmez votre inscription. Le prix affiché est votre prix garanti minimum.",
-                color: "#C14B1D",
-              },
-              {
-                step: "02",
-                icon: "🔒",
-                title: "Paiement en escrow",
-                desc: "Votre paiement est bloqué sur un compte séquestre neutre. Ni le fournisseur ni Dolly Trade ne peut le toucher.",
-                color: "#E8A820",
-              },
-              {
-                step: "03",
-                icon: "🎯",
-                title: "Palier atteint",
-                desc: "Quand la campagne clôt, si le palier est atteint, le prix baisse pour tous. Vous payez le meilleur prix possible.",
-                color: "#C14B1D",
-              },
-              {
-                step: "04",
-                icon: "✅",
-                title: "Livraison → Paiement",
-                desc: "À la réception confirmée des marchandises, l'escrow se débloque et le fournisseur est payé. Zéro risque pour vous.",
-                color: "#1B5E3E",
-              },
-            ].map((s) => (
-              <div key={s.step} className="relative">
-                <div className="w-20 h-20 rounded-2xl flex flex-col items-center justify-center mx-auto mb-4 relative z-10"
-                  style={{ background: `${s.color}10`, border: `2px solid ${s.color}25` }}>
-                  <div className="text-3xl">{s.icon}</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: s.color }}>{s.step}</div>
-                  <div className="font-display font-semibold text-[#1A1630] mb-2">{s.title}</div>
-                  <div className="text-xs text-gray-500 leading-relaxed">{s.desc}</div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {STEPS.map((s, i) => (
+              <div key={s.n} className="relative">
+                {i < STEPS.length - 1 && (
+                  <div
+                    className="hidden lg:block absolute top-6 left-full w-full h-0.5 z-0"
+                    style={{ background: "linear-gradient(90deg, #C14B1D40, #E8A82040)", width: "calc(100% - 3rem)" }}
+                  />
+                )}
+                <div className="relative z-10 flex flex-col items-start">
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-3"
+                    style={{ background: "linear-gradient(135deg, rgba(193,75,29,0.1), rgba(232,168,32,0.1))", border: "1px solid rgba(193,75,29,0.15)" }}
+                  >
+                    {s.icon}
+                  </div>
+                  <div className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: "#C14B1D" }}>{s.n}</div>
+                  <div className="font-semibold text-[13px] text-[#1A1630] mb-1">{s.title}</div>
+                  <div className="text-[11px] text-gray-500 leading-relaxed">{s.desc}</div>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="mt-10 p-4 rounded-2xl flex items-center gap-3 max-w-lg mx-auto"
-            style={{ background: "rgba(27,94,62,0.06)", border: "1px solid rgba(27,94,62,0.15)" }}>
-            <Shield className="h-5 w-5 text-green-600 shrink-0" />
-            <p className="text-sm text-green-700">
-              Fonds libérés uniquement à la livraison confirmée. En cas de non-livraison, remboursement intégral automatique.
+          <div
+            className="mt-6 p-4 rounded-xl flex items-center gap-3"
+            style={{ background: "rgba(27,94,62,0.06)", border: "1px solid rgba(27,94,62,0.15)" }}
+          >
+            <CheckCircle size={16} className="text-green-600 shrink-0" />
+            <p className="text-[12px] text-green-700">
+              Fonds libérés uniquement après livraison confirmée. Remboursement intégral automatique en cas de non-livraison.
             </p>
           </div>
         </div>
       </section>
 
-      {/* ── PRICE TIERS EXPLAINER ── */}
-      <section className="py-16" style={{ background: "#F8F2E8" }}>
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="font-display text-3xl font-bold text-[#1A1630] mb-4">
-                Les paliers : plus on est nombreux,
-                <br />
-                <span style={{ color: "#C14B1D" }}>plus le prix baisse</span>
-              </h2>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                Chaque campagne a 4 niveaux de prix. Le prix est automatiquement recalculé au meilleur palier atteint à la clôture.
-                Vous ne payez jamais plus que votre prix d'inscription.
-              </p>
-              <div className="flex flex-col gap-3">
-                {[
-                  { label: "Vous vous inscrivez au prix Starter", icon: "👤" },
-                  { label: "D'autres acheteurs rejoignent → palier Bronze débloqué → prix baisse", icon: "👥" },
-                  { label: "La communauté atteint Silver, puis Or → -42% pour tous", icon: "🏆" },
-                  { label: "Vous êtes remboursé de la différence si le palier change après paiement", icon: "💰" },
-                ].map((item) => (
-                  <div key={item.label} className="flex items-start gap-3">
-                    <span className="text-xl shrink-0">{item.icon}</span>
-                    <span className="text-sm text-gray-700 leading-relaxed">{item.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Visual tier comparison */}
-            <div className="bg-white rounded-2xl p-6 card-shadow">
-              <div className="text-xs text-gray-400 uppercase tracking-widest mb-4">Exemple — Gants chirurgicaux stériles</div>
-
-              {[
-                { label: "Starter", qty: "100 000+", price: "0,085$", pct: 0, active: false, achieved: false, color: "#6B7280" },
-                { label: "Bronze", qty: "500 000+", price: "0,072$", pct: -15, active: true, achieved: true, color: "#B45309" },
-                { label: "Silver", qty: "1 000 000+", price: "0,062$", pct: -27, active: false, achieved: false, color: "#6B7280" },
-                { label: "Or 🏆", qty: "3 000 000+", price: "0,049$", pct: -42, active: false, achieved: false, color: "#C14B1D" },
-              ].map((tier) => (
-                <div key={tier.label} className={`flex items-center gap-3 p-3 rounded-xl mb-2 border-2 transition-all ${tier.active ? "border-orange-200 bg-orange-50" : "border-gray-100"}`}>
-                  <div className="w-16 text-center">
-                    <div className="text-xs font-bold" style={{ color: tier.color }}>{tier.label}</div>
-                    <div className="text-[10px] text-gray-400">{tier.qty}</div>
-                  </div>
-                  <div className="flex-1 h-2 rounded-full overflow-hidden bg-gray-100">
-                    <div className="h-full rounded-full" style={{ width: tier.achieved ? "100%" : "0%", background: `${tier.color}` }} />
-                  </div>
-                  <div className="text-right w-24">
-                    <div className="font-bold text-sm text-[#1A1630]">{tier.price}<span className="text-xs font-normal text-gray-400">/u</span></div>
-                    {tier.pct !== 0 && <div className="text-xs font-bold" style={{ color: tier.active ? "#C14B1D" : "#10B981" }}>{tier.pct}%</div>}
-                  </div>
-                  {tier.achieved && <CheckCircle className="h-4 w-4 text-green-500 shrink-0" />}
-                  {tier.active && <div className="text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0" style={{ background: "#C14B1D", color: "white" }}>EN COURS</div>}
-                </div>
-              ))}
-
-              <div className="mt-4 pt-4 border-t flex justify-between text-sm">
-                <span className="text-gray-500">Prix marché habituel</span>
-                <span className="line-through text-gray-400">0,12$/u</span>
-              </div>
-              <div className="flex justify-between text-sm font-bold">
-                <span style={{ color: "#1B5E3E" }}>Votre économie (Bronze)</span>
-                <span style={{ color: "#1B5E3E" }}>-40%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── ACTIVE CAMPAIGNS ── */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="font-display text-2xl font-bold text-[#1A1630]">Campagnes en cours</h2>
-              <p className="text-gray-500 text-sm mt-1">Rejoignez maintenant et faites baisser le prix pour tous</p>
-            </div>
-            <Link to="/campaigns" className="btn-secondary text-sm">
-              Toutes les campagnes <ChevronRight className="h-4 w-4" />
-            </Link>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {campaigns.slice(0, 3).map((campaign) => {
-              const tier = getCurrentTier(campaign);
-              const nextTier = campaign.priceTiers.find((t) => t.minQty > campaign.currentQty);
-              const progress = getCampaignProgress(campaign);
-              const daysLeft = Math.max(0, Math.ceil((new Date(campaign.endDate).getTime() - Date.now()) / 86400000));
-
-              return (
-                <Link key={campaign.id} to="/campaigns/$id" params={{ id: campaign.id }}
-                  className="campaign-card bg-white rounded-2xl overflow-hidden card-shadow border border-gray-100 flex flex-col">
-                  {/* Header */}
-                  <div className="p-5 pb-3">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="text-4xl">{campaign.image}</div>
-                      <div className="flex gap-1 items-center">
-                        <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#FFF7ED", color: "#C14B1D", border: "1px solid #FED7AA" }}>
-                          {tier.label}
-                        </span>
-                        <span className="text-xs text-gray-400">{daysLeft}j</span>
-                      </div>
-                    </div>
-                    <h3 className="font-semibold text-[#1A1630] text-sm leading-snug mb-1">{campaign.title}</h3>
-                    <div className="flex items-center gap-1 text-xs text-gray-400 mb-3">
-                      <Users className="h-3 w-3" />
-                      {formatQty(campaign.currentQty)} {campaign.unit} inscrits
-                    </div>
-
-                    {/* Progress */}
-                    <div className="progress-track mb-1.5">
-                      <div className="progress-fill" style={{ width: `${progress}%` }} />
-                    </div>
-                    {nextTier && (
-                      <div className="text-[10px] text-gray-400">
-                        <span className="font-semibold" style={{ color: "#C14B1D" }}>+{formatQty(nextTier.minQty - campaign.currentQty)} {campaign.unit}</span> pour {nextTier.label} ({nextTier.discountPct > 0 ? `-${nextTier.discountPct}%` : "base"})
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Footer */}
-                  <div className="mt-auto px-5 py-4 border-t border-gray-50 flex items-center justify-between">
-                    <div>
-                      <div className="text-xs text-gray-400">Prix actuel</div>
-                      <div className="font-display text-lg font-bold" style={{ color: "#C14B1D" }}>
-                        {formatPrice(tier.pricePerUnit, tier.currency)}
-                        <span className="text-xs font-normal text-gray-400">/{campaign.unit}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-xl" style={{ background: "#C14B1D", color: "white" }}>
-                      Rejoindre <ArrowRight className="h-3 w-3" />
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTORS ── */}
-      <section className="py-16" style={{ background: "#F8F2E8" }}>
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="font-display text-2xl font-bold text-[#1A1630] mb-2">Secteurs couverts</h2>
-          <p className="text-gray-500 text-sm mb-8">De l'équipement médical aux pièces industrielles</p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {sectors.map((sector) => (
-              <Link key={sector.id} to="/campaigns" className="sector-card bg-white rounded-2xl p-5 card-shadow flex items-center gap-3 hover:shadow-md transition-all">
-                <span className="text-3xl">{sector.icon}</span>
-                <div>
-                  <div className="font-semibold text-sm text-[#1A1630]">{sector.name}</div>
-                  <div className="text-xs text-gray-400">{sector.stats.campaigns} campagnes</div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── DUAL CTA ── */}
-      <section className="py-16 bg-white">
-        <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-6">
-          <div className="rounded-2xl p-8 text-white flex flex-col gap-4" style={{ background: "linear-gradient(135deg, #1A1630, #2D2050)" }}>
-            <div className="text-4xl">🏭</div>
-            <h3 className="font-display text-xl font-bold">Vous êtes fournisseur ?</h3>
-            <p className="text-white/70 text-sm leading-relaxed">Lancez vos campagnes, fixez vos paliers de prix et vendez en volume. Les fonds sont garantis avant la production.</p>
-            <Link to="/register/supplier" className="btn-gold self-start">
-              Créer un compte fournisseur <ArrowRight className="h-4 w-4" />
+      <section className="px-6 py-8" style={{ background: "#F8F2E8" }}>
+        <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+          <div className="rounded-2xl p-6 text-white" style={{ background: "linear-gradient(135deg, #1A1630, #2D2050)" }}>
+            <div className="text-3xl mb-3">🏭</div>
+            <h3 className="font-display text-[17px] font-bold mb-2">Vous êtes fournisseur ?</h3>
+            <p className="text-white/60 text-[13px] leading-relaxed mb-4">
+              Lancez vos campagnes, définissez vos paliers et vendez en volume. Les fonds sont sécurisés avant production.
+            </p>
+            <Link to="/register/supplier" className="btn-gold text-sm self-start inline-flex">
+              Créer un compte fournisseur <ArrowRight size={14} />
             </Link>
           </div>
-          <div className="rounded-2xl p-8 flex flex-col gap-4" style={{ background: "linear-gradient(135deg, #FFF7ED, #FFFBEB)", border: "2px solid #FED7AA" }}>
-            <div className="text-4xl">🛒</div>
-            <h3 className="font-display text-xl font-bold text-[#1A1630]">Vous achetez ?</h3>
-            <p className="text-gray-600 text-sm leading-relaxed">Rejoignez des campagnes actives, combinez vos achats avec d'autres professionnels et économisez jusqu'à 42%.</p>
-            <Link to="/register/client" className="btn-primary self-start">
-              Rejoindre en tant qu'acheteur <ArrowRight className="h-4 w-4" />
+          <div className="rounded-2xl p-6" style={{ background: "white", border: "1px solid #F0ECE6" }}>
+            <div className="text-3xl mb-3">🛒</div>
+            <h3 className="font-display text-[17px] font-bold text-[#1A1630] mb-2">Vous êtes acheteur ?</h3>
+            <p className="text-gray-500 text-[13px] leading-relaxed mb-4">
+              Rejoignez des campagnes actives, mutualisez vos achats et économisez jusqu'à 43% grâce au volume collectif.
+            </p>
+            <Link to="/register/client" className="btn-primary text-sm self-start inline-flex">
+              Rejoindre comme acheteur <ArrowRight size={14} />
             </Link>
           </div>
         </div>
       </section>
-    </PageLayout>
+    </AppLayoutHome>
   );
 }
