@@ -138,7 +138,7 @@ function CampaignCard({ c }: { c: (typeof campaigns)[0] }) {
             boxShadow: "0 3px 12px rgba(212,88,28,0.35)",
           }}
         >
-          {next ? `Acheter à ${formatPrice(next.pricePerUnit, next.currency)}` : "Rejoindre la campagne"}
+          {next ? `Rejoindre — ${formatPrice(next.pricePerUnit, next.currency)}/u` : "Rejoindre la campagne"}
           <ArrowRight size={14} />
         </div>
       </div>

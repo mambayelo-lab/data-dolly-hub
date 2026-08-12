@@ -89,7 +89,7 @@ export default function RegisterClientPage() {
           <Link to="/" className="flex items-center gap-2.5">
             <div className="h-8 w-8 rounded-lg flex items-center justify-center text-white font-bold"
               style={{ background: "linear-gradient(135deg, #D4581C, #F5BE25)" }}>D</div>
-            <span className="text-white font-bold text-sm font-display">DOLLY TRADE B2B</span>
+            <span className="text-white font-bold text-sm font-display">WAOUMAS</span>
           </Link>
           <span className="text-white/60 text-xs">Inscription Acheteur Pro</span>
         </div>
